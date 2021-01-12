@@ -1,0 +1,950 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: bga 1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-12-20 21:15+0100\n"
+"PO-Revision-Date: 2012-01-23 14:54+0100\n"
+"Last-Translator: Grégory Isabelli <gisabelli@gmail.com>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-SearchPath-0: /var/tournoi/www/game/translation/alhambra\n"
+
+#: game/translation/alhambra/alhambra_clientsidekeys.js
+#: alhambra_clientsidekeys.php:23
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:23
+msgid "${actplayer} must pick money, buy building or transform Alhambra"
+msgstr "${actplayer} doit piocher de l'argent, acheter un édifice ou transformer son Alhambra"
+
+#: game/translation/alhambra/alhambra_clientsidekeys.js
+#: alhambra_clientsidekeys.php:25
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:25
+msgid "${actplayer} must place new buildings"
+msgstr "${actplayer} doit placer ses édifices achetés"
+
+#: game/translation/alhambra/alhambra_clientsidekeys.js
+#: alhambra_clientsidekeys.php:4
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:4
+msgid "${player_name} bought a ${building_type} with cards: ${cards_value_string}"
+msgstr "${player_name} a acheté un ${building_type} avec les cartes: ${cards_value_string}"
+
+#: game/translation/alhambra/alhambra_clientsidekeys.js
+#: alhambra_clientsidekeys.php:11
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:11
+msgid "${player_name} gets ${building_type} because he has the most ${money_name}"
+msgstr "${player_name} reçoit le ${building_type} parce qu'il a le plus de ${money_name}"
+
+#: game/translation/alhambra/alhambra_clientsidekeys.js
+#: alhambra_clientsidekeys.php:5
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:5
+msgid "${player_name} paid with the exact amount and replay !"
+msgstr "${player_name} a payé avec le montant exact et rejoue !"
+
+#: game/translation/alhambra/alhambra_clientsidekeys.js
+#: alhambra_clientsidekeys.php:6
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:6
+msgid "${player_name} places a ${building_name}"
+msgstr "${player_name} place un ${building_name}"
+
+#: game/translation/alhambra/alhambra_clientsidekeys.js
+#: alhambra_clientsidekeys.php:7
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:7
+msgid "${player_name} places a ${building_name} in stock"
+msgstr "${player_name} place un ${building_name} dans sa réserve"
+
+#: game/translation/alhambra/alhambra_clientsidekeys.js
+#: alhambra_clientsidekeys.php:3
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:3
+msgid "${player_name} takes ${description}"
+msgstr "${player_name} prend ${description}"
+
+#: game/translation/alhambra/alhambra_clientsidekeys.js
+#: alhambra_clientsidekeys.php:24
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:24
+msgid "${you} must pick money, buy building or transform Alhambra"
+msgstr "${you} devez piocher de l'argent, acheter un édifice ou transformer votre Alhambra"
+
+#: game/translation/alhambra/alhambra_clientsidekeys.js
+#: alhambra_clientsidekeys.php:26 alhambra_clientsidekeys.php:28
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:26
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:28
+msgid "${you} must place your new building in your Alhambra or in your stock"
+msgstr "${you} devez placer les édifices achetés dans votre Alhambra ou dans votre réserve"
+
+#: game/translation/alhambra/alhambra_clientsidekeys.js
+#: alhambra_clientsidekeys.php:8
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:8
+msgid "A scoring round card has been picked !"
+msgstr "Une carte décompte a été piochée !"
+
+#: game/module/alhambra/alhambra.game.php:354 alhambra_serversidekeys.php:3
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:3
+msgid "A side with a wall can't touch a side without a wall"
+msgstr "Un coté avec un mur ne peut pas toucher un coté sans mur"
+
+#: game/module/alhambra/alhambra.game.php:360 alhambra_serversidekeys.php:7
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:7
+msgid "Each building must have at least a common side with another one"
+msgstr "Les édifices doivent avoir au moins un coté commun"
+
+#: game/translation/alhambra/alhambra_clientsidekeys.js
+#: alhambra_clientsidekeys.php:22
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:22
+msgid "End of game"
+msgstr "Fin de la partie"
+
+#: game/translation/alhambra/alhambra_clientsidekeys.js
+#: alhambra_clientsidekeys.php:20 alhambra_clientsidekeys.php:21
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:20
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:21
+msgid "Everyone must accept initial money"
+msgstr "Tout le monde doit accepter son argent de départ"
+
+#: game/translation/alhambra/alhambra_clientsidekeys.js
+#: alhambra_clientsidekeys.php:19
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:19
+msgid "Game setup"
+msgstr "Attente des autres joueurs ..."
+
+#: game/translation/alhambra/alhambra_clientsidekeys.js
+#: alhambra_clientsidekeys.php:30
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:30
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:41
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:52
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:63
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:74
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:85
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:96
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:107
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:118
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:129
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:140
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:151
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:162
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:173
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:184
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:195
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:206
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:217
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:228
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:239
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:250
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:261
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:272
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:283
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:294
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:305
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:316
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:327
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:338
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:349
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:360
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:371
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:382
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:393
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:404
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:415
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:426
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:437
+msgid "If you take several money cards their total value should not exceed 5"
+msgstr "Si vous prenez plusieurs cartes, leur total ne dois pas dépasser 5"
+
+#: game/translation/alhambra/alhambra_clientsidekeys.js
+#: alhambra_clientsidekeys.php:34
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:34
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:45
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:56
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:67
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:78
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:89
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:100
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:111
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:122
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:133
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:144
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:155
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:166
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:177
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:188
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:199
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:210
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:221
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:232
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:243
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:254
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:265
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:276
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:287
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:298
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:309
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:320
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:331
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:342
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:353
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:364
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:375
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:386
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:397
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:408
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:419
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:430
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:441
+msgid "Initial money for players"
+msgstr "Argent de départ"
+
+#: theme/template/tpl_translate/alhambra_alhambra.php:2
+#: alhambra_serversidekeys.php:27
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:27
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:32
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:37
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:42
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:47
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:52
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:57
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:62
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:67
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:72
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:77
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:82
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:87
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:92
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:97
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:102
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:107
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:112
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:117
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:122
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:127
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:132
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:137
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:142
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:147
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:152
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:157
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:162
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:167
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:172
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:177
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:182
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:187
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:192
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:197
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:202
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:207
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:212
+msgid "LB_SCORING_ROUND_AT_THE_END_OF_THIS_TURN"
+msgstr "Décompte à la fin de ce tour"
+
+#: theme/template/tpl_translate/alhambra_alhambra.php:5
+#: alhambra_serversidekeys.php:30
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:30
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:35
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:40
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:45
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:50
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:55
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:60
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:65
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:70
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:75
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:80
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:85
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:90
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:95
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:100
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:105
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:110
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:115
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:120
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:125
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:130
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:135
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:140
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:145
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:150
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:155
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:160
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:165
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:170
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:175
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:180
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:185
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:190
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:195
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:200
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:205
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:210
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:215
+msgid "LB_TO_PLACE"
+msgstr "Édifices à placer"
+
+#: theme/template/tpl_translate/alhambra_alhambra.php:6
+#: alhambra_serversidekeys.php:31
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:31
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:36
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:41
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:46
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:51
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:56
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:61
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:66
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:71
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:76
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:81
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:86
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:91
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:96
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:101
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:106
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:111
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:116
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:121
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:126
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:131
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:136
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:141
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:146
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:151
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:156
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:161
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:166
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:171
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:176
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:181
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:186
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:191
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:196
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:201
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:206
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:211
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:216
+msgid "LB_YOUR_ALHAMBRA"
+msgstr "Votre Alhambra"
+
+#: theme/template/tpl_translate/alhambra_alhambra.php:3
+#: alhambra_serversidekeys.php:28
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:28
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:33
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:38
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:43
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:48
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:53
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:58
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:63
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:68
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:73
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:78
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:83
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:88
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:93
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:98
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:103
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:108
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:113
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:118
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:123
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:128
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:133
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:138
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:143
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:148
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:153
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:158
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:163
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:168
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:173
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:178
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:183
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:188
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:193
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:198
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:203
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:208
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:213
+msgid "LB_YOUR_MONEY"
+msgstr "Votre argent"
+
+#: theme/template/tpl_translate/alhambra_alhambra.php:4
+#: alhambra_serversidekeys.php:29
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:29
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:34
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:39
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:44
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:49
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:54
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:59
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:64
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:69
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:74
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:79
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:84
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:89
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:94
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:99
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:104
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:109
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:114
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:119
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:124
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:129
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:134
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:139
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:144
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:149
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:154
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:159
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:164
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:169
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:174
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:179
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:184
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:189
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:194
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:199
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:204
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:209
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:214
+msgid "LB_YOUR_STOCK"
+msgstr "Votre réserve"
+
+#: game/translation/alhambra/alhambra_clientsidekeys.js
+#: alhambra_clientsidekeys.php:38
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:38
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:49
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:60
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:71
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:82
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:93
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:104
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:115
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:126
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:137
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:148
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:159
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:170
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:181
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:192
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:203
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:214
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:225
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:236
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:247
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:258
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:269
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:280
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:291
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:302
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:313
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:324
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:335
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:346
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:357
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:368
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:379
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:390
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:401
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:412
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:423
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:434
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:445
+msgid "Longest wall"
+msgstr "Mur le plus long"
+
+#: alhambra_serversidekeys.php:18 alhambra_serversidekeys.php:20
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:18
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:20
+msgid "Longest wall length"
+msgstr ""
+
+#: game/translation/alhambra/alhambra_clientsidekeys.js
+#: alhambra_clientsidekeys.php:2
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:2
+msgid "No more money card: recreating a deck"
+msgstr "Plus d'argent: la pioche est remélangée"
+
+#: game/translation/alhambra/alhambra_clientsidekeys.js
+#: alhambra_clientsidekeys.php:9
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:9
+msgid "Nobody has any ${money_name}, ${building_type} stays in buildingsite"
+msgstr "Personne n'a de ${money_name}, personne ne récupère le ${building_type}"
+
+#: alhambra_serversidekeys.php:24
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:24
+msgid "Number of Alhambra transformation action"
+msgstr ""
+
+#: alhambra_serversidekeys.php:26
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:26
+msgid "Number of exact amount replay"
+msgstr ""
+
+#: alhambra_serversidekeys.php:19
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:19
+msgid "Number of turn"
+msgstr ""
+
+#: game/module/alhambra/alhambra.game.php:319 alhambra_serversidekeys.php:2
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:2
+msgid "Place is not free"
+msgstr "La place n'est pas libre"
+
+#: game/translation/alhambra/alhambra_clientsidekeys.js
+#: alhambra_clientsidekeys.php:27
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:27
+msgid "Players who gains buildings must place them"
+msgstr "Les joueurs ayant récupéré des édifices doivent les placer"
+
+#: game/translation/alhambra/alhambra_clientsidekeys.js
+#: alhambra_clientsidekeys.php:29
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:29
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:40
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:51
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:62
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:73
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:84
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:95
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:106
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:117
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:128
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:139
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:150
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:161
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:172
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:183
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:194
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:205
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:216
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:227
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:238
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:249
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:260
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:271
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:282
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:293
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:304
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:315
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:326
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:337
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:348
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:359
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:370
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:381
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:392
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:403
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:414
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:425
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:436
+msgid "Points wins at each scoring round.<br/>Example: on the second scoring round, the player with the most red buildings wins 9 points and the second wins 2 points."
+msgstr "Points gagnés lors des décomptes.<br/>Exemple: lors du second décompte, le joueur ayant le plus d'édifices rouges marque 9 points et le second marque 2 points."
+
+#: alhambra_serversidekeys.php:21
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:21
+msgid "Points wins during the first scoring round"
+msgstr ""
+
+#: alhambra_serversidekeys.php:22
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:22
+msgid "Points wins during the second scoring round"
+msgstr ""
+
+#: alhambra_serversidekeys.php:23
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:23
+msgid "Points wins during the third scoring round"
+msgstr ""
+
+#: game/translation/alhambra/alhambra_clientsidekeys.js
+#: alhambra_clientsidekeys.php:35
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:35
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:46
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:57
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:68
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:79
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:90
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:101
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:112
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:123
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:134
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:145
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:156
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:167
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:178
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:189
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:200
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:211
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:222
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:233
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:244
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:255
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:266
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:277
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:288
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:299
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:310
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:321
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:332
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:343
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:354
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:365
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:376
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:387
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:398
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:409
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:420
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:431
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:442
+msgid "Remove this building from your Alhambra and place it in your stock"
+msgstr "Retirer cet édifice de votre Alhambra et le mettre dans votre réserve"
+
+#: game/module/alhambra/alhambra.game.php:428 alhambra_serversidekeys.php:9
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:9
+msgid "Scoring round !"
+msgstr "Décompte !"
+
+#: game/translation/alhambra/alhambra_clientsidekeys.js
+#: alhambra_clientsidekeys.php:36
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:36
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:47
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:58
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:69
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:80
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:91
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:102
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:113
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:124
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:135
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:146
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:157
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:168
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:179
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:190
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:201
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:212
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:223
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:234
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:245
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:256
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:267
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:278
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:289
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:300
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:311
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:322
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:333
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:344
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:355
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:366
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:377
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:388
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:399
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:410
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:421
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:432
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:443
+msgid "Scoring round n°"
+msgstr "Décompte n°"
+
+#: game/translation/alhambra/alhambra_clientsidekeys.js
+#: alhambra_clientsidekeys.php:10
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:10
+msgid "Several players has the same value in ${money_name}, ${building_type} stays in buildingsite"
+msgstr "Plusieurs joueurs ont la même quantité de ${money_name}, personne ne prend le ${building_type}"
+
+#: alhambra_serversidekeys.php:25
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:25
+msgid "Value of money taken"
+msgstr ""
+
+#: game/module/alhambra/alhambra.game.php:404
+#: game/module/alhambra/alhambra.game.php:931 alhambra_serversidekeys.php:4
+#: alhambra_serversidekeys.php:5
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:4
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:5
+msgid "You can't make 'holes' in your Alhambra"
+msgstr "Vous ne pouvez pas faire de 'trou' dans l'Alhambra"
+
+#: game/module/alhambra/alhambra.game.php:1025 alhambra_serversidekeys.php:6
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:6
+msgid "You can't replace the fountain"
+msgstr "Vous ne pouvez pas remplacer la fontaine"
+
+#: game/module/alhambra/alhambra.game.php:363
+#: game/module/alhambra/alhambra.game.php:949 alhambra_serversidekeys.php:8
+#: alhambra_serversidekeys.php:10
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:8
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:10
+msgid "You must be able to go from fountain to this building without crossing wall"
+msgstr "Un chemin sans mur doit exister entre la fontaine et tous les édifices"
+
+#: game/translation/alhambra/alhambra_clientsidekeys.js
+#: alhambra_clientsidekeys.php:32
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:32
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:43
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:54
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:65
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:76
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:87
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:98
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:109
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:120
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:131
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:142
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:153
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:164
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:175
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:186
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:197
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:208
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:219
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:230
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:241
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:252
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:263
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:274
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:285
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:296
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:307
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:318
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:329
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:340
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:351
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:362
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:373
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:384
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:395
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:406
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:417
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:428
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:439
+msgid "You must only pay with the money corresponding to this building"
+msgstr "Vous ne devez payer qu'avec de l'argent de la couleur correspondante"
+
+#: alhambra_clientsidekeys.php:33
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:33
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:44
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:55
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:66
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:77
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:88
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:99
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:110
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:121
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:132
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:143
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:154
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:165
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:176
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:187
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:198
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:209
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:220
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:231
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:242
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:253
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:264
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:275
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:286
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:297
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:308
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:319
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:330
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:341
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:352
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:363
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:374
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:385
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:396
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:407
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:418
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:429
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:440
+msgid "You need to select enough money card. This building cost: "
+msgstr ""
+
+#: game/translation/alhambra/alhambra_clientsidekeys.js
+#: alhambra_clientsidekeys.php:31
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:31
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:42
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:53
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:64
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:75
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:86
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:97
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:108
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:119
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:130
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:141
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:152
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:163
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:174
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:185
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:196
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:207
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:218
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:229
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:240
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:251
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:262
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:273
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:284
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:295
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:306
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:317
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:328
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:339
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:350
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:361
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:372
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:383
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:394
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:405
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:416
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:427
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:438
+msgid "You need to select money cards in your hand to buy a building"
+msgstr "Vous devez sélectionner de l'argent pour acheter cet édifice"
+
+#: game/module/alhambra/materials.inc.php:19
+#: game/translation/alhambra/alhambra_clientsidekeys.js
+#: alhambra_clientsidekeys.php:14 alhambra_serversidekeys.php:13
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:14
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:13
+msgid "arcades"
+msgstr "arcades"
+
+#: game/module/alhambra/materials.inc.php:20
+#: game/translation/alhambra/alhambra_clientsidekeys.js
+#: alhambra_clientsidekeys.php:15 alhambra_serversidekeys.php:14
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:15
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:14
+msgid "chambers"
+msgstr "appartements"
+
+#: game/module/alhambra/materials.inc.php:16
+#: game/translation/alhambra/alhambra_clientsidekeys.js
+#: alhambra_clientsidekeys.php:18 alhambra_serversidekeys.php:17
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:18
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:17
+msgid "fountain"
+msgstr "fontaine"
+
+#: game/module/alhambra/materials.inc.php:21
+#: game/translation/alhambra/alhambra_clientsidekeys.js
+#: alhambra_clientsidekeys.php:16 alhambra_serversidekeys.php:15
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:16
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:15
+msgid "garden"
+msgstr "jardin"
+
+#: game/translation/alhambra/alhambra_clientsidekeys.js
+#: alhambra_clientsidekeys.php:37 alhambra_clientsidekeys.php:39
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:37
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:39
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:48
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:50
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:59
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:61
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:70
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:72
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:81
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:83
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:92
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:94
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:103
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:105
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:114
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:116
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:125
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:127
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:136
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:138
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:147
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:149
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:158
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:160
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:169
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:171
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:180
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:182
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:191
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:193
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:202
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:204
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:213
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:215
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:224
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:226
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:235
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:237
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:246
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:248
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:257
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:259
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:268
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:270
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:279
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:281
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:290
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:292
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:301
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:303
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:312
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:314
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:323
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:325
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:334
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:336
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:345
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:347
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:356
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:358
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:367
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:369
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:378
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:380
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:389
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:391
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:400
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:402
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:411
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:413
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:422
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:424
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:433
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:435
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:444
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:446
+msgid "ok"
+msgstr "ok"
+
+#: game/module/alhambra/materials.inc.php:17
+#: game/translation/alhambra/alhambra_clientsidekeys.js
+#: alhambra_clientsidekeys.php:12 alhambra_serversidekeys.php:11
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:12
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:11
+msgid "pavillon"
+msgstr "pavillon"
+
+#: game/module/alhambra/materials.inc.php:18
+#: game/translation/alhambra/alhambra_clientsidekeys.js
+#: alhambra_clientsidekeys.php:13 alhambra_serversidekeys.php:12
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:13
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:12
+msgid "seraglio"
+msgstr "sérail"
+
+#: game/module/alhambra/materials.inc.php:22
+#: game/translation/alhambra/alhambra_clientsidekeys.js
+#: alhambra_clientsidekeys.php:17 alhambra_serversidekeys.php:16
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_clientsidekeys.php:17
+#: /var/www/tournoi-dev/game/translation/alhambra/alhambra_serversidekeys.php:16
+msgid "tower"
+msgstr "tour"

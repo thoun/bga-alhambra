@@ -2,6 +2,9 @@ define(["dojo", "dojo/_base/declare", g_gamethemeurl + "modules/js/modal.js"], (
   const CARD_W = 112; // 125 ??
   const CARD_H = 173;
 
+  const BUILDING_THEN_MONEY = 1;
+  const MONEY_THEN_BUILDING = 2;
+
 
   return declare("alhambra.moneyCardTrait", null, {
     constructor(){
@@ -13,8 +16,10 @@ define(["dojo", "dojo/_base/declare", g_gamethemeurl + "modules/js/modal.js"], (
       this.initialMoneyDlg = null;
       this.moneyDeckCounter = null;
       this.playerHand = null;
-      this._cardInStacks = [];
-      this._selectedStacks = [];
+      this.cardInStacks = [];
+      this.selectedStacks = [];
+
+      this.selectableCards = [];
     },
 
 
@@ -101,7 +106,7 @@ define(["dojo", "dojo/_base/declare", g_gamethemeurl + "modules/js/modal.js"], (
 
       cards.forEach((card, j) => {
         let i = this.findFirstFreeSpot();
-        this._cardInStacks[i] = card;
+        this.cardInStacks[i] = card;
         this.addCard(card, 'money-spot-' + i);
 
         if(animate){
@@ -130,13 +135,13 @@ define(["dojo", "dojo/_base/declare", g_gamethemeurl + "modules/js/modal.js"], (
     },
 
     updateSelectableStacks(){
-      var selectedTotal = this._selectedStacks.reduce((carry, i) => carry + this._cardInStacks[i].value, 0);
+      var selectedTotal = this.selectedStacks.reduce((carry, i) => carry + this.cardInStacks[i].value, 0);
       debug(selectedTotal)
       let stacks = null;
       if(selectedTotal != 0){
         stacks = [];
-        this._cardInStacks.forEach((card, i) => {
-          if(this._selectedStacks.includes(i) || card.value + selectedTotal <= 5)
+        this.cardInStacks.forEach((card, i) => {
+          if(this.selectedStacks.includes(i) || card.value + selectedTotal <= 5)
             stacks.push(i);
         });
       }
@@ -154,19 +159,19 @@ define(["dojo", "dojo/_base/declare", g_gamethemeurl + "modules/js/modal.js"], (
         return;
 
       // Unselect
-      if(this._selectedStacks.includes(stack)){
-        this._selectedStacks = this._selectedStacks.filter(stackId => stackId != stack);
+      if(this.selectedStacks.includes(stack)){
+        this.selectedStacks = this.selectedStacks.filter(stackId => stackId != stack);
         dojo.removeClass('money-spot-' + stack, "selected");
       }
       // Select if not too much
       else {
-        var selectedTotal = this._selectedStacks.reduce((carry, i) => carry + this._cardInStacks[i].value, 0);
-        if(selectedTotal != 0 && this._cardInStacks[stack].value + selectedTotal > 5){
+        var selectedTotal = this.selectedStacks.reduce((carry, i) => carry + this.cardInStacks[i].value, 0);
+        if(selectedTotal != 0 && this.cardInStacks[stack].value + selectedTotal > 5){
           this.showMessage( _("If you take several money cards their total value should not exceed 5"), "error" );
           return;
         }
 
-        this._selectedStacks.push(stack);
+        this.selectedStacks.push(stack);
         dojo.addClass('money-spot-' + stack, "selected");
       }
 
@@ -174,11 +179,11 @@ define(["dojo", "dojo/_base/declare", g_gamethemeurl + "modules/js/modal.js"], (
       this.updateSelectableStacks();
 
       // Update buttons and take action if needed
-      if(this._selectedStacks.length > 0){
+      if(this.selectedStacks.length > 0){
         // Compute (un)selected cards
         var selectedCards = [], unselectedCards = [];
-        this._cardInStacks.forEach((card, i) => {
-          if(this._selectedStacks.includes(i))
+        this.cardInStacks.forEach((card, i) => {
+          if(this.selectedStacks.includes(i))
             selectedCards.push(card);
           else
             unselectedCards.push(card);
@@ -204,7 +209,7 @@ define(["dojo", "dojo/_base/declare", g_gamethemeurl + "modules/js/modal.js"], (
      * Confirm the multiselection of cards => send that to backend
      */
     onConfirmTakeMoney(){
-      let cardIds = this._selectedStacks.map(stack => this._cardInStacks[stack].id).join(';');
+      let cardIds = this.selectedStacks.map(stack => this.cardInStacks[stack].id).join(';');
       this.takeAction('takeMoney', { cardIds: cardIds});
     },
 
@@ -212,7 +217,7 @@ define(["dojo", "dojo/_base/declare", g_gamethemeurl + "modules/js/modal.js"], (
      * Clear multiselection
      */
     onCancelTakeMoney(){
-      this._selectedStacks = [];
+      this.selectedStacks = [];
       dojo.query('.money-spot').removeClass('selected');
       this.updateSelectableStacks();
       dojo.destroy('btnConfirmMoneyChoice');
@@ -267,6 +272,7 @@ define(["dojo", "dojo/_base/declare", g_gamethemeurl + "modules/js/modal.js"], (
       }
 
       this.addToPlayerHand(cards);
+      dojo.connect(this.playerHand, 'onChangeSelection', this, 'onChangeHandSelection');
     },
 
 
@@ -283,12 +289,15 @@ define(["dojo", "dojo/_base/declare", g_gamethemeurl + "modules/js/modal.js"], (
     },
 
 
+    /*
+     * Adapt stock overlap so it fits in one row
+     */
     adaptPlayerHandOverlap() {
       if(this.playerHand === null)
         return; // Can be trigger when loading by onScreenWidthChange
 
       let nCards = this.playerHand.getItemNumber();
-      let cardWidth = CARD_W + 10; // 5 = margin
+      let cardWidth = CARD_W + 10; // margin
       let spaceNeeded = cardWidth * nCards;
       var spaceAvailable = dojo.coords('player-hand').w;
 
@@ -303,6 +312,88 @@ define(["dojo", "dojo/_base/declare", g_gamethemeurl + "modules/js/modal.js"], (
     },
 
 
+    /*
+     * Get total value of each color in hand
+     */
+    getTotalValueByColorInHand(onlySelected = false){
+      // TODO : remove optional parameter ?
+      onlySelected = this.playerHand.getSelectedItems().length > 0;
 
+      var cards = onlySelected? this.playerHand.getSelectedItems() : this.playerHand.getAllItems();
+      var totals = { 1:0, 2:0, 3:0, 4:0};
+      cards.forEach(card => {
+        let type = Math.floor(card.type / 10),
+            value = card.type % 10;
+        totals[type] += value;
+      });
+
+      return totals;
+    },
+
+    /*
+     * Get card ids of a given color(s)
+     */
+    getCardsInHandOfColors(colors){
+      return this.playerHand.getAllItems().filter(item => {
+        let color = Math.floor(item.type / 10);
+        return colors.includes(color);
+      }).map(item => item.id);
+    },
+
+    /*
+     * Update list of cards selectable
+     */
+    updateSelectableCards(){
+      dojo.query("#player-hand .stockitem").removeClass('selectable').addClass('unselectable');
+      this.selectableCards = [];
+
+      let selected = this.playerHand.getSelectedItems();
+      let colors = null;
+      if(selected.length > 0){
+        // Filter all cards of this color
+        colors = [Math.floor(selected[0].type / 10)];
+      } else {
+        // Get colors of selectable buildings
+        colors = this.selectableBuildings.map(building => building.pos);
+      }
+
+      this.selectableCards = this.getCardsInHandOfColors(colors);
+      this.selectableCards.forEach(cId => dojo.query("#player-hand_item_" + cId).removeClass('unselectable').addClass('selectable') );
+    },
+
+    /*
+     * Called when a card is clicked
+     */
+    onChangeHandSelection(control_name, cardId){
+      // Check if item was selected
+      if(!this.selectableCards.includes(+cardId)){
+        this.playerHand.unselectItem(cardId);
+      }
+
+
+      // "MONEY_THEN_BUILDING" mode
+      if(this.selectionMode == null || this.selectionMode == MONEY_THEN_BUILDING){
+        if(this.playerHand.getSelectedItems().length == 0){
+          this.onCancelBuyBuilding()
+          return;
+        }
+
+        this.selectionMode = MONEY_THEN_BUILDING;
+        this.updateSelectableBuildings();
+
+        this.gamedatas.gamestate.descriptionmyturn = this.gamedatas.gamestate.descriptionmyturnmoneyforbuilding;
+        this.updatePageTitle();
+      }
+
+      // Already in "building then money" mode => unselect selected building if it was clicked
+      else if(this.selectionMode == BUILDING_THEN_MONEY){
+        // Compare value with selected total
+        let total = this.getTotalValueByColorInHand();
+        if(total >= this.selectedBuilding.cost)
+          this.addPrimaryActionButton('btnConfirmBuyBuilding', _('Buy'), () => this.onConfirmBuyBuilding());
+        else
+          dojo.destroy('btnConfirmBuyBuilding');
+      }
+    },
   });
 });

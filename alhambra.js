@@ -37,6 +37,7 @@
       alhambra.playerTrait,
     ], {
       constructor(){
+        this.selectionMode = null; // moneyThenBuilding or buildingThenMoney
       },
 
 
@@ -76,6 +77,7 @@ TODO
 
       onEnteringStatePlayerTurn(){
         this.makeMoneyPoolSelectable();
+        this.updateSelectableBuildings();
       },
 
       resetPageTitle(){
@@ -87,8 +89,10 @@ TODO
         if(this.initialMoneyDlg)
           this.initialMoneyDlg.destroy();
 
-        this._selectedStacks = [];
+        this.selectedStacks = [];
         dojo.query(".money-spot").removeClass('selected selectable unselectable');
+        dojo.query(".stockitem").removeClass('stockitem_selected selectable unselectable');
+        this.onCancelBuyBuilding();
 
         this.inherited(arguments);
       },

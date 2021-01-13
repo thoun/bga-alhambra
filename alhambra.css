@@ -83,13 +83,13 @@
   .money-card[data-value="9"] {
     background-position-x: 100%; }
 
-.money-spot.unselectable .money-card {
-  opacity: 0.6;
+.money-spot.unselectable .money-card, #player-hand .stockitem.unselectable {
+  opacity: 0.6 !important;
   cursor: not-allowed; }
 
-.money-spot.selectable .money-card {
+.money-spot.selectable .money-card, #player-hand .stockitem.selectable {
   cursor: pointer; }
-  .money-spot.selectable .money-card:hover {
+  .money-spot.selectable .money-card:hover, #player-hand .stockitem.selectable:hover {
     transform: scale(1.1); }
 
 .money-spot.selected .money-card {
@@ -100,7 +100,11 @@
 #player-hand .stockitem {
   border-radius: 5px;
   box-shadow: 5px 5px 5px 0 rgba(0, 0, 0, 0.4);
-  border: 1px solid white; }
+  border: 1px solid white;
+  cursor: default; }
+  #player-hand .stockitem.stockitem_selected {
+    margin-left: -2px;
+    margin-top: -2px; }
 
 #board {
   position: relative;
@@ -135,13 +139,13 @@
         text-shadow: 2px 2px 0 #ffffff, 2px -2px 0 #ffffff, -2px 2px 0 #ffffff, -2px -2px 0 #ffffff, 2px 0px 0 #ffffff, 0px 2px 0 #ffffff, -2px 0px 0 #ffffff, 0px -2px 0 #ffffff; }
         #board .building-spot#building-deck #building-count::before {
           content: 'x'; }
-    #board .building-spot#building-spot-0 {
-      left: 133px; }
     #board .building-spot#building-spot-1 {
-      left: 279px; }
+      left: 133px; }
     #board .building-spot#building-spot-2 {
-      left: 426px; }
+      left: 279px; }
     #board .building-spot#building-spot-3 {
+      left: 426px; }
+    #board .building-spot#building-spot-4 {
       left: 572px; }
   #board .money-spot {
     width: 112px;
@@ -258,6 +262,16 @@
     background-position-x: 80%; }
   .building-tile[data-type="6"] {
     background-position-x: 100%; }
+  .building-tile .building-cost {
+    position: absolute;
+    bottom: 7px;
+    right: 7px;
+    color: black;
+    font-size: 22px;
+    width: 26px;
+    background: white;
+    height: 25px;
+    text-align: center; }
   .building-tile .wall-n, .building-tile .wall-s {
     position: absolute;
     left: 0;
@@ -286,6 +300,21 @@
     display: none; }
   .building-tile .wall-w[data-wall="false"] {
     display: none; }
+
+.building-spot .building-tile.unselectable {
+  opacity: 0.7;
+  cursor: not-allowed; }
+
+.building-spot .building-tile.selectable {
+  cursor: pointer; }
+  .building-spot .building-tile.selectable:hover {
+    transform: scale(1.1); }
+
+.building-spot .building-tile.selected {
+  border: 3px solid red;
+  margin-left: -3px;
+  margin-top: -3px;
+  border-radius: 2px; }
 
 /* building tile
 

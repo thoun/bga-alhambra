@@ -17,12 +17,12 @@
   }
 }
 
-.money-spot.unselectable .money-card {
-  opacity: 0.6;
+.money-spot.unselectable .money-card, #player-hand .stockitem.unselectable {
+  opacity: 0.6 !important;
   cursor: not-allowed;
 }
 
-.money-spot.selectable .money-card {
+.money-spot.selectable .money-card, #player-hand .stockitem.selectable {
   cursor:pointer;
   &:hover {
     transform: scale(1.1);
@@ -41,4 +41,11 @@
   border-radius: 5px;
   box-shadow: 5px 5px 5px 0 rgba(0, 0, 0, 0.4);
   border: 1px solid white;
+  cursor:default;
+
+  &.stockitem_selected {
+    margin-left:-1px;
+    margin-top:-1px;
+    z-index:100;
+  }
 }

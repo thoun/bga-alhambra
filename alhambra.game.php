@@ -38,6 +38,7 @@ class Alhambra extends Table
 {
   use ALH\States\StartOfGameTrait;
   use ALH\States\PlayerTurnTrait;
+  use ALH\States\PlaceBuildingTrait;
 
   public static $instance = null;
   public function __construct()

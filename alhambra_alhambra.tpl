@@ -10,10 +10,10 @@
                 <div id="building-deck" class="building-spot">
                   <div id="building-count"></div>
                 </div>
-                <div id="building-spot-0" class="building-spot"></div>
                 <div id="building-spot-1" class="building-spot"></div>
                 <div id="building-spot-2" class="building-spot"></div>
                 <div id="building-spot-3" class="building-spot"></div>
+                <div id="building-spot-4" class="building-spot"></div>
 
 
                 <div id="money-deck" class="money-spot">
@@ -100,6 +100,8 @@ var jstpl_building = `
   <div class="wall-e" data-wall="\${wallE}"></div>
   <div class="wall-s" data-wall="\${wallS}"></div>
   <div class="wall-w" data-wall="\${wallW}"></div>
+
+  <div class="building-cost">\${cost}</div>
 
   <div class="building-surface" id="building-surface-\${id}"></div>
   <a id="remove-building-\${id}" class="remove-building" href="#">

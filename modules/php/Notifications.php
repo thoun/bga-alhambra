@@ -56,6 +56,21 @@ class Notifications
     ]);
   }
 
+  public static function buyBuilding($player, $cards, $building){
+    self::notifyAll("buyBuilding", clienttranslate('${player_name} buys ${building_type_pre}${building_type}${building_type_post} with ${description}'), [
+      'player' => $player,
+      'cards' => $cards,
+      'building' => $building,
+    ]);
+  }
+
+
+  public static function exactAmount($player){
+    self::notifyAll("exactAmount", clienttranslate('${player_name} pays with the exact amount and replay !'), [
+      'player' => $player
+    ]);
+  }
+
 
   /*
    * Automatically adds some standard field about player and/or card/task
@@ -66,6 +81,27 @@ class Notifications
       $args['player_id'] = $args['player']->getId();
       unset($args['player']);
     }
+
+    if(isset($args['building'])){
+      $names = [
+        FONTAIN => clienttranslate('fountain'),    // start
+        PAVILLON => clienttranslate("pavillon"),    // blue
+        SERAGLIO => clienttranslate("seraglio"),    // red
+        ARCADE => clienttranslate("arcades"),     // brown
+        CHAMBER => clienttranslate("chambers"),    // white
+        GARDEN => clienttranslate("garden"),      // green
+        TOWER => clienttranslate("tower")        // purple
+      ];
+
+      if(!isset($args['i18n'])){
+        $args['i18n'] = [];
+      }
+      $args['i18n'][] = 'building_type';
+      $args['building_type'] = $names[$args['building']['type'] ];
+      $args["building_type_pre"] = '<span class="buildingtype buildingtype_'.$args['building']['type'] .'">';
+      $args["building_type_post"] = '</span>';
+    }
+
 
     if(isset($args['cards'])) {
       $names = [

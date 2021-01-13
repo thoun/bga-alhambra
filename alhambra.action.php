@@ -42,22 +42,21 @@ class action_alhambra extends APP_GameAction
     self::setAjaxMode();
     $raw = self::getArg("cardIds", AT_numberlist, true);
     $cardIds = explode(';', $raw);
-    $result = $this->game->actTakeMoney($cardIds);
-    self::ajaxResponse( );
+    $this->game->actTakeMoney($cardIds);
+    self::ajaxResponse();
   }
 
 
-public function buyBuilding()
-{
-self::setAjaxMode();
-$building_id = self::getArg( "building", AT_posint, true );
-$cards_raw = self::getArg( "cards", AT_numberlist, true );
-if( substr( $cards_raw, -1 ) == ';' )
-$cards_raw = substr( $cards_raw, 0, -1 );
-$cards = explode( ';', $cards_raw );
-$result = $this->game->buyBuilding( $building_id, $cards );
-self::ajaxResponse( );
-}
+  public function buyBuilding()
+  {
+    self::setAjaxMode();
+    $buildingId = self::getArg("buildingId", AT_posint, true );
+    $raw = self::getArg("cardIds", AT_numberlist, true);
+    $cardIds = explode(';', $raw);
+    $this->game->actBuyBuilding($buildingId, $cardIds);
+    self::ajaxResponse();
+  }
+
 
 public function transformAlhambraPlace()
 {

@@ -4,6 +4,7 @@ use ALH\Players;
 use ALH\Globals;
 use ALH\Money;
 use ALH\Buildings;
+use ALH\Notifications;
 
 
 trait PlayerTurnTrait {
@@ -71,6 +72,64 @@ TODO
 
 
 
+
+  /**********************
+  **** BUY BUILDING  ****
+  **********************/
+  function actBuyBuilding($bId, $cardIds)
+  {
+    self::checkAction("buyBuilding");
+    $player = Players::getActive();
+    $cards = Money::get($cardIds);
+    $building = Buildings::get($bId);
+
+    // Check that theses cards exists and are in player hand
+    foreach($cards as $card){
+      if( $card['location'] != 'hand' || $card['pId'] != $player->getId())
+        throw new \feException( "This money card is not available in your hand" );
+    }
+
+    // Check if building was available
+    if($building['location'] != 'buildingsite')
+      throw new \feException( "This building isn't available for buying" );
+
+    // Check that the cards are in the good money
+    $amount = 0;
+    foreach($cards as $card){
+      $amount += $card['value'];
+      if($card['type'] != $building['pos']){
+        throw new \feException( "Try to pay with money which does not correspond to building" );
+      }
+
+      Money::move($card['id'], 'discard', 0);
+    }
+
+    // Check the total amount
+    if($amount < $building['cost'])
+      throw new \feException( "Not enough money to buy this building" );
+
+    // Buy the building, ie place it in player's "to place" location, and notify
+    Buildings::move($building['id'], 'bought', $building['pos']);
+    Notifications::buyBuilding($player, $cards, $building);
+    $player->updateMoneyCount();
+
+
+    if($amount == $building['cost']){
+      Stats::exactAmount($player);
+      Notifications::exactAmount($player);
+      $this->gamestate->nextState( "replay" );
+    }
+    else {
+      // More money than expected => go to "place building" step
+      $this->gamestate->nextState( "buildingToPlace" );
+    }
+  }
+
+
+
+  /**********************
+  ****  END OF TURN  ****
+  **********************/
 
   // If there are building to place, go to corresponding step
   // Otherwise end current player turn

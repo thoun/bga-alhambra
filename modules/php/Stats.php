@@ -46,6 +46,10 @@ class Stats
   public static function takeMoney($player, $total){
     self::inc('money_taken', $player->getId(), $total);
   }
+
+  public static function exactAmount($player){
+    self::inc('exact_amount', $player->getId());
+  }
 }
 
 ?>

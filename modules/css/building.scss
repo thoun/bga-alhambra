@@ -13,6 +13,18 @@
     &[data-type="#{$i}"]{ background-position-x: ($i - 1) * 100% / 5; }
   }
 
+  .building-cost {
+    position: absolute;
+    bottom: 7px;
+    right: 7px;
+    color: black;
+    font-size: 22px;
+    width: 26px;
+    background: white;
+    height: 25px;
+    text-align: center;
+  }
+
   .wall-n, .wall-s {
     position:absolute;
     left:0;
@@ -38,6 +50,28 @@
   .wall-s[data-wall="false"] { display:none; }
   .wall-w[data-wall="false"] { display:none; }
 }
+
+
+
+.building-spot .building-tile.unselectable {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.building-spot .building-tile.selectable  {
+  cursor:pointer;
+  &:hover {
+    transform: scale(1.1);
+  }
+}
+
+.building-spot .building-tile.selected {
+  border: 3px solid red;
+  margin-left:-3px;
+  margin-top:-3px;
+  border-radius:2px;
+}
+
 
 /* building tile
 

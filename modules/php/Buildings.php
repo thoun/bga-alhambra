@@ -36,7 +36,7 @@ class Buildings extends \ALH\Helpers\Deck
     if($row['location'] == "hand")
       $data['pId'] = (int) $row['location_arg'];
 
-    if($row['location'] == 'buildingsite')
+    if(in_array($row['location'], ['buildingsite', 'bought']))
       $data['pos'] = (int) $row['location_arg'];
 
     return $data;
@@ -188,6 +188,15 @@ class Buildings extends \ALH\Helpers\Deck
   }
 
 
+  public function get($buildingId, $raiseException = true)
+  {
+    $building = self::getSelectQuery()->where('card_id', $buildingId)->get(true);
+    if(is_null($building) && $raiseException)
+      throw new \feException("This building does not exists" );
+    return $building;
+  }
+
+
   /*
    * getUiData : get visible cards
    */
@@ -221,8 +230,8 @@ class Buildings extends \ALH\Helpers\Deck
     while($nBuildings < 4) {
       // Get the first free spot
       $spot = array_shift($freeSpots);
-      if(!$spot )
-        throw new feException( "Fatal error: no more free places for buildings in building site" );
+      if(is_null($spot))
+        throw new \feException( "Fatal error: no more free places for buildings in building site" );
 
       $newbuilding = self::pickForLocation("deck", "buildingsite", $spot);
       if(is_null($newbuilding)) {

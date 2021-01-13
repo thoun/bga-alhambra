@@ -22,7 +22,7 @@ class Money extends \ALH\Helpers\Deck
 
   protected static function cast($row)
   {
-    return [
+    $data = [
       'id' => (int) $row['id'],
       'type' => (int) $row['type'],
       'value' => (int) $row['type_arg'],
@@ -30,6 +30,11 @@ class Money extends \ALH\Helpers\Deck
 
       'stockType' => (int) 10*$row['type'] + $row['type_arg'], // Useful for stock component
     ];
+
+    if($row['location'] == 'hand')
+      $data['pId'] = $row['location_arg'];
+
+    return $data;
   }
 
 

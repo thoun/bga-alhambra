@@ -1,4 +1,7 @@
 define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
+  const BUILDING_THEN_MONEY = 1;
+  const MONEY_THEN_BUILDING = 2;
+
   return declare("alhambra.buildingTrait", null, {
     constructor(){
       /*
@@ -7,82 +10,12 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
         ['giveCard', 1000],
         ['receiveCard', 1000]
       );
-      this._callbackOnCard = null;
-      this._selectableCards = [];
       */
       this.buildingDeckCounter = null;
+      this.buildingSite = [];
+      this.selectableBuildings = [];
+      this.selectedBuilding = null;
     },
-
-
-    addCard(card, container){
-      this.place('jstpl_moneyCard', card, container);
-      // TODO : add tooltip
-    },
-
-
-    /*#######################
-    #########################
-    #### BUILDING POOL ######
-    #########################
-    #######################*/
-    setupBuildingsPool(){
-      // Connect events
-      [0,1,2,3].forEach(i => dojo.connect($('money-spot-' + i), 'click', () => this.onBuildingPoolChangeSelection(i) ) );
-
-/*
-this.addToBuildingSite( this.gamedatas.buildingsite );
-dojo.query( '.buildingsite_place' ).connect( 'onclick', this, 'onClickBuildingSitePlace' );
-
-var i = null;
-var building = null;
-this.addToBuildingSiteToPlace( this.gamedatas.to_place );
-*/
-      // Add buildings to pool
-      this.addToBuildingSite(this.gamedatas.buildings.buildingsite);
-      // Add buildings to place
-      //this.addToBuildingSiteToPlace(this.gamedatas.buildings.toPlace);
-
-      // Setup deck counter and update
-      this.buildingDeckCounter = new ebg.counter();
-      this.buildingDeckCounter.create('building-count');
-      this.updateBuildingDeckCount();
-    },
-
-    updateBuildingDeckCount(){
-      this.buildingDeckCounter.setValue(this.gamedatas.buildings.count);
-    },
-
-
-    // Add to building site the list of building
-    addToBuildingSite(buildings){
-      debug("Adding building on site", buildings);
-      buildings.forEach((building, i) => {
-        this.addBuilding(building, 'building-spot-' + i);
-
-        /* TODO : ????
-        if( building.location == 'alamb')
-        {
-            // Specific case: must add it immediately to alhambra
-            // (happens with Neutral player)
-            this.addToAlhambra( building, 0 );
-        }
-        else
-        */
-
-/*
-        // Generic case
-        this.placeOnObject( $('building_tile_'+tile_id ), 'buildingdeck' );
-        this.slideToObject( $('building_tile_'+tile_id ), $('buildingsite_'+building.location_arg ) ).play();
-
-        this.zone_to_building[ building.location_arg ] = building;
-        this.building_to_zone[ building.id ] = building.location_arg;
-
-        dojo.addClass( 'building_tile_'+tile_id, 'building_available' );
-        dojo.connect( $('building_tile_'+tile_id ), 'onclick', this, 'onBuyBuilding' );
-*/
-      });
-    },
-
 
 
 
@@ -99,175 +32,164 @@ this.addToBuildingSiteToPlace( this.gamedatas.to_place );
       building.wallW = building.wall.includes(3);
 
       this.place('jstpl_building', building, container);
+      dojo.connect($('building-tile-' + building.id), 'onclick', () => this.onClickBuilding(building) );
     },
 
+
+    onClickBuilding(building){
+      if(building.location == 'buildingsite')
+        this.onBuyBuilding(building);
+    },
+
+    /*#######################
+    #########################
+    #### BUILDING POOL ######
+    #########################
+    #######################*/
+    setupBuildingsPool(){
+      // Add buildings to pool
+      this.addToBuildingSite(this.gamedatas.buildings.buildingsite);
+      // Add buildings to place
+      this.addToBuildingSiteToPlace(this.gamedatas.buildings.toPlace);
+
+      // Setup deck counter and update
+      this.buildingDeckCounter = new ebg.counter();
+      this.buildingDeckCounter.create('building-count');
+      this.updateBuildingDeckCount();
+    },
+
+    updateBuildingDeckCount(){
+      this.buildingDeckCounter.setValue(this.gamedatas.buildings.count);
+    },
+
+
+    // Add to building site the list of building
+    addToBuildingSite(buildings){
+      debug("Adding building on site", buildings);
+      buildings.forEach(building => {
+        this.addBuilding(building, 'building-spot-' + building.pos);
+        this.buildingSite[building.pos] = building;
+
+        /* TODO : ????
+        if( building.location == 'alamb')
+        {
+            // Specific case: must add it immediately to alhambra
+            // (happens with Neutral player)
+            this.addToAlhambra( building, 0 );
+        }
+        else
+        */
+/*
+        // Generic case
+        this.placeOnObject( $('building_tile_'+tile_id ), 'buildingdeck' );
+        this.slideToObject( $('building_tile_'+tile_id ), $('buildingsite_'+building.location_arg ) ).play();
+*/
+      });
+    },
 
 
     // Add to building site the list of building (deck format) to be placed in the Alhambra
-    addToBuildingSiteToPlace: function( building_list )
+    addToBuildingSiteToPlace(buildings)
     {
-        console.log( 'addToBuildingSiteToPlace' );
-        console.log( building_list );
+      debug("Adding building on site to place", buildings);
+      buildings.forEach(building => {
+        this.addBuilding(building, 'building-spot-' + building.pos);
+        this.buildingSite[building.pos] = building;
 
-        for( var i in building_list )
-        {
-            var building = building_list[i];
-            this.newBuilding( building );
-            var tile_id = building.id;
-
-            this.slideToObjectPos( $('building_tile_'+tile_id ), $('buildingsite_'+building.location_arg ), -16, -20 ).play();
-
-            this.zone_to_building[ building.location_arg ] = building;
-            this.building_to_zone[ building.id ] = building.location_arg;
-
-            dojo.addClass( 'building_tile_'+tile_id, 'building_bought' );
-            this.makeBuildingDraggable( tile_id );
-        }
-    },
-
-
-    onBuyBuilding: function( evt )
-    {
-        console.log( "onBuyBuilding" );
-        console.log( evt );
-        evt.preventDefault();
-
-        var tile_id = evt.currentTarget.id.split('_')[2];
-
-        if( dojo.hasClass( evt.currentTarget, 'building_bought' ))
-        {
-            //Note: do not show this message, otherwise it is displayed when the building is dag n dropped
-          //  this.showMessage( _("You already bought this building, and will be able to place it at the end of your turn."), 'error' );
-            return ;
-        }
-
-
-        if( ! this.checkAction( 'buyBuilding' ) )
-        {   return; }
-
-
-        // buildingsite_zone_
-        var zone_id = this.building_to_zone[ tile_id ]
-        var building_money = zone_id;
-
-        var building = this.zone_to_building[ zone_id ];
-        console.log( building );
-        var building_cost = building.typedetails.cost;
-
-        // Get money cards selected
-        var selected = this.playerHand.getSelectedItems();
-        if( selected.length === 0 )
-        {
-            this.showMessage( _("You need to select money cards in your hand to buy a building"), "error" );
-        }
-        else
-        {
-            var iSelectedTotalValue = 0;
-            var selected_string = '';
-            var i = null;
-            for( i in selected )
-            {
-                var card = selected[i];
-                var card_value = card.type%10;
-                var card_money = Math.floor( card.type/10 );
-                iSelectedTotalValue = iSelectedTotalValue + card_value;
-                selected_string += ( card.id+';' );
-
-                if( card_money != building_money )
-                {
-                    if( building_money == 1 )
-                    {
-                        this.showMessage(_("This building must be buy with couronne only (yellow cards)"), 'error');
-                    }
-                    else if( building_money == 2 )
-                    {
-                        this.showMessage(_("This building must be buy with dirham only (green cards)"), 'error');
-                    }
-                    else if( building_money == 3 )
-                    {
-                        this.showMessage(_("This building must be buy with dinar only (blue cards)"), 'error');
-                    }
-                    else if( building_money == 4 )
-                    {
-                        this.showMessage(_("This building must be buy with ducat only (orange cards)"), 'error');
-                    }
-
-                    return;
-                }
-            }
-
-            if( iSelectedTotalValue >= building_cost )
-            {
-                this.ajaxcall( "/alhambra/alhambra/buyBuilding.html", { building: building.id, cards: selected_string, lock:true }, this, function( result ) {});
-            }
-            else
-            {
-                this.showMessage( _("You need to select enough money card. This building cost: ")+building_cost, "error" );
-            }
-
-        }
+        this.slideToObjectPos( $('building-tile-' + building.id ), $('building-spot-' + building.pos), -16, -20 ).play();
+        // TODO : this.makeBuildingDraggable( tile_id );
+      });
     },
 
 
 
-    onClickBuildingSitePlace: function( evt )
-    {
-        // DEPRECATED: see "onBuyBuilding"
 
-        console.log( "onClickBuildingSitePlace" );
-        console.log( evt );
-        evt.preventDefault();
+    /*
+     * Compute the set of selectable buildings :
+     *  - if a building is already selected (BUILDING_THEN_MONEY mode) => only one clickable to be unselected
+     *  - if no building selected, check which ones can be built with two cases :
+     *     + no cards selected : compute all possibilities
+     *     + cards of one color selected : compute possibilities with respect to these cards
+     */
+    updateSelectableBuildings(){
+      dojo.query(".building-spot .building-tile").removeClass('selectable').addClass('unselectable');
+      this.selectableBuildings = [];
 
-        if( ! this.checkAction( 'buyBuilding' ) )
-        {   return; }
-
-        // buildingsite_zone_
-        var zone_id = evt.currentTarget.id.substr( 18 );
-        console.log( zone_id );
-        var building_money = zone_id;
-
-        var building = this.zone_to_building[ zone_id ];
-        console.log( building );
-        var building_cost = building.typedetails.cost;
-
-        // Get money cards selected
-        var selected = this.playerHand.getSelectedItems();
-        if( selected.length === 0 )
-        {
-            this.showMessage( _("You need to select money cards in your hand to buy a building"), "error" );
-        }
-        else
-        {
-            var iSelectedTotalValue = 0;
-            var selected_string = '';
-            var i = null;
-            for( i in selected )
-            {
-                var card = selected[i];
-                var card_value = card.type%10;
-                var card_money = Math.floor( card.type/10 );
-                iSelectedTotalValue = iSelectedTotalValue + card_value;
-                selected_string += ( card.id+';' );
-
-                if( card_money != building_money )
-                {
-                    this.showMessage(_("You must only pay with the money corresponding to this building"), 'error');
-                    return;
-                }
-            }
-
-            if( iSelectedTotalValue >= building_cost )
-            {
-                this.ajaxcall( "/alhambra/alhambra/buyBuilding.html", { building: building.id, cards: selected_string, lock:true }, this, function( result ) {});
-            }
-            else
-            {
-                this.showMessage( _("You need to select enough money card. This building cost: ")+building_cost, "error" );
-            }
-
+      if(this.selectedBuilding != null){
+        // Highlight this one only
+        dojo.query('#building-tile-' + this.selectedBuilding.id).removeClass('unselectable').addClass('selectable selected');
+        this.selectableBuildings.push(this.selectedBuilding)
+      }
+      else {
+        // Check cards to see which one can be selected
+        let totals = this.getTotalValueByColorInHand();
+        for(var type = 1; type <= 4; type++){
+          if(this.buildingSite[type] && this.buildingSite[type].cost <= totals[type])
+            this.selectableBuildings.push(this.buildingSite[type]);
         }
 
+        this.selectableBuildings.forEach(building => dojo.query("#building-tile-" + building.id).removeClass('unselectable').addClass('selectable') );
+      }
+
+      this.updateSelectableCards();
     },
+
+
+    onBuyBuilding(building){
+      if(!this.checkAction('buyBuilding'))
+        return;
+
+
+      // No selection mode => switch building then money cards
+      if(this.selectionMode == null){
+        if(!this.selectableBuildings.map(b => b.id).includes(building.id)){
+          this.showMessage( _("You don't have enough of this currency to build this building"), "error" );
+          return;
+        }
+
+        this.selectionMode = BUILDING_THEN_MONEY;
+        this.selectedBuilding = building;
+        this.updateSelectableBuildings();
+
+        this.gamedatas.gamestate.descriptionmyturn = this.gamedatas.gamestate.descriptionmyturnbuilding;
+        this.updatePageTitle();
+        this.addSecondaryActionButton('btnCancelBuildingChoice', _('Cancel'), () => this.onCancelBuyBuilding());
+      }
+
+      // Already in "building then money" mode => unselect selected building if it was clicked
+      else if(this.selectionMode == BUILDING_THEN_MONEY){
+        if(building.id == this.selectedBuilding.id)
+          this.onCancelBuyBuilding();
+      }
+
+      // Already in "money then building" mode => check cost and send action
+      else if(this.selectionMode == MONEY_THEN_BUILDING){
+        this.selectedBuilding = building;
+        this.onConfirmBuyBuilding();
+      }
+    },
+
+
+    onCancelBuyBuilding(){
+      this.selectionMode = null;
+      this.selectedBuilding = null;
+      dojo.query('.building-spot .building-tile').removeClass('selected');
+      this.updateSelectableBuildings();
+      dojo.destroy('btnCancelBuildingChoice');
+      dojo.destroy('btnConfirmBuyBuilding');
+      this.resetPageTitle();
+    },
+
+
+    onConfirmBuyBuilding(){
+      // If we are here, cards and building should be selected
+      let cardIds = this.playerHand.getSelectedItems().map(item => item.id);
+      this.takeAction('buyBuilding', {
+        buildingId: this.selectedBuilding.id,
+        cardIds: cardIds.join(';'),
+      });
+    },
+
 
 
 

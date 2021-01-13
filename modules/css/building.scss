@@ -1,0 +1,86 @@
+.building-tile {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 95px;
+  height: 95px;
+  background-image: url('img/buildings.jpg');
+  background-position: 0 0;
+  background-size:600%;
+  box-shadow: 5px 5px 5px 0 rgba(0, 0, 0, 0.4);
+
+  @for $i from 1 through 6 {
+    &[data-type="#{$i}"]{ background-position-x: ($i - 1) * 100% / 5; }
+  }
+
+  .wall-n, .wall-s {
+    position:absolute;
+    left:0;
+    width:100%;
+    height:10%;
+    background-color:brown;
+  }
+  .wall-n { top : 0; }
+  .wall-s { bottom :0; }
+
+  .wall-e, .wall-w {
+    position:absolute;
+    top:0;
+    height:100%;
+    width:10%;
+    background-color:brown;
+  }
+  .wall-e { right : 0; }
+  .wall-w { left : 0; }
+
+  .wall-n[data-wall="false"] { display:none; }
+  .wall-e[data-wall="false"] { display:none; }
+  .wall-s[data-wall="false"] { display:none; }
+  .wall-w[data-wall="false"] { display:none; }
+}
+
+/* building tile
+
+.building_tile.dragging_in_progress {
+    z-index:30000;
+}
+
+.building_last_placed {
+    filter: brightness(1.1);
+}
+
+
+
+
+.building_surface {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 95px;
+    height: 95px;
+}
+
+.remove_building {
+    position: absolute;
+    bottom: 5px;
+    right: 10px;
+    opacity: 0;
+    background-color: white;
+    border-radius: 17px;
+    padding: 1px;
+    transition: 0.5s;
+    font-size: 28px;
+}
+.fountain .remove_building {
+    display: none;
+}
+.remove_building .fa {
+    color: red;
+}
+
+.current_player_is_active .gamestate_playerTurn .alhambra_wrap_current .building_tile:hover .remove_building {
+    transition: all 0.5s;
+    opacity: 1;
+}
+
+*/

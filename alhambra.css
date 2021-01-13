@@ -1,0 +1,336 @@
+@charset "UTF-8";
+/**
+ *------
+ * BGA framework: © Gregory Isabelli <gisabelli@boardgamearena.com> & Emmanuel Colin <ecolin@boardgamearena.com>
+ * Alhambra implementation : © Gregory Isabelli
+ *
+ * This code has been produced on the BGA studio platform for use on http://boardgamearena.com.
+ * See http://en.boardgamearena.com/#!doc/Studio for more information.
+ * -----
+ *
+ * alhambra.scss
+ *
+ * Alhambra stylesheet
+ *
+ */
+@import url(../../../css/csslayer.css);
+.alhambra_popin {
+  width: 80%;
+  position: relative; }
+  .alhambra_popin .alhambra_popin_closeicon {
+    background-color: black;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: -20px;
+    right: -20px;
+    font-size: 82%;
+    color: white !important; }
+    .alhambra_popin .alhambra_popin_closeicon:hover {
+      text-decoration: none;
+      color: #CCC !important;
+      transform: scale(1.1); }
+    .alhambra_popin .alhambra_popin_closeicon i {
+      margin-top: -2px; }
+
+#popin_moneyDialog {
+  margin-top: 150px;
+  width: auto;
+  min-height: 400px;
+  background: wheat;
+  padding: 15px;
+  text-align: center; }
+  #popin_moneyDialog .money-dialog-holder {
+    display: flex; }
+
+.money-card {
+  width: 109px;
+  height: 169px;
+  background-image: url("img/money.jpg");
+  background-size: 900%;
+  background-repeat: no-repeat;
+  border-radius: 5px;
+  box-shadow: 5px 5px 5px 0 rgba(0, 0, 0, 0.4);
+  border: 1px solid white; }
+  .money-card[data-type="1"] {
+    background-position-y: 0%; }
+  .money-card[data-type="2"] {
+    background-position-y: 33.3333333333%; }
+  .money-card[data-type="3"] {
+    background-position-y: 66.6666666667%; }
+  .money-card[data-type="4"] {
+    background-position-y: 100%; }
+  .money-card[data-value="1"] {
+    background-position-x: 0%; }
+  .money-card[data-value="2"] {
+    background-position-x: 12.5%; }
+  .money-card[data-value="3"] {
+    background-position-x: 25%; }
+  .money-card[data-value="4"] {
+    background-position-x: 37.5%; }
+  .money-card[data-value="5"] {
+    background-position-x: 50%; }
+  .money-card[data-value="6"] {
+    background-position-x: 62.5%; }
+  .money-card[data-value="7"] {
+    background-position-x: 75%; }
+  .money-card[data-value="8"] {
+    background-position-x: 87.5%; }
+  .money-card[data-value="9"] {
+    background-position-x: 100%; }
+
+.money-spot.unselectable .money-card {
+  opacity: 0.6;
+  cursor: not-allowed; }
+
+.money-spot.selectable .money-card {
+  cursor: pointer; }
+  .money-spot.selectable .money-card:hover {
+    transform: scale(1.1); }
+
+.money-spot.selected .money-card {
+  border: 3px solid red;
+  margin-left: -2px;
+  margin-top: -2px; }
+
+#player-hand .stockitem {
+  border-radius: 5px;
+  box-shadow: 5px 5px 5px 0 rgba(0, 0, 0, 0.4);
+  border: 1px solid white; }
+
+#board {
+  position: relative;
+  width: 800px;
+  height: 410px;
+  background-image: url("img/board.jpg");
+  border: 2px solid #913b3b;
+  box-shadow: 2px 2px 5px -2px black;
+  border-radius: 4px; }
+  #board .building-spot {
+    position: absolute;
+    top: 294px;
+    left: 0px;
+    width: 95px;
+    height: 95px; }
+    #board .building-spot#building-deck {
+      width: 95px;
+      height: 95px;
+      background-image: url("img/buildings.jpg");
+      background-position: -0px -570px;
+      top: 295px;
+      left: 13px;
+      box-shadow: 1px 1px 0px black, 2px 2px 0px black, 3px 3px 0px black; }
+      #board .building-spot#building-deck #building-count {
+        font-size: 38px;
+        font-weight: bold;
+        position: absolute;
+        top: 25px;
+        width: 100%;
+        text-align: center;
+        color: #000000;
+        text-shadow: 2px 2px 0 #ffffff, 2px -2px 0 #ffffff, -2px 2px 0 #ffffff, -2px -2px 0 #ffffff, 2px 0px 0 #ffffff, 0px 2px 0 #ffffff, -2px 0px 0 #ffffff, 0px -2px 0 #ffffff; }
+        #board .building-spot#building-deck #building-count::before {
+          content: 'x'; }
+    #board .building-spot#building-spot-0 {
+      left: 133px; }
+    #board .building-spot#building-spot-1 {
+      left: 279px; }
+    #board .building-spot#building-spot-2 {
+      left: 426px; }
+    #board .building-spot#building-spot-3 {
+      left: 572px; }
+  #board .money-spot {
+    width: 112px;
+    height: 173px;
+    position: absolute;
+    top: 22px; }
+    #board .money-spot#money-deck {
+      left: 51px;
+      top: 21px; }
+      #board .money-spot#money-deck #money-count {
+        font-size: 38px;
+        font-weight: bold;
+        position: absolute;
+        top: 62px;
+        width: 100%;
+        text-align: center;
+        color: #000000;
+        text-shadow: 2px 2px 0 #ffffff, 2px -2px 0 #ffffff, -2px 2px 0 #ffffff, -2px -2px 0 #ffffff, 2px 0px 0 #ffffff, 0px 2px 0 #ffffff, -2px 0px 0 #ffffff, 0px -2px 0 #ffffff; }
+        #board .money-spot#money-deck #money-count::before {
+          content: 'x'; }
+    #board .money-spot#money-spot-0 {
+      left: 199px; }
+    #board .money-spot#money-spot-1 {
+      left: 345px; }
+    #board .money-spot#money-spot-2 {
+      left: 491px; }
+    #board .money-spot#money-spot-3 {
+      left: 638px; }
+
+/*
+#board .building_available {
+    cursor: pointer;
+
+    -moz-box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.4);
+    -webkit-box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.4);
+    -o-box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.4);
+    box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.4);
+    filter:progid:DXImageTransform.Microsoft.Shadow(color=#656565, Direction=134, Strength=30);
+
+}
+.notouch-device #board .building_available:hover {
+    transform: scale( 1.1 );
+}
+
+#board .building_bought {
+    outline: 3px blue solid;
+
+    -moz-box-shadow: 16px 20px 5px 0px rgba(0,0,0,0.4);
+    -webkit-box-shadow: 16px 20px 5px 0px rgba(0,0,0,0.4);
+    -o-box-shadow: 16px 20px 5px 0px rgba(0,0,0,0.4);
+    box-shadow: 16px 20px 5px 0px rgba(0,0,0,0.4);
+    filter:progid:DXImageTransform.Microsoft.Shadow(color=#656565, Direction=134, Strength=30);
+}
+
+#board .building_bought.selected {
+    outline: 3px red solid;
+}
+*/
+#upper-part {
+  display: flex; }
+  #upper-part #right-part {
+    width: 640px;
+    height: 900px;
+    flex-grow: 1;
+    margin: 0px 10px; }
+    #upper-part #right-part #money-wrap {
+      border-image-slice: 70 70 70 100;
+      border-image-width: 20px 20px 20px 20px;
+      border-image-outset: 0px 0px 0px 0px;
+      border-image-repeat: stretch stretch;
+      border-image-source: url("img/frame.png");
+      filter: drop-shadow(2px 2px 5px #2f2719);
+      width: 100%;
+      height: 220px;
+      padding: 20px;
+      box-sizing: border-box;
+      position: relative; }
+      #upper-part #right-part #money-wrap::before {
+        content: '';
+        display: block;
+        position: absolute;
+        width: calc(100% - 40px);
+        height: calc(100% - 40px);
+        background-image: url("img/frame-texture.jpg");
+        background-size: 100px;
+        z-index: -1; }
+      #upper-part #right-part #money-wrap h3 {
+        display: none; }
+      #upper-part #right-part #money-wrap #player-hand-wrapper {
+        display: flex;
+        align-items: center; }
+        #upper-part #right-part #money-wrap #player-hand-wrapper #player-hand {
+          width: 100%; }
+
+.building-tile {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 95px;
+  height: 95px;
+  background-image: url("img/buildings.jpg");
+  background-position: 0 0;
+  background-size: 600%;
+  box-shadow: 5px 5px 5px 0 rgba(0, 0, 0, 0.4); }
+  .building-tile[data-type="1"] {
+    background-position-x: 0%; }
+  .building-tile[data-type="2"] {
+    background-position-x: 20%; }
+  .building-tile[data-type="3"] {
+    background-position-x: 40%; }
+  .building-tile[data-type="4"] {
+    background-position-x: 60%; }
+  .building-tile[data-type="5"] {
+    background-position-x: 80%; }
+  .building-tile[data-type="6"] {
+    background-position-x: 100%; }
+  .building-tile .wall-n, .building-tile .wall-s {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 10%;
+    background-color: brown; }
+  .building-tile .wall-n {
+    top: 0; }
+  .building-tile .wall-s {
+    bottom: 0; }
+  .building-tile .wall-e, .building-tile .wall-w {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 10%;
+    background-color: brown; }
+  .building-tile .wall-e {
+    right: 0; }
+  .building-tile .wall-w {
+    left: 0; }
+  .building-tile .wall-n[data-wall="false"] {
+    display: none; }
+  .building-tile .wall-e[data-wall="false"] {
+    display: none; }
+  .building-tile .wall-s[data-wall="false"] {
+    display: none; }
+  .building-tile .wall-w[data-wall="false"] {
+    display: none; }
+
+/* building tile
+
+.building_tile.dragging_in_progress {
+    z-index:30000;
+}
+
+.building_last_placed {
+    filter: brightness(1.1);
+}
+
+
+
+
+.building_surface {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 95px;
+    height: 95px;
+}
+
+.remove_building {
+    position: absolute;
+    bottom: 5px;
+    right: 10px;
+    opacity: 0;
+    background-color: white;
+    border-radius: 17px;
+    padding: 1px;
+    transition: 0.5s;
+    font-size: 28px;
+}
+.fountain .remove_building {
+    display: none;
+}
+.remove_building .fa {
+    color: red;
+}
+
+.current_player_is_active .gamestate_playerTurn .alhambra_wrap_current .building_tile:hover .remove_building {
+    transition: all 0.5s;
+    opacity: 1;
+}
+
+*/
+
+/*# sourceMappingURL=alhambra.css.map */

@@ -1,0 +1,452 @@
+
+/* Initial money */
+
+.initialMoney {
+    float: left;
+
+    -moz-box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.4);
+    -webkit-box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.4);
+    -o-box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.4);
+    box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.4);
+    filter:progid:DXImageTransform.Microsoft.Shadow(color=#656565, Direction=134, Strength=30);
+}
+
+/* building site */
+
+#buildingsite {
+    position: relative;
+    width: 335px;
+    height: 221px;
+    float: left;
+    background-image: url( 'img/buildingsite.png' );
+}
+
+
+/* money pool */
+
+#money_pool {
+    float: left;
+    width: 378px;
+    margin-left: 5px;
+}
+
+#scoring_help {
+    margin-left: 5px;
+}
+
+/* player hand */
+
+
+
+.floatpanel {
+    float: left;
+    margin-right: 20px;
+}
+/* alhambra */
+
+.alhambra {
+    position: relative;
+   /* z-index: 1; */ /* otherwise, it goes over the right panel */
+}
+
+/* scoring round */
+
+#scoringDlgContent {
+    width: 500px;
+}
+.scoringBuilding {
+    clear: both;
+}
+.scoring_list {
+    padding: 10px;
+}
+.building_tile_scoring
+{
+    float: left;
+    width: 75px;
+    height: 75px;
+    background-image: url( 'img/main.png' );
+    background-position: 0px 0px;
+    margin: 10px;
+}
+.scoring_player {
+
+}
+
+.alhambra_drag_in_progress .building_tile.freeplace {
+    outline: 5px red dotted;
+    cursor: pointer;
+}
+
+.notouch-device.alhambra_drag_in_progress .building_tile.freeplace:hover {
+    outline: 8px red dotted;
+}
+
+.alhambra_drag_in_progress #player_stock {
+    outline: 5px red dotted;
+    cursor: pointer;
+}
+.alhambra_drag_in_progress_from_stock #player_stock {
+    outline: 0px;
+    cursor: default;
+}
+
+.notouch-device.alhambra_drag_in_progress #player_stock:hover {
+    outline: 8px red dotted;
+}
+.notouch-device.alhambra_drag_in_progress_from_stock #player_stock:hover {
+    outline: 0px red dotted;
+}
+
+
+/* player panel */
+.player_score {
+    float: left;
+}
+
+.wall_stat {
+    margin-left: 10px;
+    display: inline-block;
+    position: relative;
+    top: 0px;
+}
+
+.mobile_version .wall_stat {
+    top: -42px;
+}
+
+
+.alamb_stat {
+    position: relative;
+    width: 60px;
+    height: 60px;
+    display: inline-block;
+    margin: 5px;
+}
+
+.alamb_stat.highlighted
+{
+    box-shadow: 0 0 3pt 2pt red;
+    border-radius: 10px;
+}
+
+.building_type_square {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    display: inline-block;
+    width: 60px;
+    height: 40px;
+    background-image: url('img/icons_panel.png');
+}
+.bts_1 {
+    background-position: 0px 0px;
+}
+.bts_2 {
+    background-position: -60px 0px;
+}
+.bts_3 {
+    background-position: -120px 0px;
+}
+.bts_4 {
+    background-position: -180px 0px;
+}
+.bts_5 {
+    background-position: -240px 0px;
+}
+.bts_6 {
+    background-position: -300px 0px;
+}
+
+.stat_1 {   color: blue;}
+.stat_2 {   color: red; }
+.stat_3 {   color: brown;}
+.stat_4 {   color: white;}
+.stat_5{    color: green;}
+.stat_6{    color: purple;}
+
+.stat_nbr {
+    position: absolute;
+    width: 60px;
+    bottom: -3px;
+    font-weight: bold;
+    text-align:center;
+    font-size: 20px;
+}
+
+.wallicon {
+    width: 45px;
+    height: 25px;
+    background-image: url('img/icons_panel.png');
+    background-position: -360px -7px;
+    display: inline-block;
+}
+.wall_nbr {
+    display: inline-block;
+    text-align: center;
+    width: 38px;
+    font-size: 20px;
+    font-weight: bold;
+    position: relative;
+    top: -5px;
+}
+
+/* player stock */
+
+.alhambra_stock {
+    float: left;
+    border: 2px gray solid;
+    margin: 5px;
+    padding: 5px;
+
+}
+.stock_current_player {
+    z-index: 30;
+}
+
+#alhambra_stock_current_player {
+    min-height: 95px;
+    min-width: 95px;
+}
+
+#toplace {
+    z-index: 2;
+}
+
+#scoring_round_alert {
+    font-weight: bold;
+    background-color: red;
+    text-align: center;
+    padding: 10px;
+    margin: 5px;
+    margin-top: 10px;
+    border-radius: 10px;
+    display: block;
+    color: white;
+    font-size: 20px;
+    display: none;
+}
+
+
+/******************************************** LEGACY **************************************************/
+
+/******************************************** NEW **************************************************/
+
+
+#left_part {
+    width: 800px;
+    float: left;
+}
+#right_part {
+    margin-left: 810px;
+}
+
+
+#player_aid {
+    width: 646px;
+    height: 477px;
+    background-image: url('img/player_aid.jpg');
+    border-radius: 30px;
+    margin-top: 6px;
+    float: left;
+}
+#player_stock {
+    margin-left: 656px;
+    min-height: 452px;
+}
+
+.alhambra_wrap_current {
+    min-height: 635px;
+}
+
+
+#player_stock .selected {
+    outline: 3px red solid;
+}
+
+
+#player_hand .stockitem, #board .stockitem {
+    border-radius: 10px;
+
+    -moz-box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.4);
+    -webkit-box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.4);
+    -o-box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.4);
+    box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.4);
+    filter:progid:DXImageTransform.Microsoft.Shadow(color=#656565, Direction=134, Strength=30);
+}
+
+.notouch-device #player_hand .stockitem:hover,
+.notouch-device #board .stockitem:hover {
+
+    transform: scale( 1.1 );
+}
+
+.stockitem_selected {
+ border: 3px solid red ! important;
+}
+
+#money_wrap {
+    position: relative;
+}
+
+#scoring_panel {
+
+}
+
+.round_scoring {
+    display: none;
+
+    border: black 10px solid;
+    border-radius: 15px;
+    background-color: white;
+    position: absolute;
+    left: 50%;
+    top: 0px;
+    z-index:20;
+    height: 500px;
+    background-image: url('img/scoring.png');
+}
+
+.scoring_items {
+    position: absolute;
+    left: 7px;
+    top: 113px;
+    width: 100%;
+}
+
+#round_scoring_1 {
+    display: none;
+    width: 86px;
+    margin-left: -43px;
+    background-position: -1px 0px;
+}
+#round_scoring_2 {
+    display: none;
+    width: 142px;
+    margin-left: -71px;
+    background-position: -90px 0px;
+}
+#round_scoring_3 {
+    display: none;
+    width: 205px;
+    margin-left: -102px;
+    background-position: -236px 0px;
+}
+
+.scoring_zone {
+    border-radius: 10px;
+    box-shadow: 0 0 3pt 2pt red;
+
+    width: 70px;
+    height: 55px;
+    margin-bottom: 10.3px;
+    display: inline-block;
+    transition: all .5s;
+    opacity: 0;
+}
+.scoring_zone.highlighted {
+    opacity: 1;
+}
+#round_scoring_2 .scoring_zone {
+    width: 65px;
+    height: 55px;
+    margin-bottom: 6.3px;
+    margin-right: -5px;
+}
+#round_scoring_3 .scoring_zone {
+    width: 66px;
+    height: 55px;
+    margin-bottom: 6.3px;
+    margin-right: -7px;
+}
+
+.scoring_nbr {
+    font-weight: bold;
+    font-size: 30px;
+}
+
+#playername_0 {
+    margin-left: 45px;
+}
+
+@media only screen and (max-width: 1480px) {
+
+    #player_aid {
+        display: none;
+    }
+
+    #right_part {
+        clear: both;
+        margin-left: auto;
+    }
+    #left_part {
+        width: 939px;
+    }
+
+    #board {
+        float: left;
+    }
+
+    #player_stock {
+        margin-left: 806px;
+        min-height: 380px;
+    }
+
+}
+
+
+.card_nbr {
+    display: inline;
+    margin-left: 32px;
+    white-space: nowrap;
+}
+
+.mobile_version .card_nbr {
+    margin-left: 32px;
+    white-space: nowrap;
+    position: absolute;
+    bottom: 7px;
+    right: 28px;
+}
+
+.card_nbr_icon {
+    background-image: url('img/card_icon.jpg');
+    height: 30px;
+    width: 19px;
+    border-radius: 3px;
+    display: inline-block;
+}
+
+.card_nbr_nbr {
+    font-size: 20px;
+    font-weight: bold;
+    position: relative;
+    top: -8px;
+    left: 4px;
+}
+
+.moneytype {
+    font-weight: bold;
+}
+
+.moneytype_1    {
+    color: yellow;
+    text-shadow: 1px 1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, -1px -1px 0 #000000, 1px 0px 0 #000000, 0px 1px 0 #000000, -1px 0px 0 #000000, 0px -1px 0 #000000;
+}
+.moneytype_2    {   color: green; }
+.moneytype_3    {   color: blue; }
+.moneytype_4    {   color: orange; }
+
+.buildingtype {
+    font-weight: bold;
+}
+
+.buildingtype_1 {   color: blue }
+.buildingtype_2 {   color: red }
+.buildingtype_3 {   color: brown }
+.buildingtype_4 {
+    color: white;
+    text-shadow: 1px 1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, -1px -1px 0 #000000, 1px 0px 0 #000000, 0px 1px 0 #000000, -1px 0px 0 #000000, 0px -1px 0 #000000;
+}
+.buildingtype_5 {   color: green }
+.buildingtype_6 {   color: purple }

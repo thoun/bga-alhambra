@@ -4,42 +4,71 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
 
   return declare("alhambra.buildingTrait", null, {
     constructor(){
-      /*
       this._notifications.push(
-        ['newHand', 100],
-        ['giveCard', 1000],
-        ['receiveCard', 1000]
+        ['buyBuilding', 1000],
+        ['newBuildings', 1500]
       );
-      */
       this.buildingDeckCounter = null;
       this.buildingSite = [];
       this.selectableBuildings = [];
       this.selectedBuilding = null;
+      this.stockZones = [];
     },
 
 
 
     // Create a new building div with argument in deck format
-    addBuilding(building, container){
-      if($('building-tile-' + building.id)){
-        this.showMessage( "this building tile already exists !!", "error" );
+    addBuilding(building, container = null){
+      if($('building-tile-' + building.id))
         return;
-      }
 
       building.wallN = building.wall.includes(0);
       building.wallE = building.wall.includes(1);
       building.wallS = building.wall.includes(2);
       building.wallW = building.wall.includes(3);
 
-      this.place('jstpl_building', building, container);
-      dojo.connect($('building-tile-' + building.id), 'onclick', () => this.onClickBuilding(building) );
+      this.place('jstpl_building', building, container ?? 'board');
     },
 
 
-    onClickBuilding(building){
-      if(building.location == 'buildingsite')
-        this.onBuyBuilding(building);
+    // Setup stock of a player
+    setupStock(player){
+      let pId = player.id;
+
+      // Init component
+      this.stockZones[pId] = new ebg.zone();
+      this.stockZones[pId].create(this, $('stock-' + pId), 95, 95);
+      if(pId != this.player_id) {
+        this.stockZones[pId].autowidth = true;
+      }
+      this.stockZones[pId].setFluidWidth();
+
+      // Insert buildings
+      player.stock.forEach(building => {
+        this.addBuilding(building);
+        this.stockZones[pId].placeInZone('building-tile-' + building.id);
+      });
+
+      // TODO : useless ??
+      //dojo.connect($('player_stock'), 'onclick', this, 'onPlaceOnStock');
     },
+
+
+    // Add to building site the list of building (deck format) to be placed in the Alhambra
+    addToBuildingSiteToPlace(buildings){
+      debug("Adding building on site to place", buildings);
+      buildings.forEach(building => {
+        if(!$('building-tile-' + building.id))
+          this.addBuilding(building, 'building-spot-' + building.pos);
+
+        dojo.addClass('building-tile-' + building.id, 'bought');
+        this.buildingSite[building.pos] = building;
+
+        this.slideToObjectPos( $('building-tile-' + building.id ), $('building-spot-' + building.pos), -16, -20 ).play();
+      });
+    },
+
+
 
     /*#######################
     #########################
@@ -64,11 +93,22 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
 
 
     // Add to building site the list of building
-    addToBuildingSite(buildings){
+    addToBuildingSite(buildings, animate = false){
       debug("Adding building on site", buildings);
       buildings.forEach(building => {
         this.addBuilding(building, 'building-spot-' + building.pos);
         this.buildingSite[building.pos] = building;
+
+        if(animate){
+          let id = 'building-tile-' + building.id;
+          dojo.addClass(id, "flipped animate");
+          this.placeOnObject(id, "building-deck");
+          this.slide(id, 'building-spot-' + building.pos, 800)
+          .then(() => {
+            dojo.removeClass(id, "flipped");
+            setTimeout(() => dojo.removeClass(id, "animate"), 500);
+          });
+        }
 
         /* TODO : ????
         if( building.location == 'alamb')
@@ -79,28 +119,8 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
         }
         else
         */
-/*
-        // Generic case
-        this.placeOnObject( $('building_tile_'+tile_id ), 'buildingdeck' );
-        this.slideToObject( $('building_tile_'+tile_id ), $('buildingsite_'+building.location_arg ) ).play();
-*/
       });
     },
-
-
-    // Add to building site the list of building (deck format) to be placed in the Alhambra
-    addToBuildingSiteToPlace(buildings)
-    {
-      debug("Adding building on site to place", buildings);
-      buildings.forEach(building => {
-        this.addBuilding(building, 'building-spot-' + building.pos);
-        this.buildingSite[building.pos] = building;
-
-        this.slideToObjectPos( $('building-tile-' + building.id ), $('building-spot-' + building.pos), -16, -20 ).play();
-        // TODO : this.makeBuildingDraggable( tile_id );
-      });
-    },
-
 
 
 
@@ -170,10 +190,14 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
     },
 
 
+    /*
+     * Cancel current buying process : unselect everything
+     */
     onCancelBuyBuilding(){
       this.selectionMode = null;
       this.selectedBuilding = null;
       dojo.query('.building-spot .building-tile').removeClass('selected');
+      this.playerHand.unselectAll();
       this.updateSelectableBuildings();
       dojo.destroy('btnCancelBuildingChoice');
       dojo.destroy('btnConfirmBuyBuilding');
@@ -181,6 +205,9 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
     },
 
 
+    /*
+     * Confirm buy : called when both cards and building are selected
+     */
     onConfirmBuyBuilding(){
       // If we are here, cards and building should be selected
       let cardIds = this.playerHand.getSelectedItems().map(item => item.id);
@@ -191,45 +218,39 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
     },
 
 
+    /*
+     * Notification received after a building is bought
+     */
+    notif_buyBuilding(n){
+      debug("Notif: buying a building", n);
+      let pId = n.args.player_id,
+          building = n.args.building;
 
+      // Slide the cards
+      n.args.cards.forEach(card => {
+        if(this.player_id == pId){
+          this.playerHand.removeFromStockById(card.id, 'building-tile-' + building.id);
+          this.adaptPlayerHandOverlap();
+        } else {
+          this.addCard(card, 'alhambra_wrapper');
+          this.placeOnObject('card-' + card.id, 'player_name_' + pId);
+          this.slideAndDestroy('card-' + card.id, 'building-tile-' + building.id);
+        }
+      });
 
-    notif_newBuildings: function( notif )
-    {
-        console.log( "notif_newBuildings" );
-        console.log( notif );
-        this.addToBuildingSite( notif.args.buildings );
-
-        $('building_count').innerHTML = 'x'+notif.args.count;
+      setTimeout(() => this.addToBuildingSiteToPlace([building]), 500);
     },
 
-    notif_buyBuilding: function( notif )
-    {
-        console.log( 'notif_buyBuilding' );
-        console.log( notif );
 
-        if( notif.args.player == this.player_id )
-        {
-            // Remove money from player hand if current player
-            for( var i in notif.args.cards )
-            {
-                var card = notif.args.cards[i];
-                console.log( "removing card "+card.id );
-                this.playerHand.removeFromStockById( card.id );
-            }
-            this.adaptPlayerHandOverlap();
-        }
 
-        // Mark this building as "bought"
-        dojo.removeClass( 'building_tile_'+notif.args.building_id, 'building_available' );
-        dojo.addClass( 'building_tile_'+notif.args.building_id, 'building_bought' );
-        if( notif.args.player == this.player_id )
-        {
-            this.makeBuildingDraggable( notif.args.building_id );
-        }
-
-        this.slideToObjectPos( $('building_tile_'+notif.args.building_id ), $('buildingsite_'+this.building_to_zone[ notif.args.building_id ] ), -16, -20 ).play();
-
+    notif_newBuildings(n){
+      debug("New buildings", n);
+      this.addToBuildingSite(n.args.buildings, true); // True to animate
+      this.gamedatas.buildings.count = n.args.count;
+      this.updateBuildingDeckCount();
     },
+
+
 
     // Get building for free at the end of the game
     notif_getBuilding: function( notif )
@@ -246,46 +267,5 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
             this.slideToObjectPos( $('building_tile_'+notif.args.building_id ), $('buildingsite_'+this.building_to_zone[ notif.args.building_id ] ), -16, -20 ).play();
         }
     },
-
-    notif_placeBuilding: function( notif )
-    {
-        console.log( 'notif_placeBuilding' );
-        console.log( notif );
-
-        // In case it comes from the stock ...
-        this.alamb_stock[ notif.args.player ].updateDisplay();
-
-        var building = notif.args.building;
-
-        if( notif.args.stock )  // Should add this building to player stock
-        {
-            if( ! $('building_tile_'+notif.args.building_id ) )
-            {
-                this.newBuilding( building );
-                this.placeOnObject( $('building_tile_'+notif.args.building_id ), $('overall_player_board_'+notif.args.player ) );
-            }
-            this.alamb_stock[ notif.args.player ].placeInZone( 'building_tile_'+notif.args.building_id );
-            if( notif.args.player == this.player_id )
-            {
-                this.makeBuildingDraggable( notif.args.building_id );   // Make it draggable again (place in zone destroy its capabilities)
-
-                if( notif.args.removed )
-                {
-                    // We must rebuild freeplaces
-                    this.refreshAllFreePlaces();
-                }
-            }
-        }
-        else
-        {
-            // "Normal" case: add it to alhambra
-            building.x = notif.args.x;
-            building.y = notif.args.y;
-            this.addToAlhambra( building, notif.args.player );
-        }
-
-        dojo.removeClass( 'building_tile_'+notif.args.building_id, 'building_bought');
-    },
-
   });
 });

@@ -73,32 +73,6 @@
 
 }
 
-.alhambra_drag_in_progress .building_tile.freeplace {
-    outline: 5px red dotted;
-    cursor: pointer;
-}
-
-.notouch-device.alhambra_drag_in_progress .building_tile.freeplace:hover {
-    outline: 8px red dotted;
-}
-
-.alhambra_drag_in_progress #player_stock {
-    outline: 5px red dotted;
-    cursor: pointer;
-}
-.alhambra_drag_in_progress_from_stock #player_stock {
-    outline: 0px;
-    cursor: default;
-}
-
-.notouch-device.alhambra_drag_in_progress #player_stock:hover {
-    outline: 8px red dotted;
-}
-.notouch-device.alhambra_drag_in_progress_from_stock #player_stock:hover {
-    outline: 0px red dotted;
-}
-
-
 /* player panel */
 .player_score {
     float: left;
@@ -233,31 +207,6 @@
 /******************************************** NEW **************************************************/
 
 
-#left_part {
-    width: 800px;
-    float: left;
-}
-#right_part {
-    margin-left: 810px;
-}
-
-
-#player_aid {
-    width: 646px;
-    height: 477px;
-    background-image: url('img/player_aid.jpg');
-    border-radius: 30px;
-    margin-top: 6px;
-    float: left;
-}
-#player_stock {
-    margin-left: 656px;
-    min-height: 452px;
-}
-
-.alhambra_wrap_current {
-    min-height: 635px;
-}
 
 
 #player_stock .selected {
@@ -424,18 +373,6 @@
     top: -8px;
     left: 4px;
 }
-
-.moneytype {
-    font-weight: bold;
-}
-
-.moneytype_1    {
-    color: yellow;
-    text-shadow: 1px 1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, -1px -1px 0 #000000, 1px 0px 0 #000000, 0px 1px 0 #000000, -1px 0px 0 #000000, 0px -1px 0 #000000;
-}
-.moneytype_2    {   color: green; }
-.moneytype_3    {   color: blue; }
-.moneytype_4    {   color: orange; }
 
 .buildingtype {
     font-weight: bold;

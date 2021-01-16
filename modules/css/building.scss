@@ -4,43 +4,121 @@
   left: 0px;
   width: 95px;
   height: 95px;
-  background-image: url('img/buildings.jpg');
-  background-position: 0 0;
-  background-size:600%;
-  box-shadow: 5px 5px 5px 0 rgba(0, 0, 0, 0.4);
+  z-index:1000 !important;
+  transform-origin: 50% 50%;
+  transform-style: preserve-3d;
+
+  .building-tile-front, .building-tile-back {
+    position:absolute;
+    width: 100%;
+    height: 100%;
+    background-image: url('img/buildings.jpg');
+    background-position: 0 0;
+    background-size:600%;
+    box-shadow: 5px 5px 5px 0 rgba(0, 0, 0, 0.4);
+    backface-visibility: hidden;
+    -webkit-backface-visibility:hidden;
+  }
+
+  .building-tile-back {
+    background-image: url("img/fontains.jpg");
+    background-size: cover;
+    background-position-y: 6/7 * 100%;
+    transform: rotateY(180deg);
+    z-index:2;
+  }
+
+  &.flipped {
+    transform: rotateY(180deg);
+  }
+  &.animate {
+    transition:transform 0.5s;
+  }
+
 
   @for $i from 1 through 6 {
-    &[data-type="#{$i}"]{ background-position-x: ($i - 1) * 100% / 5; }
+    &[data-type="#{$i}"] .building-tile-front { background-position-x: ($i - 1) * 100% / 5; }
+    &[data-type="#{$i}"] .building-cost { background-position-x: ($i - 1) * 100% / 5; }
+  }
+
+  // Fontain
+  &[data-type="0"] .building-tile-front {
+    background-image: url('img/fontains.jpg');
+    background-position:0 0;
+    background-size:cover;
+
+    .building-cost, .remove-building {
+      display:none;
+    }
+  }
+
+
+
+  &.bought .building-tile-front {
+    outline: 3px solid #00f;
+    box-shadow: 16px 20px 5px 0 rgba(0,0,0,.4);
   }
 
   .building-cost {
     position: absolute;
-    bottom: 7px;
-    right: 7px;
+    bottom: 5px;
+    right: 5px;
     color: black;
     font-size: 22px;
-    width: 26px;
-    background: white;
-    height: 25px;
+    width: 32px;
+    height: 32px;
+    background-image:url('img/octogons.png');
+    background-size: cover;
     text-align: center;
+    line-height: 33px;
+    filter: drop-shadow(2px 2px 3px #222);
+    text-shadow: 1px 1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, -1px -1px 0 #fff, 1px 0px 0 #fff, 0px 1px 0 #fff, -1px 0px 0 #fff, 0px -1px 0 #fff;
   }
+
+  .remove-building {
+    // TODO
+    display:none;
+  }
+
+
+  .wall-n::before, .wall-e::before, .wall-s::before, .wall-w::before {
+    content:'';
+    position:absolute;
+    display:block;
+    width:95px;
+    height:8px;
+    background-image:url('img/wall.png');
+    background-size:contain;
+  }
+
+  .wall-e::before {
+    transform:rotate(90deg);
+    transform-origin: 4px 4px;
+  }
+  .wall-s::before {
+    transform:rotate(180deg);
+    transform-origin: 50% 4px;
+  }
+  .wall-w::before {
+    transform:rotate(-90deg);
+    transform-origin: 47.5px 47.5px;
+  }
+
 
   .wall-n, .wall-s {
     position:absolute;
-    left:0;
-    width:100%;
-    height:10%;
-    background-color:brown;
+    left:0px;
+    width:95px;
+    height:8px;
   }
   .wall-n { top : 0; }
   .wall-s { bottom :0; }
 
   .wall-e, .wall-w {
     position:absolute;
-    top:0;
-    height:100%;
-    width:10%;
-    background-color:brown;
+    top:0px;
+    height:95px;
+    width:8px;
   }
   .wall-e { right : 0; }
   .wall-w { left : 0; }
@@ -57,6 +135,11 @@
   opacity: 0.7;
   cursor: not-allowed;
 }
+.building-spot .building-tile.unselectable.bought {
+  opacity: 1;
+  cursor: default;
+}
+
 
 .building-spot .building-tile.selectable  {
   cursor:pointer;
@@ -65,12 +148,40 @@
   }
 }
 
-.building-spot .building-tile.selected {
+.building-spot .building-tile.selected .building-tile-front {
   border: 3px solid red;
   margin-left:-3px;
   margin-top:-3px;
   border-radius:2px;
 }
+
+
+
+.alhambra_drag_in_progress .building-tile.freeplace {
+  outline: 5px red dotted;
+  cursor: pointer;
+}
+
+.notouch-device.alhambra_drag_in_progress .building-tile.freeplace:hover {
+  outline: 8px red dotted;
+}
+
+.alhambra_drag_in_progress #player-stock {
+    outline: 5px red dotted;
+    cursor: pointer;
+}
+.alhambra_drag_in_progress_from_stock #player-stock {
+    outline: 0px;
+    cursor: default;
+}
+
+.notouch-device.alhambra_drag_in_progress #player-stock:hover {
+    outline: 8px red dotted;
+}
+.notouch-device.alhambra_drag_in_progress_from_stock #player-stock:hover {
+    outline: 0px red dotted;
+}
+
 
 
 /* building tile

@@ -58,6 +58,28 @@ class action_alhambra extends APP_GameAction
   }
 
 
+  public function placeBuildingOnStock()
+  {
+    self::setAjaxMode();
+    $buildingId = self::getArg("buildingId", AT_posint, true);
+    $this->game->actPlaceBuildingOnStock($buildingId);
+    self::ajaxResponse();
+  }
+
+
+  public function placeBuildingOnAlhambra()
+  {
+    self::setAjaxMode();
+    $buildingId = self::getArg("buildingId", AT_posint, true);
+    $x = self::getArg("x", AT_int, true);
+    $y = self::getArg("y", AT_int, true);
+    $this->game->actPlaceBuildingOnAlhambra($buildingId, $x, $y);
+    self::ajaxResponse( );
+  }
+
+
+
+
 public function transformAlhambraPlace()
 {
 self::setAjaxMode();
@@ -75,23 +97,6 @@ $this->game->transformAlhambraRemove( $building_to_remove );
 self::ajaxResponse( );
 }
 
-public function placeBuilding()
-{
-self::setAjaxMode();
-$building_id = self::getArg( "building", AT_posint, true );
-if( self::isArg( 'x' ) )    // place building in the alhambra
-{
-$x = self::getArg( "x", AT_int, true );
-$y = self::getArg( "y", AT_int, true );
-$this->game->placeBuilding( $building_id, true, $x, $y );
-}
-else
-{
-// place building in stock
-$this->game->placeBuilding( $building_id, true );
-}
-self::ajaxResponse( );
-}
 
 public function giveneutral()
 {

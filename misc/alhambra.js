@@ -44,13 +44,6 @@ function (dojo, declare) {
                 var player_board_div = $('player_board_'+player_id);
                 dojo.place( this.format_block('jstpl_player_board', {id: player_id } ), player_board_div );
 
-                this.alamb_stock[ player_id ] = new ebg.zone();
-                this.alamb_stock[ player_id ].create( this, $('stock_'+player_id), 95, 95 );
-                if( player_id != this.player_id )
-                {
-                    this.alamb_stock[ player_id ].autowidth = true;
-                }
-                this.alamb_stock[ player_id ].setFluidWidth();
 
                 $('wallnbr_'+player_id).innerHTML = player.longest_wall;
 
@@ -65,27 +58,9 @@ function (dojo, declare) {
             }
 
             // "stock" zone
-            for( i in gamedatas.stock )
-            {
-                building = gamedatas.stock[i];
-                player_id = building.location_arg;
-                this.newBuilding( building );
-                this.alamb_stock[player_id].placeInZone( 'building_tile_'+building.id );
-                if( player_id == this.player_id )
-                {   this.makeBuildingDraggable( building.id );  }
-            }
-            dojo.connect($('player_stock'), 'onclick', this, 'onPlaceOnStock');
 
             // Alhambra
             this.freeplace_index = {};
-            for( player_id in gamedatas.alamb )
-            {
-                if( player_id != 0 )
-                {
-                    this.alhambra_wrapper[ player_id ] = new ebg.wrapper();
-                    this.alhambra_wrapper[ player_id ].create( this, $( 'alhambra_' + player_id ), $( 'alhambra_' + player_id +'_inner' ) );
-                    this.alhambra_wrapper[ player_id ].item_size = 95;
-                }
             }
             if( gamedatas.neutral_player == 1 )
             {
@@ -226,194 +201,6 @@ function (dojo, declare) {
 
         // Add specified building to corresponding player alhambra
         // Create places if needed
-        addToAlhambra: function( building, player_id )
-        {
-            console.log( "addToAlhambra" );
-
-            dojo.query( '.building_last_placed' ).removeClass( 'building_last_placed' );
-
-            var bAlreadyExist = false;
-            if( $('building_tile_'+building.id) )
-            {
-                // Already exists ...
-                bAlreadyExist = true;
-
-                this.alamb_stock[ player_id ].removeFromZone( 'building_tile_'+building.id, false );
-            }
-            else
-            {
-                this.newBuilding( building );
-                bAlreadyExist = false;
-            }
-
-
-            // Place this tile in player alhambra
-            var building_div = $('building_tile_'+building.id);
-            var x = parseInt( building.x, 10 );
-            var y = parseInt( building.y, 10 );
-            building_div = this.attachToNewParent( building_div, $('alhambra_'+player_id+'_inner') );
-
-            // item position is relative to player's alhambra fountain position
-            var item_size = this.alhambra_wrapper[ player_id ].item_size;
-
-            var tgt_x = (x*item_size);
-            var tgt_y = (y*item_size);
-
-            dojo.style( building_div, "width", (item_size)+'px' );
-            dojo.style( building_div, "height", (item_size)+'px' );
-            dojo.style( building_div, 'backgroundSize', (item_size*7) + 'px '+(item_size*11)+'px' );
-
-            if( player_id == this.player_id )
-            {
-                this.freeplace_index[ x+'x'+y ] = true;
-
-                // Remove free place at building place if exists
-                var tile_id = 'building_tile_p'+this.player_id+'_'+x+'_'+y;
-                if( $(tile_id) )
-                {   dojo.destroy( tile_id );    }
-
-                // Add "free" places if needed
-                this.addFreePlace( x+1, y );
-                this.addFreePlace( x-1, y );
-                this.addFreePlace( x, y+1 );
-                this.addFreePlace( x, y-1 );
-            }
-
-            if( bAlreadyExist )
-            {
-                // Already exists => slide to its position
-                dojo.fx.slideTo( {  node: building_div,
-                                top: tgt_y,
-                                left: tgt_x ,
-                                onEnd: dojo.hitch( this, function(){
-                                        this.alhambra_wrapper[ player_id ].rewrap();
-                                        this.adaptAlhambra( player_id );
-                                } ),
-                                unit: "px" } ).play();
-            }
-            else
-            {
-                dojo.style( building_div, "left", tgt_x+'px' );
-                dojo.style( building_div, "top", tgt_y+'px' );
-                this.alhambra_wrapper[ player_id ].rewrap();
-                this.adaptAlhambra( player_id );
-            }
-
-            // Add the "last placed" class
-            dojo.addClass( building_div, 'building_last_placed' );
-
-            if( player_id == this.player_id )
-            {
-                if( parseInt( x, 10 ) !== 0 || parseInt( y, 10 ) !== 0 )  // Filter fountain
-                {
-                    // Add the "remove building" icon
-                   this.addTooltip( 'rm_'+building.id, '', _("Remove this building from your Alhambra and place it in your stock") );
-                   dojo.connect( $('rm_'+building.id), 'onclick', this, 'onRemoveBuilding' );
-               }
-            }
-        },
-
-        adaptAlhambra: function( player_id )
-        {
-            if( typeof this.alhambra_wrapper[ player_id] == 'undefined')
-            {
-                return ;
-            }
-
-            // Adapt alhambra size & position to make sure it matches the current space
-            var coords_container = dojo.position( 'alhambra_wrap_'+player_id );
-            var max_width = coords_container.w;
-
-            var coords_alhambra = dojo.position( 'alhambra_'+player_id );
-            var width = coords_alhambra.w;
-            var height = coords_alhambra.h;
-
-
-            if( width > max_width  )
-            {
-                // The alhambra does not fit (in the width)
-                var old_size = this.alhambra_wrapper[ player_id ].item_size;
-                var new_size = toint( Math.floor( this.alhambra_wrapper[ player_id ].item_size / width * max_width ) );
-
-                // Change tiles size to this size
-                this.alhambra_wrapper[ player_id ].item_size = new_size;
-
-                dojo.query( '#alhambra_'+player_id+' .building_tile' ).forEach( dojo.hitch( this, function( node ) {
-                    dojo.style( node, 'left', ( dojo.style( node, 'left' ) * new_size / old_size ) + 'px' );
-                    dojo.style( node, 'top', ( dojo.style( node, 'top' ) * new_size / old_size ) + 'px' );
-                    dojo.style( node, 'width',  new_size + 'px' );
-                    dojo.style( node, 'height', new_size + 'px' );
-                    dojo.style( node, 'backgroundSize', (new_size*7) + 'px '+(new_size*11)+'px' );
-                } ) );
-
-                this.alhambra_wrapper[ player_id ].rewrap();
-
-            }
-            else
-            {
-                // It fits... but may it be larger?
-                var old_size = this.alhambra_wrapper[ player_id ].item_size;
-                var new_size = Math.min( 95, Math.floor( old_size * max_width / width ) );
-                if( new_size > old_size )
-                {
-                    // We can enlarge the size !
-                    this.alhambra_wrapper[ player_id ].item_size = new_size;
-
-                    dojo.query( '#alhambra_'+player_id+' .building_tile' ).forEach( dojo.hitch( this, function( node ) {
-                        dojo.style( node, 'left', ( dojo.style( node, 'left' ) * new_size / old_size ) + 'px' );
-                        dojo.style( node, 'top', ( dojo.style( node, 'top' ) * new_size / old_size ) + 'px' );
-                        dojo.style( node, 'width',  new_size + 'px' );
-                        dojo.style( node, 'height', new_size + 'px' );
-                        dojo.style( node, 'backgroundSize', (new_size*7) + 'px '+(new_size*11)+'px' );
-                    } ) );
-
-                    this.alhambra_wrapper[ player_id ].rewrap();
-
-                }
-            }
-
-            // Center the new alhambra
-            var coords_alhambra = dojo.position( 'alhambra_'+player_id );
-            var width = coords_alhambra.w;
-            var height = coords_alhambra.h;
-
-            this.slideToObjectPos( 'alhambra_'+player_id, 'alhambra_wrap_'+player_id, (max_width-width)/2, 40 ).play();
-
-        },
-
-        // Add a free place to this x/y if needed (if there is not already alnother one)
-        addFreePlace: function( x, y )
-        {
-            console.log( 'add free place '+x+'/'+y );
-
-            var this_freeplace_index = x+'x'+y;
-            if( this.freeplace_index[ this_freeplace_index ] )
-            {
-                console.log( "(skipped)" );    // Already done or occupied by a building
-                return;
-            }
-
-            var tile_id = 'building_tile_p'+this.player_id+'_'+x+'_'+y;
-            dojo.place( this.format_block('jstpl_building_tile',
-                    {   id: 'p'+this.player_id+'_'+x+'_'+y,
-                        back_x: 0,
-                        back_y: -700,
-                        cost: '',
-                        additional_style: 'freeplace'
-                    } ), 'alhambra_'+this.player_id+'_inner' );
-            tile_div = $( tile_id );
-
-            var item_size = this.alhambra_wrapper[ this.player_id ].item_size;
-
-            dojo.style( tile_div, "left", (x*item_size)+'px' );
-            dojo.style( tile_div, "top", (y*item_size)+'px' );
-            dojo.style( tile_div, "width", (item_size)+'px' );
-            dojo.style( tile_div, "height", (item_size)+'px' );
-            dojo.style( tile_div, 'backgroundSize', (item_size*7) + 'px '+(item_size*11)+'px' );
-            this.freeplace_index[ this_freeplace_index ] = true;
-
-            dojo.connect( tile_div, 'onclick', this, 'onClickFreePlace');
-        },
 
 
 
@@ -453,41 +240,6 @@ function (dojo, declare) {
         notif_endOfGame: function( notif )
         {
             this.showMessage( _('The last building has been drawn: this is the end of the game!'), 'info' );
-        },
-
-        refreshAllFreePlaces: function()
-        {
-            dojo.query( '.freeplace' ).forEach( dojo.destroy );
-            this.freeplace_index = {};  // Delete freeplace index
-            var buildings_coordinates = [];
-
-            var item_size = this.alhambra_wrapper[ this.player_id ].item_size;
-
-            // Get all building tiles now in display and compute their coordinates
-            dojo.query( '#alhambra_'+this.player_id+' .building_tile').forEach( function( node ){
-
-                var x_alhambra = Math.round( dojo.style(node,'left') / item_size );
-                var y_alhambra = Math.round( dojo.style(node,'top') / item_size );
-                buildings_coordinates.push( {x:x_alhambra,y:y_alhambra});
-            });
-
-            console.log( buildings_coordinates );
-
-            for( var i in buildings_coordinates )
-            {
-                var building = buildings_coordinates[i];
-                this.freeplace_index[ building.x+'x'+building.y ] = true;
-            }
-
-            for( var i in buildings_coordinates )
-            {
-                var building = buildings_coordinates[i];
-                this.addFreePlace( building.x+1, building.y );
-                this.addFreePlace( building.x-1, building.y );
-                this.addFreePlace( building.x, building.y+1 );
-                this.addFreePlace( building.x, building.y-1 );
-            }
-
         },
 
         notif_scoringRound: function( notif )

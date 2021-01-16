@@ -5,6 +5,7 @@ use ALH\Globals;
 use ALH\Money;
 use ALH\Buildings;
 use ALH\Notifications;
+use ALH\Stats;
 
 
 trait PlayerTurnTrait {
@@ -40,6 +41,32 @@ TODO
   }
 
 
+
+  function argPlayerTurn()
+  {
+    $player = Players::getActive();
+    $board = $player->getBoard();
+
+    // Compute removable building
+    $buildings = $board->getBuildings();
+    foreach($buildings as &$building){
+      $building['availablePlaces'] = [];
+      if($board->canBeRemoved($building))
+        $building['canGoToStock'] = true;
+    }
+
+    // Compute buildings that can be moved from stock
+    $stock = $player->getStock();
+    foreach($stock as &$building){
+      $building['availablePlaces'] = $board->getAvailablePlaces($building, true);
+      $building['canGoToStock'] = false;
+    }
+
+    return [
+      'buildings' => array_merge($buildings, $stock),
+      'buildingsite' => Buildings::getInLocation('buildingsite'),
+    ];
+  }
 
 
   /*******************
@@ -135,9 +162,12 @@ TODO
   // Otherwise end current player turn
   function endTurnOrPlaceBuildings()
   {
-    $this->gamestate->nextState("endTurn");
-  /*
+    $player = Players::getCurrent();
+    $newState = Buildings::countInLocation("bought") == 0? "endTurn" : "buildingToPlace";
+    $this->gamestate->nextState($newState);
 
+  /*
+    TODO
       global $g_user;
       $state = $this->gamestate->state();
 
@@ -162,16 +192,6 @@ TODO
       }
       else
       {
-          $buildings_to_place = $this->buildings->countCardInLocation( "bought" );
-
-          if( $buildings_to_place == 0 )
-          {
-              $this->gamestate->nextState( "endTurn" );   // Normal case
-          }
-          else
-          {
-              $this->gamestate->nextState( "buildingToPlace" );
-          }
       }
       */
   }

@@ -1,19 +1,44 @@
 .money-card {
   width: 109px;
   height: 169px;
-  background-image: url("img/money.jpg");
-  background-size: 900%;
-  background-repeat: no-repeat;
-  border-radius: 5px;
-  box-shadow: 5px 5px 5px 0 rgba(0, 0, 0, 0.4);
-  border: 1px solid white;
+  position:relative;
+  transform-origin: 50% 50%;
+  transform-style: preserve-3d;
+
+  .money-card-front, .money-card-back {
+    position:absolute;
+    width: 100%;
+    height: 100%;
+    background-image: url("img/money.jpg");
+    background-size: 900%;
+    background-repeat: no-repeat;
+    border-radius: 5px;
+    box-shadow: 5px 5px 5px 0 rgba(0, 0, 0, 0.4);
+    border: 1px solid white;
+    backface-visibility: hidden;
+    -webkit-backface-visibility:hidden;
+  }
+
+  .money-card-back {
+    background-image: url("img/money-back.jpg");
+    background-size: cover;
+    transform: rotateY(180deg);
+  }
+
+  &.flipped {
+    transform: rotateY(180deg);
+  }
+  &.animate {
+    transition:transform 0.5s;
+  }
+
 
   @for $i from 1 through 4 {
-    &[data-type="#{$i}"]{ background-position-y: ($i - 1) * 100% / 3; }
+    &[data-type="#{$i}"] .money-card-front { background-position-y: ($i - 1) * 100% / 3; }
   }
 
   @for $i from 1 through 9 {
-    &[data-value="#{$i}"]{ background-position-x: ($i - 1) * 100% / 8; }
+    &[data-value="#{$i}"] .money-card-front { background-position-x: ($i - 1) * 100% / 8; }
   }
 }
 
@@ -29,7 +54,7 @@
   }
 }
 
-.money-spot.selected .money-card {
+.money-spot.selected .money-card .money-card-front {
   border: 3px solid red;
   margin-left:-2px;
   margin-top:-2px;

@@ -50,6 +50,10 @@ class Stats
   public static function exactAmount($player){
     self::inc('exact_amount', $player->getId());
   }
+
+  public static function transform($player){
+    self::inc("transformation_nbr",$player->getId());
+  }
 }
 
 ?>

@@ -1,111 +1,273 @@
 <?php
+namespace ALH;
+use ALH\Helpers\Utils;
+use Alhambra;
 
-// Test if you can place a new piece (deck format) in position x,y
-// in player alhambra.
-// neighbours is an array of pieces (deck format) with index "XxY" (ex: -4x2)
-// that contains at least pieces around $x,$y
-// Throw an exception if this is not possible to place this piece here
-// If bSkipFreeCheckAndHoles = true, we don't make the free place test & the hole test (useful for building replacement)
-function canPlaceAlhambraPiece( $piece, $x, $y, $neighbours, $bSkipFreeCheckAndHoles = false )
-{
-    $direction_to_coord_delta = array(
-        0 => array( 0, -1 ),
-        1 => array( 1, 0 ),
-        2 => array( 0, 1 ),
-        3 => array( -1, 0 )
-    );
+/*
+ * Class that will handle everything about the alhambra of a player
+ */
+class Board {
+  protected $board;
+  protected $buildings;
 
-    if( ! $bSkipFreeCheckAndHoles )
-    {
-        if( isset( $neighbours[ $x.'x'.$y ] ) )
-            throw new feException( self::_("Place is not free"), true, true );
+  protected static $directions = [
+    ['x' =>  0, 'y' => -1], // NORTH
+    ['x' =>  1, 'y' => 0], // EAST
+    ['x' =>  0, 'y' => 1], // SOUTH
+    ['x' => -1, 'y' => 0], // WEST
+  ];
+
+  protected static $directionsWithDiagonals = [
+    ['x' => -1, 'y' => -1], // NW
+    ['x' =>  0, 'y' => -1], // N
+    ['x' =>  1, 'y' => -1], // NE
+    ['x' =>  1, 'y' =>  0], // E
+    ['x' =>  1, 'y' =>  1], // SE
+    ['x' =>  0, 'y' =>  1], // S
+    ['x' => -1, 'y' =>  1], // SW
+    ['x' => -1, 'y' =>  0], // W
+  ];
+
+  public function __construct($pId)
+  {
+    $this->board = [];
+    $this->buildings = Buildings::getInLocation('alam', $pId);
+    foreach($this->buildings as $building){
+      $this->addBuilding($building);
+    }
+  }
+
+  public function getUiData()
+  {
+    return $this->buildings;
+  }
+  public function getBuildings()
+  {
+    return $this->buildings;
+  }
+
+
+  public function addBuilding($building)
+  {
+    $this->board[$building['x'] .'x'. $building['y'] ] = $building;
+  }
+
+  public function getAt($x, $y)
+  {
+    return $this->board[$x .'x' .$y] ?? null;
+  }
+
+  public function getInDir($x, $y, $dir)
+  {
+    return $this->getAt($x + $dir['x'], $y + $dir['y']);
+  }
+
+  public function getPosInDir($pos, $dir)
+  {
+    return [
+      'x' => $pos['x'] + $dir['x'],
+      'y' => $pos['y'] + $dir['y'],
+    ];
+  }
+
+  public function isFree($x, $y = null)
+  {
+    if(\is_array($x)){
+      $y = $x['y'];
+      $x = $x['x'];
+    }
+    return is_null($this->getAt($x, $y));
+  }
+
+  public function isFreeInDir($x, $y, $dir)
+  {
+    return $this->isFree($x + $dir['x'], $y + $dir['y']);
+  }
+
+
+  /*
+   * Test if you can place a new piece in position x,y in player alhambra.
+   * If bSkipFreeCheckAndHoles = true, we don't make the free place test & the hole test (useful for building replacement)
+   */
+  function canPlaceAlhambraPiece($building, $x, $y, $bSkipFreeCheckAndHoles = false )
+  {
+    if((!$bSkipFreeCheckAndHoles && !$this->isFree($x, $y)) || ($x == 0 && $y == 0))
+      return false;
+
+    // At least one neighbour
+    $hasNeighbour = array_reduce(self::$directions, function($hasNeighbour, $dir) use ($x,$y){
+      return $hasNeighbour || !$this->isFreeInDir($x, $y, $dir);
+    }, false);
+
+    if(!$hasNeighbour)
+      return false;
+
+
+    // Check walls
+    $isReachable = false;
+    foreach(self::$directions as $dirId => $dir){
+      $neighbour = $this->getInDir($x, $y, $dir);
+      if(is_null($neighbour))
+        continue;
+
+      $oppositeDirId = ($dirId + 2) % 4;
+      $hasWall = in_array($dirId, $building['wall']);
+      $neighbourHasWall = in_array($oppositeDirId, $neighbour['wall']);
+
+      if($hasWall XOR $neighbourHasWall)
+        return false;
+
+      if(!$neighbourHasWall)
+        $isReachable = true; // Can walk from the fountain using this neighbour
+    }
+    if(!$isReachable)
+      return false;
+
+
+    // Check holes now
+    if($bSkipFreeCheckAndHoles)
+      return true;
+
+    // Compute holes in all 8 directions
+    $holes = array_map(function($dir) use ($x,$y){
+      return $this->isFreeInDir($x,$y,$dir);
+    }, self::$directionsWithDiagonals);
+
+    // Compute nbr of changes (including wrapping at the end of array)
+    $nbChange = 0;
+    for($direction = 0; $direction < 8; $direction++){
+      $previousDirection = ($direction + 7) % 8;
+
+      if($holes[$direction] XOR $holes[$previousDirection])
+        $nbChange ++;
     }
 
-    // Analyse piece to place type
-    $type = $this->building_tiles[ $piece['type_arg'] ];
-    $direction_to_wall = array( 0=>false, 1=>false, 2=>false, 3=>false );
-    foreach( $type['wall'] as $wall )
-    {
-        $direction_to_wall[ $wall ] = true;
-    }
+    // if we starts from direction 0 and go to 7, we must change 1 time from "hole => building" and one time from "building => hole"
+    if($nbChange != 2)
+      return false;
 
-    // Test if there is a wall / there is no wall accordingly (and if there is at least one neighbour)
-    $at_least_one_neighbour = false;
-    $at_least_one_neighbour_without_wall = false;
-    for( $direction = 0; $direction<4; $direction++ )
-    {
-        $coord_delta = $direction_to_coord_delta[ $direction ];
-        $neighbour_index = ( $x+$coord_delta[0] ).'x'.( $y+$coord_delta[1] );
-        if( isset( $neighbours[ $neighbour_index ] ) )
-        {
-            $at_least_one_neighbour = true;
+    return true;
+  }
 
-            $neighbour = $neighbours[ $neighbour_index ];
-            $neighbour_type = $this->building_tiles[ $neighbour['type_arg'] ];
-            $opposite_direction = ($direction+2)%4;
 
-            $neighbour_has_wall = in_array( $opposite_direction, $neighbour_type['wall'] );
-            $piece_has_wall = $direction_to_wall[ $direction ];
-
-            if( ! $neighbour_has_wall )
-                $at_least_one_neighbour_without_wall = true;
-
-            if( ( $neighbour_has_wall && !$piece_has_wall )
-             || ( !$neighbour_has_wall && $piece_has_wall ) )
-            {
-                throw new feException( self::_("A side with a wall can't touch a side without a wall"), true, true );
-            }
+  /*
+   * Get the set of free places around existing buildings
+   */
+  function getFreePlaces($bSkipFreeCheckAndHoles = false)
+  {
+    $places = [];
+    foreach($this->buildings as $building){
+      foreach(self::$directions as $dir){
+        $pos = $this->getPosInDir($building, $dir);
+        if(($this->isFree($pos) || $bSkipFreeCheckAndHoles) && !in_array($pos, $places)){
+          $places[] = $pos;
         }
+      }
     }
 
-    if( ! $at_least_one_neighbour )
-        throw new feException( self::_('Each building must have at least a common side with another one'), true, true );
+    return $places;
+  }
 
-    if( ! $at_least_one_neighbour_without_wall )
-        throw new feException( self::_('You must be able to go from fountain to this building without crossing wall'), true, true );
+  /*
+   * Get the set of available places to place a given building from stock/bought
+   */
+  function getAvailablePlaces($building, $bSkipFreeCheckAndHoles = false)
+  {
+    $freePlaces = $this->getFreePlaces($bSkipFreeCheckAndHoles);
+    Utils::filter($freePlaces, function($place) use ($building, $bSkipFreeCheckAndHoles){
+      return $this->canPlaceAlhambraPiece($building, $place['x'], $place['y'], $bSkipFreeCheckAndHoles);
+    });
+    return $freePlaces;
+  }
 
-    if( ! $bSkipFreeCheckAndHoles )
-    {
-        // Test if there is a "hole" by testing if all neighbours (including corner neighbour are consecutives)
-        // ... now we include corners ...
-        $direction_to_coord_delta = array(
-            0 => array( -1, -1 ),
-            1 => array( 0, -1 ),
-            2 => array( 1, -1 ),
-            3 => array( 1, 0 ),
-            4 => array( 1, 1 ),
-            5 => array( 0, 1 ),
-            6 => array( -1, 1 ),
-            7 => array( -1, 0 )
-        );
 
-        // ... analyse corner neighbours one by one
-        $holes_detected = array();
-        foreach( $direction_to_coord_delta as $direction => $coord_delta )
-        {
-            $neighbour_index = ( $x+$coord_delta[0] ).'x'.( $y+$coord_delta[1] );
-            if( ! isset( $neighbours[ $neighbour_index ] ) )
-            {   // This is a "hole"
-               array_push( $holes_detected, $direction );
-            }
-        }
+  /*
+   * Check if a building can be removed or not
+   */
+  function canBeRemoved($building)
+  {
+    if($building['type'] == FONTAIN)
+      return false;
 
-        // ... see if all holes are contiguous
-        // if we starts from direction 0 and go to 7, we must change 1 time from "hole => building" and one time from "building => hole"
-        $nb_change = 0; // Should be 2 at the end
-        for( $direction=0; $direction<8; $direction++ )
-        {
-            $direction_previous = ($direction+7)%8;
-            $previous_is_hole = in_array( $direction_previous, $holes_detected );
-            $current_is_hole = in_array( $direction, $holes_detected );
+    $x = $building['x'];
+    $y = $building['y'];
 
-            if( ( $current_is_hole && !$previous_is_hole ) || ( !$current_is_hole && $previous_is_hole ) )
-                $nb_change ++;
-        }
-        if( $nb_change != 2 )
-            throw new feException( self::_("You can't make 'holes' in your Alhambra"), true, true );
+    // We must check that no "hole" is created
+    // Note: a hole is created only if there are buildings in four directions (N/E/S/W) => very simple to check
+    $neighbours = 0;
+    foreach(self::$directions as $dir){
+      $neighbours += $this->isFreeInDir($x, $y, $dir)? 0 : 1;
     }
-}
+
+    if($neighbours == 4)
+      return false;
+
+    // We must check that it is still possible to go eveywhere in the alhambra from the foutain without this building
+    // => we have no many choices at this step than reconstitue the full alhambra net and make this check
+    $graph = new Graph($this->buildAlhambraNet($x.'x'.$y));
+    if(!$graph->isConnex())
+      return false;
+
+    return true;
+  }
+
+  /*
+  function transformAlhambraRemove( $building_id )
+  {
+      self::checkAction( "transformAlhambra" );
+
+      $player_id = self::getActivePlayerId();
+
+      // Now we remove the building
+      $this->buildings->moveCard( $building_id, 'stock', $player_id );
+      $this->notifyAllPlayers( "placeBuilding", '',
+                               array( "player_name" => self::getActivePlayerName(),
+                                      "player" => $player_id,
+                                      "building_id" => $building_id,
+                                      "building" => $building,
+                                      "stock" => 1,
+                                      "removed" => 1
+                                      ) );
+
+
+      self::updateAlhambraStats( $player_id );
+
+      self::incStat( 1, "transformation_nbr", $player_id );
+
+      self::endTurnOrPlaceBuildings();
+  }
+  */
+
+
+  // Build player alhambra net with node id = coords and link = footpath from one to another
+  // $exceptCoord allows to ignore one node, useful to test if removal is possible
+  function buildAlhambraNet($exceptCoord = null)
+  {
+    $net = [];
+    foreach($this->buildings as $building){
+      $coord = $building['x'].'x'.$building['y'];
+      if($coord == $exceptCoord)
+        continue;
+
+
+      $net[$coord] = [];
+      foreach(self::$directions as $dirId => $dir){
+        if(in_array($dirId, $building['wall']))
+          continue;
+
+        $pos = $this->getPosInDir($building, $dir);
+        $neighbour = $pos['x'].'x'.$pos['y'];
+        if(isset($net[$neighbour]) && $neighbour != $exceptCoord) {
+          $net[$neighbour][] = $coord;
+          $net[$coord][] = $neighbour;
+        }
+      }
+    }
+
+    return $net;
+  }
+
+
 
 
 // Count players buildings (in Alhambra) by type
@@ -215,59 +377,9 @@ function buildPlayerWallNet( $player_id )
     return $net;
 }
 
-// Build player alhambra net with node id = coords and link = footpath from one to another
-function buildPlayerAlhambraNet( $player_id )
-{
-    $net = array();
-  $sql = "SELECT card_id id, card_type type, card_type_arg type_arg, card_location_arg location_arg, ";
-  $sql .= "card_x x, card_y y ";
-  $sql .= "FROM building ";
-  $sql .= " WHERE card_location='alamb' AND card_location_arg='$player_id' ";
-  $dbres = self::DbQuery( $sql );
-
-    while( $building = mysql_fetch_assoc( $dbres ) )
-    {
-        $id = $building['id'];
-        $x = $building['x'];
-        $y = $building['y'];
-        $coord = $x.'x'.$y;
-
-        if( ! isset( $net[$coord] ) )
-            $net[$coord] = array();
-
-        // Find walls of this building
-        $building_tile_id = $building['type_arg'];
-        $walls = $this->building_tiles[ $building_tile_id ]['wall'];
-
-        $neighbours = array(
-            0 => $x.'x'.($y-1),
-            1 => ($x+1).'x'.$y,
-            2 => $x.'x'.($y+1),
-            3 => ($x-1).'x'.$y
-        );
-
-        foreach( $neighbours as $direction => $neighbour )
-        {
-            if( ! in_array( $direction, $walls ) )  // no walls on this direction
-            {
-                if( isset( $net[ $neighbour ] ) )
-                {
-                    $net[ $neighbour ][] = $coord;
-                    $net[ $coord ][] = $neighbour;
-                }
-            }
-        }
-    }
-
-    return $net;
-}
 
 
-
-// Place a bought building in the Alhambra
-// if is_bougth=false, take the building from the stock. In that case, if destination is not empty, perform an exchange
-// if x and y are null => place building in stock
-function placeBuilding( $building_id, $is_bought, $x=null, $y=null )
+function stPlaceBuilding($buildingId, $is_bought, $x = null, $y = null)
 {
     if( $is_bought && $this->gamestate->checkPlayerAction('takeMoney', false) && self::getActivePlayerId()==self::getCurrentPlayerId())
     {
@@ -372,26 +484,6 @@ function placeBuilding( $building_id, $is_bought, $x=null, $y=null )
                                         ) );
 
     }
-    else
-    {
-        // Place in stock
-        $this->buildings->moveCard( $building_id, "stock", $g_user->get_id() );
-
-        // Notify
-        $this->notifyAllPlayers( "placeBuilding", clienttranslate('${player_name} places a ${building_type_pre}${building_name}${building_type_post} in stock'),
-                                 array( "i18n" => array( "building_name" ),
-                                        "player_name" => self::getCurrentPlayerName(),
-                                        "player" => $g_user->get_id(),
-                                        "building_id" => $building_id,
-                                        "building" => $building,
-                                        "building_name" => ( $this->building_types[ $building['typedetails']['type'] ] ),
-                                        "building_type_pre" => '<span class="buildingtype buildingtype_'.$building['typedetails']['type'].'">',
-                                        "building_type_post" => '</span>',
-                                        "stock" => 1
-                                        ) );
-
-
-    }
 
     self::updateAlhambraStats( $g_user->get_id() );
 
@@ -399,4 +491,6 @@ function placeBuilding( $building_id, $is_bought, $x=null, $y=null )
         self::incStat( 1, "transformation_nbr", $g_user->get_id() );
 
     self::endTurnOrPlaceBuildings();
+}
+
 }

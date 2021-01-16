@@ -12,12 +12,20 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
 
     setupPlayers(){
       Object.values(this.gamedatas.players).forEach(player => {
+        let pId = player.id;
 
-
-        if(this.player_id == player.id){
+        if(this.player_id == pId){
           this.place('jstpl_currentPlayerPanel', player, 'upper-part');
           this.setupMoneyHand(player.hand);
+        } else {
+          this.place('jstpl_playerPanel', player, 'bottom-part');
         }
+
+        // Setup stock of player
+        this.setupStock(player);
+
+        // Setup Alhambra of player
+        this.setupAlhambra(player);
       });
 
       /*

@@ -13,7 +13,12 @@
  * Alhambra stylesheet
  *
  */
-@import url(../../../css/csslayer.css);
+@font-face {
+  font-family: 'Chopin Script';
+  src: url("img/font/ChopinScript.woff2") format("woff2"), url("img/font/ChopinScript.woff") format("woff"), url("img/font/ChopinScript.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap; }
 .alhambra_popin {
   width: 80%;
   position: relative; }
@@ -37,12 +42,14 @@
     .alhambra_popin .alhambra_popin_closeicon i {
       margin-top: -2px; }
 
+#popin_moneyDialog_underlay {
+  background: #3e3d3d !important; }
+
 #popin_moneyDialog {
   margin-top: 150px;
   width: auto;
   min-height: 400px;
-  background: wheat;
-  padding: 15px;
+  padding: 25px;
   text-align: center; }
   #popin_moneyDialog .money-dialog-holder {
     display: flex; }
@@ -50,37 +57,54 @@
 .money-card {
   width: 109px;
   height: 169px;
-  background-image: url("img/money.jpg");
-  background-size: 900%;
-  background-repeat: no-repeat;
-  border-radius: 5px;
-  box-shadow: 5px 5px 5px 0 rgba(0, 0, 0, 0.4);
-  border: 1px solid white; }
-  .money-card[data-type="1"] {
+  position: relative;
+  transform-origin: 50% 50%;
+  transform-style: preserve-3d; }
+  .money-card .money-card-front, .money-card .money-card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: url("img/money.jpg");
+    background-size: 900%;
+    background-repeat: no-repeat;
+    border-radius: 5px;
+    box-shadow: 5px 5px 5px 0 rgba(0, 0, 0, 0.4);
+    border: 1px solid white;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden; }
+  .money-card .money-card-back {
+    background-image: url("img/money-back.jpg");
+    background-size: cover;
+    transform: rotateY(180deg); }
+  .money-card.flipped {
+    transform: rotateY(180deg); }
+  .money-card.animate {
+    transition: transform 0.5s; }
+  .money-card[data-type="1"] .money-card-front {
     background-position-y: 0%; }
-  .money-card[data-type="2"] {
+  .money-card[data-type="2"] .money-card-front {
     background-position-y: 33.3333333333%; }
-  .money-card[data-type="3"] {
+  .money-card[data-type="3"] .money-card-front {
     background-position-y: 66.6666666667%; }
-  .money-card[data-type="4"] {
+  .money-card[data-type="4"] .money-card-front {
     background-position-y: 100%; }
-  .money-card[data-value="1"] {
+  .money-card[data-value="1"] .money-card-front {
     background-position-x: 0%; }
-  .money-card[data-value="2"] {
+  .money-card[data-value="2"] .money-card-front {
     background-position-x: 12.5%; }
-  .money-card[data-value="3"] {
+  .money-card[data-value="3"] .money-card-front {
     background-position-x: 25%; }
-  .money-card[data-value="4"] {
+  .money-card[data-value="4"] .money-card-front {
     background-position-x: 37.5%; }
-  .money-card[data-value="5"] {
+  .money-card[data-value="5"] .money-card-front {
     background-position-x: 50%; }
-  .money-card[data-value="6"] {
+  .money-card[data-value="6"] .money-card-front {
     background-position-x: 62.5%; }
-  .money-card[data-value="7"] {
+  .money-card[data-value="7"] .money-card-front {
     background-position-x: 75%; }
-  .money-card[data-value="8"] {
+  .money-card[data-value="8"] .money-card-front {
     background-position-x: 87.5%; }
-  .money-card[data-value="9"] {
+  .money-card[data-value="9"] .money-card-front {
     background-position-x: 100%; }
 
 .money-spot.unselectable .money-card, #player-hand .stockitem.unselectable {
@@ -92,7 +116,7 @@
   .money-spot.selectable .money-card:hover, #player-hand .stockitem.selectable:hover {
     transform: scale(1.1); }
 
-.money-spot.selected .money-card {
+.money-spot.selected .money-card .money-card-front {
   border: 3px solid red;
   margin-left: -2px;
   margin-top: -2px; }
@@ -103,8 +127,9 @@
   border: 1px solid white;
   cursor: default; }
   #player-hand .stockitem.stockitem_selected {
-    margin-left: -2px;
-    margin-top: -2px; }
+    margin-left: -1px;
+    margin-top: -1px;
+    z-index: 100; }
 
 #board {
   position: relative;
@@ -123,8 +148,9 @@
     #board .building-spot#building-deck {
       width: 95px;
       height: 95px;
-      background-image: url("img/buildings.jpg");
-      background-position: -0px -570px;
+      background-image: url("img/fontains.jpg");
+      background-size: cover;
+      background-position-y: 85.7142857143%;
       top: 295px;
       left: 13px;
       box-shadow: 1px 1px 0px black, 2px 2px 0px black, 3px 3px 0px black; }
@@ -204,41 +230,97 @@
     outline: 3px red solid;
 }
 */
+.alhambra-block, #popin_moneyDialog {
+  box-sizing: border-box;
+  position: relative;
+  filter: drop-shadow(2px 2px 5px #2f2719); }
+  .alhambra-block::before, .alhambra-block::after, #popin_moneyDialog::before, #popin_moneyDialog::after {
+    content: '';
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-image: url("img/frame-texture.jpg");
+    background-size: 100px;
+    z-index: -1; }
+  .alhambra-block::before, #popin_moneyDialog::before {
+    border-radius: 40px; }
+  .alhambra-block::after, #popin_moneyDialog::after {
+    border-image-slice: 70 70 70 100;
+    border-image-width: 20px 20px 20px 20px;
+    border-image-outset: 0px 0px 0px 0px;
+    border-image-repeat: stretch stretch;
+    border-image-source: url("img/frame.png");
+    background: none;
+    filter: drop-shadow(1px 1px 2px #2f2719); }
+  .alhambra-block h3, #popin_moneyDialog h3 {
+    display: none;
+    font-family: 'Chopin Script'; }
+
 #upper-part {
   display: flex; }
+  #upper-part #left-part {
+    width: 800px; }
+    #upper-part #left-part #player-aid {
+      width: 646px;
+      height: 477px;
+      background-image: url("img/player_aid.jpg");
+      border-radius: 30px;
+      margin-top: 6px;
+      display: none; }
+    #upper-part #left-part #player-stock {
+      min-height: 452px;
+      width: 140px;
+      margin-left: auto;
+      padding: 20px;
+      z-index: 10; }
+      #upper-part #left-part #player-stock.droppable::after {
+        border-image-source: url("img/frame-droppable.png"); }
+      #upper-part #left-part #player-stock.droppable-now::after {
+        border-image-source: url("img/frame-droppable-now.png"); }
   #upper-part #right-part {
     width: 640px;
     height: 900px;
     flex-grow: 1;
     margin: 0px 10px; }
     #upper-part #right-part #money-wrap {
-      border-image-slice: 70 70 70 100;
-      border-image-width: 20px 20px 20px 20px;
-      border-image-outset: 0px 0px 0px 0px;
-      border-image-repeat: stretch stretch;
-      border-image-source: url("img/frame.png");
-      filter: drop-shadow(2px 2px 5px #2f2719);
       width: 100%;
       height: 220px;
-      padding: 20px;
-      box-sizing: border-box;
-      position: relative; }
-      #upper-part #right-part #money-wrap::before {
-        content: '';
-        display: block;
-        position: absolute;
-        width: calc(100% - 40px);
-        height: calc(100% - 40px);
-        background-image: url("img/frame-texture.jpg");
-        background-size: 100px;
-        z-index: -1; }
-      #upper-part #right-part #money-wrap h3 {
-        display: none; }
+      padding: 20px; }
       #upper-part #right-part #money-wrap #player-hand-wrapper {
         display: flex;
         align-items: center; }
         #upper-part #right-part #money-wrap #player-hand-wrapper #player-hand {
           width: 100%; }
+    #upper-part #right-part .alhambra-wrapper {
+      margin-top: 10px;
+      min-height: 635px; }
+
+.alhambra-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px; }
+  .alhambra-wrapper::before {
+    background-image: url("img/desert-texture.jpg"); }
+  .alhambra-wrapper .alhambra {
+    position: relative; }
+    .alhambra-wrapper .alhambra .building-tile-front, .alhambra-wrapper .alhambra .building-tile-back {
+      box-shadow: none; }
+    .alhambra-wrapper .alhambra .free-place {
+      position: absolute;
+      top: 0px;
+      left: 0px;
+      width: 95px;
+      height: 95px; }
+      .alhambra-wrapper .alhambra .free-place.droppable {
+        background: rgba(255, 0, 0, 0.3);
+        z-index: 2000; }
+      .alhambra-wrapper .alhambra .free-place.droppable-now {
+        background: rgba(0, 255, 0, 0.4);
+        z-index: 2000; }
 
 .building-tile {
   position: absolute;
@@ -246,48 +328,109 @@
   left: 0px;
   width: 95px;
   height: 95px;
-  background-image: url("img/buildings.jpg");
-  background-position: 0 0;
-  background-size: 600%;
-  box-shadow: 5px 5px 5px 0 rgba(0, 0, 0, 0.4); }
-  .building-tile[data-type="1"] {
+  z-index: 1000 !important;
+  transform-origin: 50% 50%;
+  transform-style: preserve-3d; }
+  .building-tile .building-tile-front, .building-tile .building-tile-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: url("img/buildings.jpg");
+    background-position: 0 0;
+    background-size: 600%;
+    box-shadow: 5px 5px 5px 0 rgba(0, 0, 0, 0.4);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden; }
+  .building-tile .building-tile-back {
+    background-image: url("img/fontains.jpg");
+    background-size: cover;
+    background-position-y: 85.7142857143%;
+    transform: rotateY(180deg);
+    z-index: 2; }
+  .building-tile.flipped {
+    transform: rotateY(180deg); }
+  .building-tile.animate {
+    transition: transform 0.5s; }
+  .building-tile[data-type="1"] .building-tile-front {
     background-position-x: 0%; }
-  .building-tile[data-type="2"] {
+  .building-tile[data-type="1"] .building-cost {
+    background-position-x: 0%; }
+  .building-tile[data-type="2"] .building-tile-front {
     background-position-x: 20%; }
-  .building-tile[data-type="3"] {
+  .building-tile[data-type="2"] .building-cost {
+    background-position-x: 20%; }
+  .building-tile[data-type="3"] .building-tile-front {
     background-position-x: 40%; }
-  .building-tile[data-type="4"] {
+  .building-tile[data-type="3"] .building-cost {
+    background-position-x: 40%; }
+  .building-tile[data-type="4"] .building-tile-front {
     background-position-x: 60%; }
-  .building-tile[data-type="5"] {
+  .building-tile[data-type="4"] .building-cost {
+    background-position-x: 60%; }
+  .building-tile[data-type="5"] .building-tile-front {
     background-position-x: 80%; }
-  .building-tile[data-type="6"] {
+  .building-tile[data-type="5"] .building-cost {
+    background-position-x: 80%; }
+  .building-tile[data-type="6"] .building-tile-front {
     background-position-x: 100%; }
+  .building-tile[data-type="6"] .building-cost {
+    background-position-x: 100%; }
+  .building-tile[data-type="0"] .building-tile-front {
+    background-image: url("img/fontains.jpg");
+    background-position: 0 0;
+    background-size: cover; }
+    .building-tile[data-type="0"] .building-tile-front .building-cost, .building-tile[data-type="0"] .building-tile-front .remove-building {
+      display: none; }
+  .building-tile.bought .building-tile-front {
+    outline: 3px solid #00f;
+    box-shadow: 16px 20px 5px 0 rgba(0, 0, 0, 0.4); }
   .building-tile .building-cost {
     position: absolute;
-    bottom: 7px;
-    right: 7px;
+    bottom: 5px;
+    right: 5px;
     color: black;
     font-size: 22px;
-    width: 26px;
-    background: white;
-    height: 25px;
-    text-align: center; }
+    width: 32px;
+    height: 32px;
+    background-image: url("img/octogons.png");
+    background-size: cover;
+    text-align: center;
+    line-height: 33px;
+    filter: drop-shadow(2px 2px 3px #222);
+    text-shadow: 1px 1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, -1px -1px 0 #fff, 1px 0px 0 #fff, 0px 1px 0 #fff, -1px 0px 0 #fff, 0px -1px 0 #fff; }
+  .building-tile .remove-building {
+    display: none; }
+  .building-tile .wall-n::before, .building-tile .wall-e::before, .building-tile .wall-s::before, .building-tile .wall-w::before {
+    content: '';
+    position: absolute;
+    display: block;
+    width: 95px;
+    height: 8px;
+    background-image: url("img/wall.png");
+    background-size: contain; }
+  .building-tile .wall-e::before {
+    transform: rotate(90deg);
+    transform-origin: 4px 4px; }
+  .building-tile .wall-s::before {
+    transform: rotate(180deg);
+    transform-origin: 50% 4px; }
+  .building-tile .wall-w::before {
+    transform: rotate(-90deg);
+    transform-origin: 47.5px 47.5px; }
   .building-tile .wall-n, .building-tile .wall-s {
     position: absolute;
-    left: 0;
-    width: 100%;
-    height: 10%;
-    background-color: brown; }
+    left: 0px;
+    width: 95px;
+    height: 8px; }
   .building-tile .wall-n {
     top: 0; }
   .building-tile .wall-s {
     bottom: 0; }
   .building-tile .wall-e, .building-tile .wall-w {
     position: absolute;
-    top: 0;
-    height: 100%;
-    width: 10%;
-    background-color: brown; }
+    top: 0px;
+    height: 95px;
+    width: 8px; }
   .building-tile .wall-e {
     right: 0; }
   .building-tile .wall-w {
@@ -305,16 +448,41 @@
   opacity: 0.7;
   cursor: not-allowed; }
 
+.building-spot .building-tile.unselectable.bought {
+  opacity: 1;
+  cursor: default; }
+
 .building-spot .building-tile.selectable {
   cursor: pointer; }
   .building-spot .building-tile.selectable:hover {
     transform: scale(1.1); }
 
-.building-spot .building-tile.selected {
+.building-spot .building-tile.selected .building-tile-front {
   border: 3px solid red;
   margin-left: -3px;
   margin-top: -3px;
   border-radius: 2px; }
+
+.alhambra_drag_in_progress .building-tile.freeplace {
+  outline: 5px red dotted;
+  cursor: pointer; }
+
+.notouch-device.alhambra_drag_in_progress .building-tile.freeplace:hover {
+  outline: 8px red dotted; }
+
+.alhambra_drag_in_progress #player-stock {
+  outline: 5px red dotted;
+  cursor: pointer; }
+
+.alhambra_drag_in_progress_from_stock #player-stock {
+  outline: 0px;
+  cursor: default; }
+
+.notouch-device.alhambra_drag_in_progress #player-stock:hover {
+  outline: 8px red dotted; }
+
+.notouch-device.alhambra_drag_in_progress_from_stock #player-stock:hover {
+  outline: 0px red dotted; }
 
 /* building tile
 
@@ -361,5 +529,33 @@
 }
 
 */
+.moneytype {
+  font-weight: bold; }
+  .moneytype.moneytype_1 {
+    color: yellow;
+    text-shadow: 1px 1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, -1px -1px 0 #000000, 1px 0px 0 #000000, 0px 1px 0 #000000, -1px 0px 0 #000000, 0px -1px 0 #000000; }
+  .moneytype.moneytype_2 {
+    color: green; }
+  .moneytype.moneytype_3 {
+    color: #1730b7; }
+  .moneytype.moneytype_4 {
+    color: orange; }
+  .moneytype .moneyicon {
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    margin-bottom: -4px;
+    background-image: url("img/coin-icon.png");
+    background-size: cover; }
+  .moneytype.moneytype_1 .moneyicon {
+    background-position-x: 100%; }
+  .moneytype.moneytype_2 .moneyicon {
+    background-position-x: 0%; }
+  .moneytype.moneytype_3 .moneyicon {
+    background-position-x: 66.66%; }
+  .moneytype.moneytype_4 .moneyicon {
+    background-position-x: 33.33%; }
+  .moneytype .moneyname {
+    display: none; }
 
 /*# sourceMappingURL=alhambra.css.map */

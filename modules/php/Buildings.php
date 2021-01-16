@@ -169,8 +169,8 @@ class Buildings extends \ALH\Helpers\Deck
       'location' => 'card_location',
       'location_arg' => 'card_location_arg',
       'type_arg' => 'card_type_arg',
-      'x' => 'card_x',
-      'y' => 'card_y'
+      'card_x',
+      'card_y'
     ]);
   }
 
@@ -251,5 +251,31 @@ class Buildings extends \ALH\Helpers\Deck
     Notifications::newBuildings($newBuildings, $nBuildingsLeft);
 
     return $bEndOfGame;
+  }
+
+
+  /*
+   * Get a building at given x, y
+   */
+  public function getAt($pId, $x, $y)
+  {
+    return self::getSelectQuery()->where('card_location','alam')
+      ->where('card_location_arg', $pId)
+      ->where('card_x', $x)
+      ->where('card_y', $y)
+      ->get(true);
+  }
+
+  /*
+   * Place a building at given x, y
+   */
+  public function placeAt($buildingId, $pId, $x, $y)
+  {
+    self::DB()->update([
+      'card_location' => 'alam',
+      'card_location_arg' => $pId,
+      'card_x' => $x,
+      'card_y' => $y,
+    ], $buildingId);
   }
 }

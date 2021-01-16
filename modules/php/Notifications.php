@@ -72,16 +72,49 @@ class Notifications
   }
 
 
+  public static function placeInStock($player, $building){
+    self::notifyAll('placeBuilding', clienttranslate('${player_name} places a ${building_type_pre}${building_type}${building_type_post} in stock'), [
+      'player' => $player,
+      'building' => $building,
+      'stock' => true,
+    ]);
+  }
+
+  public static function placeAt($player, $building, $x, $y){
+    self::notifyAll('placeBuilding', clienttranslate('${player_name} places a ${building_type_pre}${building_type}${building_type_post} in its Alhambra'), [
+      'player' => $player,
+      'building' => $building,
+      'stock' => false,
+      'x' => $x,
+      'y' => $y,
+    ]);
+  }
+
+
+  public static function swapBuildings($player, $buildingFromStock, $buildingOnAlhambra, $x, $y){
+    self::notifyAll('swapBuildings', clienttranslate('${player_name} transform its Alhambra by swapping a ${building_type_pre}${building_type}${building_type_post} and a ${building2_type_pre}${building2_type}${building2_type_post}'), [
+      'player' => $player,
+      'building' => $buildingOnAlhambra,
+      'building2' => $buildingFromStock,
+      'stock' => true,
+      'x' => $x,
+      'y' => $y,
+    ]);
+  }
+
+
   /*
    * Automatically adds some standard field about player and/or card/task
    */
   public static function updateArgs(&$args){
+    //#### PLAYER #####
     if(isset($args['player'])){
       $args['player_name'] = $args['player']->getName();
       $args['player_id'] = $args['player']->getId();
       unset($args['player']);
     }
 
+    //#### BUILDING #####
     if(isset($args['building'])){
       $names = [
         FONTAIN => clienttranslate('fountain'),    // start
@@ -100,9 +133,17 @@ class Notifications
       $args['building_type'] = $names[$args['building']['type'] ];
       $args["building_type_pre"] = '<span class="buildingtype buildingtype_'.$args['building']['type'] .'">';
       $args["building_type_post"] = '</span>';
+
+      if(isset($args['building2'])){
+        $args['i18n'][] = 'building2_type';
+        $args['building2_type'] = $names[$args['building2']['type'] ];
+        $args["building2_type_pre"] = '<span class="buildingtype buildingtype_'.$args['building2']['type'] .'">';
+        $args["building2_type_post"] = '</span>';
+      }
     }
 
 
+    //#### CARDS #####
     if(isset($args['cards'])) {
       $names = [
         1 => clienttranslate("couronne"), // yellow
@@ -117,9 +158,9 @@ class Notifications
       foreach($args['cards'] as $card ){
         if($description != '' )
             $description .= ', ';
-        $description .= '<span class="moneytype moneytype_'.$card['type'].'">'.$card['value'].' ${money_name_'.$i.'}'.'</span>';
-        $description_args[ 'money_name_'.$i ] = $names[ $card['type'] ];
-        $description_args[ 'i18n' ][] = 'money_name_'.$i;
+        $description .= '<span class="moneytype moneytype_'.$card['type'].'">'.$card['value'].' <span class="moneyicon"></span><span class="moneyname">${money_name_'.$i.'}'.'</span></span>';
+        $description_args['money_name_'.$i] = $names[ $card['type'] ];
+        $description_args['i18n'][] = 'money_name_'.$i;
         $i++;
       }
 

@@ -46,8 +46,22 @@ class Player extends Helpers\DB_Manager
       'color'     => $this->color,
       'score'     => $this->score,
       'hand'      => $pId == $this->id? $this->getMoneyCards() : [],
+      'stock'     => $this->getStock(),
+      'board'     => $this->getBoard()->getUiData(),
     ];
   }
+
+  // Construct the alhambra board object of player
+  public function getBoard()
+  {
+    return new Board($this->id);
+  }
+
+  public function getStock()
+  {
+    return Buildings::getInLocation('stock', $this->id);
+  }
+
 
   public function getMoneyCards()
   {
@@ -82,4 +96,25 @@ class Player extends Helpers\DB_Manager
   {
     Notifications::updateMoneyCount($this);
   }
+
+  public function placeBuildingInStock($building)
+  {
+    Buildings::move($building['id'], "stock", $this->id);
+    Notifications::placeInStock($this, $building);
+  }
+
+
+  public function placeBuilding($building, $x, $y)
+  {
+    Buildings::placeAt($building['id'], $this->id, $x, $y);
+    Notifications::placeAt($this, $building, $x, $y);
+  }
+
+  public function swapBuildings($buildingFromStock, $buildingOnAlhambra, $x, $y)
+  {
+    Buildings::move($buildingOnAlhambra['id'], "stock", $this->id);
+    Buildings::placeAt($buildingFromStock['id'], $this->id, $x, $y);
+    Notifications::swapBuildings($this, $buildingFromStock, $buildingOnAlhambra, $x, $y);
+  }
+
 }

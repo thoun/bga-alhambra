@@ -1,4 +1,4 @@
-define(["dojo", "dojo/_base/declare", g_gamethemeurl + "modules/js/modal.js"], (dojo, declare) => {
+define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
   const CARD_W = 112; // 125 ??
   const CARD_H = 173;
 
@@ -9,8 +9,8 @@ define(["dojo", "dojo/_base/declare", g_gamethemeurl + "modules/js/modal.js"], (
   return declare("alhambra.moneyCardTrait", null, {
     constructor(){
       this._notifications.push(
-        ['takeMoney', 100],
-        ['newMoneyCards', 500]
+        ['takeMoney', 600],
+        ['newMoneyCards', 10]
       );
 
       this.initialMoneyDlg = null;
@@ -56,7 +56,7 @@ define(["dojo", "dojo/_base/declare", g_gamethemeurl + "modules/js/modal.js"], (
         let name = this.gamedatas.players[pId].name;
         let tpl = `
         <div class="money-dialog-player">
-          <h3>${name}</h3>
+          <h4>${name}</h4>
           <div class="money-dialog-holder" id="money-dialog-${pId}"></div>
         </div>`;
         dojo.place(tpl, 'popin_moneyDialog_contents');
@@ -110,7 +110,14 @@ define(["dojo", "dojo/_base/declare", g_gamethemeurl + "modules/js/modal.js"], (
         this.addCard(card, 'money-spot-' + i);
 
         if(animate){
-
+          let id = 'card-' + card.id;
+          dojo.addClass(id, "flipped animate");
+          this.placeOnObject(id, "money-deck");
+          this.slide(id, "money-spot-" + i, 800)
+          .then(() => {
+            dojo.removeClass(id, "flipped");
+            setTimeout(() => dojo.removeClass(id, "animate"), 500);
+          });
         }
       })
     },
@@ -285,6 +292,7 @@ define(["dojo", "dojo/_base/declare", g_gamethemeurl + "modules/js/modal.js"], (
         dojo.destroy('card-' + card.id);
       })
 
+      // TODO : wait for the animation to end and readapt after
       this.adaptPlayerHandOverlap();
     },
 
@@ -365,6 +373,9 @@ define(["dojo", "dojo/_base/declare", g_gamethemeurl + "modules/js/modal.js"], (
      * Called when a card is clicked
      */
     onChangeHandSelection(control_name, cardId){
+      if(cardId == undefined)
+        return;
+
       // Check if item was selected
       if(!this.selectableCards.includes(+cardId)){
         this.playerHand.unselectItem(cardId);
@@ -389,7 +400,7 @@ define(["dojo", "dojo/_base/declare", g_gamethemeurl + "modules/js/modal.js"], (
       else if(this.selectionMode == BUILDING_THEN_MONEY){
         // Compare value with selected total
         let total = this.getTotalValueByColorInHand();
-        if(total >= this.selectedBuilding.cost)
+        if(total[this.selectedBuilding.pos] >= this.selectedBuilding.cost)
           this.addPrimaryActionButton('btnConfirmBuyBuilding', _('Buy'), () => this.onConfirmBuyBuilding());
         else
           dojo.destroy('btnConfirmBuyBuilding');

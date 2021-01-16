@@ -1,69 +1,42 @@
 {OVERALL_GAME_HEADER}
 <div id="alhambra_wrapper">
-
-<span id="scoring_round_alert">{SCORING_ROUND_AT_THE_END_OF_THIS_TURN} !</span>
-
-    <div id="upper-part">
-        <div id="left-part">
-
-            <div id="board">
-                <div id="building-deck" class="building-spot">
-                  <div id="building-count"></div>
-                </div>
-                <div id="building-spot-1" class="building-spot"></div>
-                <div id="building-spot-2" class="building-spot"></div>
-                <div id="building-spot-3" class="building-spot"></div>
-                <div id="building-spot-4" class="building-spot"></div>
-
-
-                <div id="money-deck" class="money-spot">
-                  <div id="money-count"></div>
-                </div>
-                <div id="money-spot-0" class="money-spot"></div>
-                <div id="money-spot-1" class="money-spot"></div>
-                <div id="money-spot-2" class="money-spot"></div>
-                <div id="money-spot-3" class="money-spot"></div>
-            </div>
-
-
-            <div id="player_aid">
-            </div>
-            <div id="player_stock" class="whiteblock">
-                <h3>{MY_STOCK}</h3>
-                    <div class="alhambra_stock" id="alhambra_stock_current_player">
-                        <div id="stock_{CURRENT_PLAYER_ID}" class="stock_current_player" ></div>
-                    </div>
-            </div>
-
+  <div id="upper-part">
+    <div id="left-part">
+      <div id="board">
+        <div id="building-deck" class="building-spot">
+          <div id="building-count"></div>
         </div>
+        <div id="building-spot-1" class="building-spot"></div>
+        <div id="building-spot-2" class="building-spot"></div>
+        <div id="building-spot-3" class="building-spot"></div>
+        <div id="building-spot-4" class="building-spot"></div>
+
+
+        <div id="money-deck" class="money-spot">
+          <div id="money-count"></div>
+        </div>
+        <div id="money-spot-0" class="money-spot"></div>
+        <div id="money-spot-1" class="money-spot"></div>
+        <div id="money-spot-2" class="money-spot"></div>
+        <div id="money-spot-3" class="money-spot"></div>
+      </div>
+
+      <div id="player-aid"></div>
+
+      <div id="player-stock" class="alhambra-block">
+        <h3>{MY_STOCK}</h3>
+        <div class="alhambra_stock" id="alhambra_stock_current_player">
+            <div id="stock-{CURRENT_PLAYER_ID}" class="stock_current_player" ></div>
+        </div>
+      </div>
     </div>
 
-    <div id="other_alhambras">
-    </div>
+    <!-- right part will be added by js if not spectator -->
+  </div>
 
-
+  <div id="bottom-part"></div>
 </div>
 
-
-<br class="clear" />
-
-
-<!-- BEGIN other_alhambra -->
-
-<div id="alhambra_wrap_{PLAYER_ID}" class="whiteblock">
-    <h3>{PLAYER_NAME}</h3>
-
-    <div class="alhambra_stock">
-        <div id="stock_{PLAYER_ID}"></div>
-    </div>
-    <br class="clear" />
-
-    <div id="alhambra_{PLAYER_ID}" class="alhambra">
-        <div id="alhambra_{PLAYER_ID}_inner" class="alhambra"></div>
-    </div>
-</div>
-
-<!-- END other_alhambra -->
 
 
 
@@ -71,16 +44,32 @@
 
 var jstpl_currentPlayerPanel = `
 <div id="right-part">
-  <div id="money-wrap">
+  <div id="money-wrap" class="alhambra-block">
     <h3>{MY_MONEY}</h3>
     <div id="player-hand-wrapper">
       <div id="player-hand"></div>
     </div>
   </div>
 
-  <div id="alhambra_wrap_{CURRENT_PLAYER_ID}" class="whiteblock alhambra_wrap_current">
+  <div id="alhambra-wrapper-\${id}" class="alhambra-block alhambra-wrapper-current alhambra-wrapper">
       <h3>{MY_ALHAMBRA}</h3>
-      <div id="alhambra_{CURRENT_PLAYER_ID}" class="alhambra"><div id="alhambra_{CURRENT_PLAYER_ID}_inner"></div></div>
+      <div id="alhambra-\${id}" class="alhambra">
+        <div id="alhambra-inner-\${id}"></div>
+      </div>
+  </div>
+</div>
+`;
+
+var jstpl_playerPanel = `
+<div id="alhambra-wrapper-\${id}" class="alhambra-block alhambra-wrapper">
+  <h3>\${name}</h3>
+
+  <div class="alhambra-stock">
+    <div id="stock-\${id}"></div>
+  </div>
+
+  <div id="alhambra-\${id}" class="alhambra">
+      <div id="alhambra-inner-\${id}" class="alhambra"></div>
   </div>
 </div>
 `;
@@ -93,22 +82,30 @@ var jstpl_moneyCard = `
 </div>
 `;
 
-
+// building_tile is for wrapper...
 var jstpl_building = `
-<div id="building-tile-\${id}" class="building-tile" data-type="\${type}">
-  <div class="wall-n" data-wall="\${wallN}"></div>
-  <div class="wall-e" data-wall="\${wallE}"></div>
-  <div class="wall-s" data-wall="\${wallS}"></div>
-  <div class="wall-w" data-wall="\${wallW}"></div>
+<div id="building-tile-\${id}" class="building-tile building_tile" data-type="\${type}">
+  <div class='building-tile-back'></div>
+  <div class='building-tile-front'>
+    <div class="wall-n" data-wall="\${wallN}"></div>
+    <div class="wall-e" data-wall="\${wallE}"></div>
+    <div class="wall-s" data-wall="\${wallS}"></div>
+    <div class="wall-w" data-wall="\${wallW}"></div>
 
-  <div class="building-cost">\${cost}</div>
+    <div class="building-cost">\${cost}</div>
 
-  <div class="building-surface" id="building-surface-\${id}"></div>
-  <a id="remove-building-\${id}" class="remove-building" href="#">
-    <i class="fa fa-times-circle" aria-hidden="true"></i>
-  </a>
+    <div class="building-surface" id="building-surface-\${id}"></div>
+    <a id="remove-building-\${id}" class="remove-building" href="#">
+      <i class="fa fa-times-circle" aria-hidden="true"></i>
+    </a>
+  </div>
 </div>
 `;
+
+// building_tile is for wrapper...
+var jstpl_freePlace = '<div id="free-place-${x}-${y}" class="free-place building_tile"></div>';
+
+
 
 var jstpl_building_tile = '<div id="building_tile_${id}" class="building_tile ${additional_style}" style="background-position: ${back_x}% ${back_y}%"></div>';
 var jstpl_building_tile_surface = '<div class="building_surface" id="building_surface_${id}"></div><a id="rm_${id}" class="remove_building" href="#"><i class="fa fa-times-circle" aria-hidden="true"></i></a>';

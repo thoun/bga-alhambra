@@ -29,14 +29,16 @@
 }
 
 
+#popin_moneyDialog_underlay {
+  background:#3e3d3d !important;
+}
 #popin_moneyDialog {
   margin-top: 150px;
   width:auto;
   min-height:400px;
-  background:wheat;
-  padding: 15px;
+  padding: 25px;
   text-align: center;
-  
+
   .money-dialog-holder {
     display:flex;
   }

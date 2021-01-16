@@ -15,13 +15,6 @@ class Alhambra extends Table
         // PLayer hand
         $result['card_count'] = $this->money->countCardsByLocationArgs( 'hand' );
 
-        // Buildings in stock (all players)
-        $result['stock'] = $this->buildings->getCardsInLocation( 'stock' );
-        foreach( $result['stock'] as $id => $card )
-        {
-            $result['stock'][ $id ]['typedetails'] = $this->building_tiles[ $card['type_arg'] ];
-        }
-
         $state = ( $this->gamestate->state());
         if( $state['name'] == 'placeLastBuildings')
         {
@@ -411,81 +404,6 @@ class Alhambra extends Table
 
 
     // Remove a building from the alhambra
-    function transformAlhambraRemove( $building_id )
-    {
-        self::checkAction( "transformAlhambra" );
-
-        $player_id = self::getActivePlayerId();
-
-        // Check that this building is on the alhambra and is not a fountain
-        $sql = "SELECT card_id id, card_type type, card_type_arg type_arg, card_location location, card_location_arg location_arg, card_x, card_y ";
-        $sql .= "FROM building ";
-        $sql .= "WHERE card_id='$building_id' ";
-        $dbres = self::DbQuery( $sql );
-        $building = mysql_fetch_assoc( $dbres );
-
-        if( ! $building )
-            throw new feException( "this building does not exist:".$building_id );
-
-        if( $building['location'] != 'alamb' )
-            throw new feException( "this building is not in an alhambra" );
-
-        if( $building['location_arg'] != $player_id )
-            throw new feException( "this building is not in your alhambra" );
-
-        $x = $building['card_x'];
-        $y = $building['card_y'];
-        if( $x == 0 && $y == 0 )
-            throw new feException( "you can't remove the initial fountain" );
-
-
-        // We must check that no "hole" is created
-        // Note: a hole is created only if there are buildings in four directions (N/E/S/W) => very simple to check
-
-        // Get neighbours
-        $sql = "SELECT card_id id, card_x, card_y ";
-        $sql .= "FROM building ";
-        $sql .= "WHERE card_x>='".($x-1)."' AND card_x<='".($x+1)."' ";
-        $sql .= "AND card_y>='".($y-1)."' AND card_y<='".($y+1)."' ";
-        $sql .= "AND card_location='alamb' AND card_location_arg='$player_id' ";
-        $dbres = self::DbQuery( $sql );
-        $neighbour_count = 0;
-        while( $row = mysql_fetch_assoc( $dbres ) )
-        {
-            if( $row['card_x'] == $building['card_x'] || $row['card_y'] == $building['card_y'] )    // immediate neighbour
-            {
-                if( $row['card_x']!=$building['card_x'] || $row['card_y']!=$building['card_y'] )    // ... and not the one to remove
-                    $neighbour_count++;
-            }
-        }
-        if( $neighbour_count == 4 )
-            throw new feException( self::_("You can't make 'holes' in your Alhambra"), true, true );
-
-        // Now we remove the building
-        $this->buildings->moveCard( $building_id, 'stock', $player_id );
-        $this->notifyAllPlayers( "placeBuilding", '',
-                                 array( "player_name" => self::getActivePlayerName(),
-                                        "player" => $player_id,
-                                        "building_id" => $building_id,
-                                        "building" => $building,
-                                        "stock" => 1,
-                                        "removed" => 1
-                                        ) );
-
-        // We must check that it is still possible to go eveywhere in the alhambra from the foutain without this building
-        // => we have no many choices at this step than reconstitue the full alhambra net and make this check
-
-        $net = self::buildPlayerAlhambraNet( $player_id );
-        $o_path = self::getNewUnique( "module.common.path" );
-        if( ! $o_path->is_connex( $net ) )
-            throw new feException( self::_('You must be able to go from fountain to this building without crossing wall'), true, true );
-
-        self::updateAlhambraStats( $player_id );
-
-        self::incStat( 1, "transformation_nbr", $player_id );
-
-        self::endTurnOrPlaceBuildings();
-    }
 
 //////////////////////////////////////////////////////////////////////////////
 //////////// Game state arguments

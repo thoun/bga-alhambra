@@ -14,9 +14,19 @@
  */
 
 
-@import url(../../../css/csslayer.css);
+@font-face {
+    font-family: 'Chopin Script';
+    src: url('img/font/ChopinScript.woff2') format('woff2'),
+        url('img/font/ChopinScript.woff') format('woff'),
+        url('img/font/ChopinScript.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
 
 @import 'modules/css/modal';
 @import 'modules/css/moneyCard';
 @import 'modules/css/board';
 @import 'modules/css/building';
+@import 'modules/css/log';

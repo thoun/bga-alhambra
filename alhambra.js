@@ -23,18 +23,25 @@
      "ebg/core/gamegui",
      "ebg/counter",
      "ebg/stock",
+     "ebg/draggable",
+     "ebg/zone",
+     "ebg/wrapper",
      g_gamethemeurl + "modules/js/game.js",
      g_gamethemeurl + "modules/js/modal.js",
 
      g_gamethemeurl + "modules/js/MoneyCard.js",
      g_gamethemeurl + "modules/js/Building.js",
+     g_gamethemeurl + "modules/js/PlaceBuilding.js",
      g_gamethemeurl + "modules/js/Player.js",
+     g_gamethemeurl + "modules/js/AlhambraBoard.js",
  ], function (dojo, declare) {
     return declare("bgagame.alhambra", [
       customgame.game,
       alhambra.moneyCardTrait,
       alhambra.buildingTrait,
+      alhambra.placeBuildingTrait,
       alhambra.playerTrait,
+      alhambra.alhambraBoardTrait,
     ], {
       constructor(){
         this.selectionMode = null; // moneyThenBuilding or buildingThenMoney
@@ -75,12 +82,26 @@ TODO
       },
 
 
-      onEnteringStatePlayerTurn(){
+      onEnteringStatePlayerTurn(args){
+        if(!this.isCurrentPlayerActive())
+          return;
+
         this.makeMoneyPoolSelectable();
         this.updateSelectableBuildings();
+        this.makeBuildingsDraggable(args.buildings);
+
+        // TODO : move somewhere else
+        args.buildingsite.forEach(building => this.connect($('building-tile-' + building.id), 'onclick', () => this.onBuyBuilding(building) ) );
       },
 
+
+      /*
+       * Allow to put back the generic title of current state (useful only for player turn)
+       */
       resetPageTitle(){
+        if(!this.gamedatas.gamestate.descriptionmyturngeneric)
+          return;
+
         this.gamedatas.gamestate.descriptionmyturn = this.gamedatas.gamestate.descriptionmyturngeneric;
         this.updatePageTitle();
       },
@@ -90,9 +111,12 @@ TODO
           this.initialMoneyDlg.destroy();
 
         this.selectedStacks = [];
+        this.onCancelBuyBuilding();
         dojo.query(".money-spot").removeClass('selected selectable unselectable');
         dojo.query(".stockitem").removeClass('stockitem_selected selectable unselectable');
-        this.onCancelBuyBuilding();
+        dojo.query(".building-tile").removeClass('selected selectable unselectable');
+
+        this.disableAllDraging();
 
         this.inherited(arguments);
       },

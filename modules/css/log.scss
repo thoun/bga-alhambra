@@ -1,0 +1,28 @@
+.moneytype {
+  font-weight: bold;
+  &.moneytype_1    {
+      color: yellow;
+      text-shadow: 1px 1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, -1px -1px 0 #000000, 1px 0px 0 #000000, 0px 1px 0 #000000, -1px 0px 0 #000000, 0px -1px 0 #000000;
+  }
+  &.moneytype_2 { color: green; }
+  &.moneytype_3 { color: #1730b7; }
+  &.moneytype_4 { color: orange; }
+
+  .moneyicon {
+    display:inline-block;
+    width:18px;
+    height:18px;
+    margin-bottom: -4px;
+    background-image:url('img/coin-icon.png');
+    background-size:cover;
+  }
+  &.moneytype_1 .moneyicon { background-position-x:100%; }
+  &.moneytype_2 .moneyicon { background-position-x:0%; }
+  &.moneytype_3 .moneyicon { background-position-x:66.66%; }
+  &.moneytype_4 .moneyicon { background-position-x:33.33%; }
+
+
+  .moneyname {
+    display: none;
+  }
+}

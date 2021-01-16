@@ -18,8 +18,9 @@
     &#building-deck {
       width: 95px;
       height: 95px;
-      background-image: url('img/buildings.jpg');
-      background-position:-0px -570px;
+      background-image: url("img/fontains.jpg");
+      background-size: cover;
+      background-position-y: 6/7 * 100%;
       top: 295px;
       left: 13px;
       box-shadow: 1px 1px 0px black, 2px 2px 0px black, 3px 3px 0px black;
@@ -107,8 +108,76 @@
 }
 */
 
+
+.alhambra-block, #popin_moneyDialog {
+  box-sizing: border-box;
+  position:relative;
+  filter:drop-shadow(2px 2px 5px #2f2719);
+
+  &::before, &::after {
+    content:'';
+    display:block;
+    position:absolute;
+    width:100%;
+    height:100%;
+    top:0;
+    left:0;
+    background-image:url('img/frame-texture.jpg');
+    background-size:100px;
+    z-index:-1;
+  }
+
+  &::before {
+    border-radius: 40px;
+  }
+
+  &::after {
+    border-image-slice: 70 70 70 100;
+    border-image-width: 20px 20px 20px 20px;
+    border-image-outset: 0px 0px 0px 0px;
+    border-image-repeat: stretch stretch;
+    border-image-source:url('img/frame.png');
+    background:none;
+    filter:drop-shadow(1px 1px 2px #2f2719);
+  }
+
+  h3 {
+    display:none;
+    font-family: 'Chopin Script';
+  }
+}
+
+
 #upper-part {
   display:flex;
+
+  #left-part {
+    width: 800px;
+
+    #player-aid {
+      width: 646px;
+      height: 477px;
+      background-image: url('img/player_aid.jpg');
+      border-radius: 30px;
+      margin-top: 6px;
+      display:none;
+    }
+
+    #player-stock {
+      min-height: 452px;
+      width:140px;
+      margin-left:auto;
+      padding:20px;
+      z-index:10;
+
+      &.droppable::after {
+        border-image-source:url('img/frame-droppable.png');
+      }
+      &.droppable-now::after {
+        border-image-source:url('img/frame-droppable-now.png');
+      }
+    }
+  }
 
   #right-part {
     width:640px;
@@ -118,32 +187,9 @@
 //    background-image:url('img/player-board.png');
 
     #money-wrap {
-      border-image-slice: 70 70 70 100;
-      border-image-width: 20px 20px 20px 20px;
-      border-image-outset: 0px 0px 0px 0px;
-      border-image-repeat: stretch stretch;
-      border-image-source:url('img/frame.png');
-      filter:drop-shadow(2px 2px 5px #2f2719);
       width:100%;
       height:220px;
       padding:20px;
-      box-sizing: border-box;
-      position:relative;
-
-      &::before {
-        content:'';
-        display:block;
-        position:absolute;
-        width:calc(100% - 40px);
-        height:calc(100% - 40px);
-        background-image:url('img/frame-texture.jpg');
-        background-size:100px;
-        z-index:-1;
-      }
-
-      h3 {
-        display:none;
-      }
 
       #player-hand-wrapper {
         display: flex;
@@ -152,6 +198,49 @@
         #player-hand {
           width:100%;
         }
+      }
+    }
+
+
+    .alhambra-wrapper {
+      margin-top:10px;
+      min-height: 635px;
+    }
+  }
+}
+
+
+.alhambra-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding:40px;
+  &::before {
+    background-image:url('img/desert-texture.jpg');
+  }
+
+
+  .alhambra {
+    position: relative;
+
+    .building-tile-front, .building-tile-back {
+      box-shadow:none;
+    }
+
+    .free-place {
+      position: absolute;
+      top: 0px;
+      left: 0px;
+      width: 95px;
+      height: 95px;
+
+      &.droppable {
+        background:rgba(255,0,0,0.3);
+        z-index:2000;
+      }
+      &.droppable-now {
+        background:rgba(0,255,0,0.4);
+        z-index:2000;
       }
     }
   }

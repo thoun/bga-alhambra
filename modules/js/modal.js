@@ -300,6 +300,10 @@ define(["dojo", "dojo/_base/declare", "dojo/fx", "dojox/fx/ext-dojo/complex"], f
      * Destroy : destroy the object and all DOM elements
      */
     destroy() {
+      if(this.isDestroyed)
+        return;
+      this.isDestroyed = true;
+
       this.fadeOutAnimation().then(() => {
         let underlayId = "popin_" + this.id + "_container";
         if ($(underlayId)) {

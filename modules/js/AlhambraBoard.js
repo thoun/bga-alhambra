@@ -16,19 +16,22 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
       this.alhambraWrappers[player.id].create(this, $('alhambra-' + player.id), $( 'alhambra-inner-' + player.id));
       this.alhambraWrappers[player.id].item_size = 95;
 
-      player.board.forEach(building => this.addToAlhambra(building, player.id));
+      player.board.buildings.forEach(building => this.addToAlhambra(building, player.id));
+
+      // Do not mark any building at setup time
+      dojo.query('.building-last-placed').removeClass('building-last-placed' );
     },
 
 
     addToAlhambra(building, pId){
-      debug("Adding to Alhambra board", building, pId);
       let bId = 'building-tile-' + building.id;
       //dojo.query( '.building_last_placed' ).removeClass( 'building_last_placed' );
 
       var bAlreadyExist = false;
       if($(bId)){
           bAlreadyExist = true;
-          this.stockZones[pId].removeFromZone(bId, false);
+          if(pId != 0)
+            this.stockZones[pId].removeFromZone(bId, false);
           this.attachToNewParent(bId, $('alhambra-inner-' + pId));
       } else {
         this.addBuilding(building, 'alhambra-inner-' + pId);
@@ -53,22 +56,11 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
       let tgtX = (x*itemSize);
       let tgtY = (y*itemSize);
 
-      this.slidePos(bId, 'alhambra-inner-' + pId, tgtX, tgtY, bAlreadyExist? 1000 : 0)
+      this.slidePos(bId, 'alhambra-inner-' + pId, tgtX, tgtY, bAlreadyExist? 800 : 0)
       .then(() => {
         this.alhambraWrappers[pId].rewrap();
         this.adaptAlhambra(pId);
       });
-
-        /*
-        // Already exists => slide to its position
-        dojo.fx.slideTo({
-          node: bId,
-          left: tgtX,
-          top: tgtY,
-          unit: "px",
-          onEnd: onEnd,
-                             } ).play();
-          */
 
       // Add the "last placed" class
       dojo.addClass(bId, 'building-last-placed');
@@ -179,49 +171,7 @@ TODO
         width: (item_size)+'px',
         height: (item_size)+'px'
       });
-      // TODO :dojo.connect( tile_div, 'onclick', this, 'onClickFreePlace');
+      dojo.connect($(divId), 'onclick', () => this.onClickFreePlaceToDrop(x,y) );
     },
-
-
-    /*
-     * Whenever a building is removed, this might lead to some useless free places
-     */
-    refreshAllFreePlaces() {
-      return;
-      // TODO : remvove, I don't think that necessary in new implementation
-      /*
-        dojo.query( '.freeplace' ).forEach( dojo.destroy );
-        this.freeplace_index = {};  // Delete freeplace index
-        var buildings_coordinates = [];
-
-        var item_size = this.alhambra_wrapper[ this.player_id ].item_size;
-
-        // Get all building tiles now in display and compute their coordinates
-        dojo.query( '#alhambra_'+this.player_id+' .building_tile').forEach( function( node ){
-
-            var x_alhambra = Math.round( dojo.style(node,'left') / item_size );
-            var y_alhambra = Math.round( dojo.style(node,'top') / item_size );
-            buildings_coordinates.push( {x:x_alhambra,y:y_alhambra});
-        });
-
-        console.log( buildings_coordinates );
-
-        for( var i in buildings_coordinates )
-        {
-            var building = buildings_coordinates[i];
-            this.freeplace_index[ building.x+'x'+building.y ] = true;
-        }
-
-        for( var i in buildings_coordinates )
-        {
-            var building = buildings_coordinates[i];
-            this.addFreePlace( building.x+1, building.y );
-            this.addFreePlace( building.x-1, building.y );
-            this.addFreePlace( building.x, building.y+1 );
-            this.addFreePlace( building.x, building.y-1 );
-        }
-        */
-    },
-
   });
 });

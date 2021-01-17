@@ -124,7 +124,6 @@ class Buildings extends \ALH\Helpers\Deck
   public function setupNewGame($players)
   {
     // Insert by hand
-
     $query = self::DB()->multipleInsert(['card_type', 'card_type_arg', 'card_location', 'card_location_arg', 'card_x', 'card_y']);
     $values = [];
 
@@ -146,13 +145,9 @@ class Buildings extends \ALH\Helpers\Deck
     // Shuffle building deck
     self::shuffle();
 
-    /*
-    TODO
-    if( $bIsNeutral )
-    {
-        $this->giveTilesToNeutral(0);   // 6 initial tile to neutral player
+    if(count($players) == 2){
+      self::giveTilesToNeutralScoringRound(0);   // 6 initial tile to neutral player
     }
-    */
   }
 
 
@@ -277,5 +272,66 @@ class Buildings extends \ALH\Helpers\Deck
       'card_x' => $x,
       'card_y' => $y,
     ], $buildingId);
+  }
+
+
+
+/*##################
+###### DIRK ########
+##################*/
+
+
+  /*
+   * Give buildings to neutral player
+   */
+  function giveTilesToNeutral(&$buildings, $silent = false, $player = null)
+  {
+    // Get target location
+    $maxY = self::getUniqueValueFromDb("SELECT MAX(card_y) FROM `building` WHERE `card_location` LIKE 'alam' AND `card_location_arg` = 0");
+    $y = is_null($maxY)? 0 : ($maxY + 1);
+    $x = 0;
+    $tilesWrap = 4;
+
+    foreach($buildings as &$building){
+      Buildings::placeAt($building['id'], 0, $x, $y);
+      $building['x'] = $x;
+      $building['y'] = $y;
+      if(!$silent){
+        Notifications::giveToNeutral($player, $building, $x, $y);
+      }
+
+      $x++;
+      if($x >= $tilesWrap){
+        $x=0;
+        $y++;
+      }
+    }
+
+    Players::getNeutral()->updateAlhambraStats();
+  }
+
+
+  /*
+   * Give tiles to neutral player after $scoringRound
+   */
+  function giveTilesToNeutralScoringRound($scoringRound)
+  {
+    // Determine how many buildings to draw depending on the scoring round
+    $nToDraw = 6;
+    if($scoringRound == 2){
+      $total = self::countInLocation('deck');
+      $nToDraw = floor( $total / 3 );
+    }
+
+    // Pick the buildings
+    $buildings = [];
+    for($i = 0; $i < $nToDraw; $i++){
+      $buildings[] = self::pickForLocation("deck", "alam", 0);
+    }
+
+    // Update position and notify
+    self::giveTilesToNeutral($buildings, true);
+    $deckCount = Buildings::countInLocation('deck');
+    Notifications::newBuildingsForNeutral($buildings, $nToDraw, $deckCount);
   }
 }

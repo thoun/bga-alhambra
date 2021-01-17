@@ -27,59 +27,7 @@ function (dojo, declare) {
         },
         setup: function( gamedatas )
         {
-            console.log( "start creating player boards" );
-            var player_id = null;
 
-            if( gamedatas.neutral_player == 1 )
-            {
-                // Add neutral player
-
-                dojo.place( this.format_block('jstpl_neutral_player_board', {
-                	id:0,
-                    color:'000000',
-                    name: _('Dirk (neutral player)')
-                } ), $('player_boards') );
-
-                var player_id = 0;
-                var player_board_div = $('player_board_'+player_id);
-                dojo.place( this.format_block('jstpl_player_board', {id: player_id } ), player_board_div );
-
-
-                $('wallnbr_'+player_id).innerHTML = player.longest_wall;
-
-                if( gamedatas.alamb_stats[ player_id ] )
-                {
-                    for( var building_type_id in gamedatas.alamb_stats[ player_id ] )
-                    {
-                        $('btnbr_'+building_type_id+'_'+player_id).innerHTML = gamedatas.alamb_stats[ player_id ][ building_type_id ];
-                    }
-                }
-
-            }
-
-            // "stock" zone
-
-            // Alhambra
-            this.freeplace_index = {};
-            }
-            if( gamedatas.neutral_player == 1 )
-            {
-                var player_id = 0;
-                this.alhambra_wrapper[ player_id ] = new ebg.wrapper();
-                this.alhambra_wrapper[ player_id ].create( this, $( 'alhambra_' + player_id ), $( 'alhambra_' + player_id +'_inner' ) );
-                this.alhambra_wrapper[ player_id ].item_size = 95;
-            }
-
-            for( player_id in gamedatas.alamb )
-            {
-                for( i in gamedatas.alamb[ player_id ] )
-                {
-                    building = gamedatas.alamb[ player_id ][ i ];
-                    this.addToAlhambra( building, player_id );
-                }
-            }
-
-            dojo.query( '.building_last_placed' ).removeClass( 'building_last_placed' );    // Do not mark any building at setup time
 
             if( gamedatas.is_scoring_round != '0' )
             {   dojo.style( $('scoring_round_alert'), 'display', 'block' );  }
@@ -96,113 +44,10 @@ function (dojo, declare) {
             this.addTooltipToClass( 'stat_6', dojo.string.substitute( _("Number of ${building} in this player palace"), {building: _("pavillon")} ), '' );
             this.addTooltipToClass( 'wall_stat', _("Length of the longest wall"), '' );
             this.addTooltipToClass( 'card_nbr', _("Number of cards in hand"), '' );
-
-            this.setupNotifications();
-
-            for( player_id in gamedatas.alamb )
-            {
-                this.adaptAlhambra( player_id );
-            }
         },
 
         //////////////////////////////////////////////////////////
         //// UI events
-
-
-        // Player wants to remove a building from the Alhambra
-        onRemoveBuilding: function( evt )
-        {
-            evt.preventDefault();
-
-            if( ! this.checkAction( 'transformAlhambra' ) )
-            {   return; }
-
-            console.log( 'onRemoveBuilding' );
-            var building_id = evt.currentTarget.id.substr( 3 );
-            console.log( 'building = '+building_id );
-
-            dojo.style( 'rm_'+building_id, 'display', 'none' );
-
-            this.ajaxcall( "/alhambra/alhambra/transformAlhambraRemove.html", { remove: building_id, lock:true }, this,
-                function( result ) {}, function( is_error ){});
-        },
-
-        ///////////////////////////////////////////////////
-        //// Game & client states
-
-        onEnteringState: function( stateName, args )
-        {
-           console.log( 'Entering state: '+stateName );
-
-            switch( stateName )
-            {
-
-            case 'playerTurn':
-                dojo.removeClass( 'ebd-body', 'alhambra_drag_in_progress' );
-                dojo.removeClass( 'ebd-body', 'alhambra_drag_in_progress_from_stock' );
-                break;
-
-            case 'dummmy':
-                break;
-            }
-        },
-        onLeavingState: function( stateName )
-        {
-            console.log( 'Leaving state: '+stateName );
-
-            switch( stateName )
-            {
-
-                break;
-            case 'dummy':
-                break;
-            }
-        },
-
-        onUpdateActionButtons: function( stateName, args )
-        {
-            console.log( 'onUpdateActionButtons: '+stateName );
-
-            if( this.isCurrentPlayerActive() )
-            {
-                switch( stateName )
-                {
-                case 'placeBuildings':
-                    if( this.gamedatas.neutral_player==1 )
-                    {
-                        this.addActionButton( 'giveDirk', _('or give them to neutral player'), 'onGiveToNeutral' );
-                    }
-                    break;
-                }
-            }
-        },
-
-
-        onGiveToNeutral: function()
-        {
-            this.confirmationDialog( _("Are you sure you want to give away these buildings to Neutral player?"), dojo.hitch( this, function(){
-
-                this.ajaxcall( "/alhambra/alhambra/giveneutral.html", { lock:true }, this, function( result ) {} );
-            } ) );
-        },
-
-        //////////////////////////////////////////////////////////
-        //// UI adaptations
-
-        onScreenWidthChange: function()
-        {
-            this.adaptPlayerHandOverlap();
-
-            for( player_id in this.gamedatas.alamb )
-            {
-                this.adaptAlhambra( player_id );
-            }
-        },
-
-        // Add specified building to corresponding player alhambra
-        // Create places if needed
-
-
 
         ///////////////////////////////////////////////////
         //// Reaction to cometD notifications

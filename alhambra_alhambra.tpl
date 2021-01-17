@@ -2,26 +2,30 @@
 <div id="alhambra_wrapper">
   <div id="upper-part">
     <div id="left-part">
-      <div id="board">
-        <div id="building-deck" class="building-spot">
-          <div id="building-count"></div>
-        </div>
-        <div id="building-spot-1" class="building-spot"></div>
-        <div id="building-spot-2" class="building-spot"></div>
-        <div id="building-spot-3" class="building-spot"></div>
-        <div id="building-spot-4" class="building-spot"></div>
+      <div id="board-wrapper" class="alhambra-block">
+        <div id="board">
+          <div id="building-deck" class="building-spot">
+            <div id="building-count"></div>
+          </div>
+          <div id="building-spot-1" class="building-spot"></div>
+          <div id="building-spot-2" class="building-spot"></div>
+          <div id="building-spot-3" class="building-spot"></div>
+          <div id="building-spot-4" class="building-spot"></div>
 
 
-        <div id="money-deck" class="money-spot">
-          <div id="money-count"></div>
+          <div id="money-deck" class="money-spot">
+            <div id="money-count"></div>
+          </div>
+          <div id="money-spot-0" class="money-spot"></div>
+          <div id="money-spot-1" class="money-spot"></div>
+          <div id="money-spot-2" class="money-spot"></div>
+          <div id="money-spot-3" class="money-spot"></div>
         </div>
-        <div id="money-spot-0" class="money-spot"></div>
-        <div id="money-spot-1" class="money-spot"></div>
-        <div id="money-spot-2" class="money-spot"></div>
-        <div id="money-spot-3" class="money-spot"></div>
       </div>
 
-      <div id="player-aid"></div>
+      <div id="player-aid-wrapper" class="alhambra-block">
+        <div id="player-aid"></div>
+      </div>
 
       <div id="player-stock" class="alhambra-block">
         <h3>{MY_STOCK}</h3>
@@ -42,6 +46,9 @@
 
 <script type="text/javascript">
 
+/****************************
+****** PLAYER PANNELS *******
+****************************/
 var jstpl_currentPlayerPanel = `
 <div id="right-part">
   <div id="money-wrap" class="alhambra-block">
@@ -75,6 +82,10 @@ var jstpl_playerPanel = `
 `;
 
 
+/******************************
+***** MONEY AND BUILDINGS *****
+******************************/
+
 var jstpl_moneyCard = `
 <div id='card-\${id}' class='money-card' data-type='\${type}' data-value='\${value}'>
   <div class='money-card-back'></div>
@@ -107,32 +118,43 @@ var jstpl_freePlace = '<div id="free-place-${x}-${y}" class="free-place building
 
 
 
-var jstpl_building_tile = '<div id="building_tile_${id}" class="building_tile ${additional_style}" style="background-position: ${back_x}% ${back_y}%"></div>';
-var jstpl_building_tile_surface = '<div class="building_surface" id="building_surface_${id}"></div><a id="rm_${id}" class="remove_building" href="#"><i class="fa fa-times-circle" aria-hidden="true"></i></a>';
+/************************
+***** PLAYER BOARDS *****
+************************/
+var jstpl_neutralPlayerBoard = `
+<div class="alh_playerboard neutral-playerboard player-board">
+  <div class="player_board_inner">
+      <div id="player_score_0"></div><div id="playername_\${id}" class="player-name" style="color: #\${color}">\${name}</div>
+  </div>
+  <div id="player_board_0" class="player_board_content"></div>
+</div>
+`;
+
+var jstpl_playerStats = `
+<div class="alhambra-stats">
+    <div class="alhambra-stat stat-1"><div class="building-type-stat"></div><div id="stat-\${id}-1" class="stat-nbr"></div></div>
+    <div class="alhambra-stat stat-2"><div class="building-type-stat"></div><div id="stat-\${id}-2" class="stat-nbr"></div></div>
+    <div class="alhambra-stat stat-3"><div class="building-type-stat"></div><div id="stat-\${id}-3" class="stat-nbr"></div></div>
+    <div class="alhambra-stat stat-4"><div class="building-type-stat"></div><div id="stat-\${id}-4" class="stat-nbr"></div></div>
+    <div class="alhambra-stat stat-5"><div class="building-type-stat"></div><div id="stat-\${id}-5" class="stat-nbr"></div></div>
+    <div class="alhambra-stat stat-6"><div class="building-type-stat"></div><div id="stat-\${id}-6" class="stat-nbr"></div></div>
+    <div class="wall-stat">
+      <div class="wallicon"></div>
+      <span id="stat-\${id}-wall" class="wall-nbr"></span>
+      <div class="wallicon"></div>
+    </div>
+    <div class="card-nbr">
+      <div class="card-nbr-icon"></div>
+      <span id="card-\${id}-nbr" class="card-nbr-nbr"></span>
+    </div>
+</div>
+`;
 
 
-// Templates
-var jstpl_player_board = '\
-        <br class="clear" />\
-        <div class="alamb_stats">\
-            <div class="alamb_stat stat_1"><span id="btnbr_1_${id}" class="stat_nbr">0</span><span class="building_type_square bts_1"></span></div>\
-            <div class="alamb_stat stat_2"><span id="btnbr_2_${id}" class="stat_nbr">0</span><span class="building_type_square bts_2"></span></div>\
-            <div class="alamb_stat stat_3"><span id="btnbr_3_${id}" class="stat_nbr">0</span><span class="building_type_square bts_3"></span></div>\
-            <div class="alamb_stat stat_4"><span id="btnbr_4_${id}" class="stat_nbr">0</span><span class="building_type_square bts_4"></span></div>\
-            <div class="alamb_stat stat_5"><span id="btnbr_5_${id}" class="stat_nbr">0</span><span class="building_type_square bts_5"></span></div>\
-            <div class="alamb_stat stat_6"><span id="btnbr_6_${id}" class="stat_nbr">0</span><span class="building_type_square bts_6"></span></div>\
-            <div class="wall_stat"><div class="wallicon"></div><span id="wallnbr_${id}" class="wall_nbr">0</span><div class="wallicon"></div></div>\
-            <div class="card_nbr"><div class="card_nbr_icon"></div><span id="card_nbr_${id}" class="card_nbr_nbr">0</span></div>\
-        </div>';
 
-var jstpl_neutral_player_board = '\<div class="alh_playerboard neutral-playerboard player-board">\
-    <div class="player_board_inner">\
-        <div id="player_score_0"></div><div id="playername_${id}" class="player-name" style="color: #${color}">${name}</div>\
-    </div>\
-    <div id="player_board_0" class="player_board_content">\
-    </div>\
-</div>';
-
+/************************
+******** SCORING ********
+************************/
 
 var jstpl_scoringDlgBuilding = '<div class="scoringBuilding">\
         <div class="building_tile_scoring" style="background-position: ${back_x}px 0px"></div>\

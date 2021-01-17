@@ -22,6 +22,7 @@ class Stats
 
   protected static function set($value, $name, $player = null){
     $pId = is_null($player)? null : ( ($player instanceof \ALH\Player)? $player->getId() : $player );
+    // TODO bis
     Alhambra::get()->setStat($value, $name, $pId);
   }
 
@@ -44,15 +45,22 @@ class Stats
   }
 
   public static function takeMoney($player, $total){
-    self::inc('money_taken', $player->getId(), $total);
+    self::inc('money_taken', $player, $total);
   }
 
   public static function exactAmount($player){
-    self::inc('exact_amount', $player->getId());
+    self::inc('exact_amount', $player);
   }
 
   public static function transform($player){
-    self::inc("transformation_nbr",$player->getId());
+    self::inc("transformation_nbr",$player);
+  }
+
+  public static function longestWall($longestWallScore, $player = null){
+    if(is_null($player))
+      self::set('longest_wall_all', $longestWallScore);
+    else
+      self::set('longest_wall', $player,  $longestWallScore);
   }
 }
 

@@ -11,6 +11,8 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
       this.draggedBuilding = null;
       this.posBeforeDrag = null;
       this.droppableZone = null;
+      this.clickedBuilding = null;
+      this.bDragged = false;
     },
 
 // TODO : fix z-index when moving from stock to Alhambra and vice versa
@@ -24,6 +26,9 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
         return;
 
       this.makeBuildingsDraggable(args.buildings);
+      if(this.gamedatas.isNeutral){
+        this.onEnteringStatePlaceBuildingsWithNeutral();
+      }
     },
 
 
@@ -41,7 +46,8 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
         this.stockZones[pId].placeInZone('building-tile-' + building.id);
       } else {
         // In case it comes from the stock ...
-        this.stockZones[pId].updateDisplay();
+        if(pId != 0)
+          this.stockZones[pId].updateDisplay();
 
         // "Normal" case: add it to alhambra
         building.x = n.args.x;
@@ -62,6 +68,26 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
       n.args.stock = false;
       this.notif_placeBuilding(n);
     },
+
+
+
+    /*###############
+    ###### DIRK #####
+    ###############*/
+    onEnteringStatePlaceBuildingsWithNeutral(){
+      this.gamedatas.gamestate.descriptionmyturn = this.gamedatas.gamestate.descriptionmyturndirk;
+      this.updatePageTitle();
+      this.addActionButton('brnGiveDirk', _('Give them to neutral player'), 'onGiveToNeutral');
+    },
+
+
+    onGiveToNeutral() {
+      this.confirmationDialog(
+        _("Are you sure you want to give away these buildings to Neutral player?"),
+        () => this.takeAction('giveNeutral')
+      );
+    },
+
 
   /*########################
   ##########################
@@ -101,7 +127,14 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
 
         this.draggables[building.id].enable();
         building.availablePlaces.forEach(pos => this.addFreePlace(pos.x, pos.y) );
+
+        // Click'n'click
+        // TODO dojo.addClass('building-tile-' + building.id, 'clickable');
+        this.connect($('building-tile-' + building.id), 'onclick', (evt) => this.onClickOnBuildingToDrag(evt, building) );
       });
+
+      // Click n click
+      this.connect($('player-stock'), 'onclick', () => this.onClickOnStockToDrop() );
     },
 
 
@@ -130,7 +163,7 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
         x : dojo.style('building-tile-' + bId, 'left'),
         y : dojo.style('building-tile-' + bId, 'top'),
       };
-
+      this.bDragged = true;
 
       if(building.canGoToStock)
         dojo.addClass('player-stock', 'droppable');
@@ -189,6 +222,10 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
      * When we stop dragging => check whether the drop zone is ok
      */
     onEndDraggingBuilding( item_id, left, top, bDragged){
+      this.bDragged = bDragged;
+      if(!bDragged)
+        return;
+
       dojo.query('.droppable').removeClass('droppable');
 
       // Not on a valid droppable zone => reset to original position and stop
@@ -205,24 +242,17 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
         return;
       }
 
+      this.actPlaceBuilding();
+    },
 
+
+    actPlaceBuilding(){
       if(this.droppableZone == "stock"){
-        debug("Building dropped on stock");
         this.takeAction("placeBuildingOnStock", {
           buildingId: this.draggedBuilding.id,
         });
-        // TODO remove ? this.alamb_stock[ this.player_id ].updateDisplay();
       } else {
-        // TODO test stateName instead
-        let action = "placeBuildingOnAlhambra";
-        /*
-        else
-        {
-            url = "/alhambra/alhambra/transformAlhambraPlace.html";
-        }
-        */
-
-        this.takeAction(action, {
+        this.takeAction("placeBuildingOnAlhambra", {
           buildingId: this.draggedBuilding.id,
           x: this.droppableZone.x,
           y: this.droppableZone.y
@@ -230,113 +260,56 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
       }
     },
 
-
   /*##########################
   ############################
   ###### CLICK N CLICK #######
   ############################
   ##########################*/
+    onClickOnBuildingToDrag(evt, building){
+      if(this.bDragged)
+        return;
 
-onPlaceOnStock: function( evt )
-{
-    dojo.stopEvent( evt );
-
-    // Click on stock
-    var selected = dojo.query('.selected');
-    if( selected.length == 0 )
-    {
-        this.showMessage( _("You must select a building you bought first"), 'error' );
-        return ;
-    }
-
-    selected = selected[0];
-
-    var building_id = ( selected.id.split('_')[2]);
-    var building_div = $('building_tile_'+building_id);
-
-
-    this.ajaxcall( "/alhambra/alhambra/placeBuilding.html", { building: building_id, lock:true }, this,
-    function( result ) {},
-    function( is_error )
-    {
-        this.alamb_stock[ this.player_id ].updateDisplay();
-    });
-
-    dojo.removeClass( 'ebd-body', 'alhambra_drag_in_progress' );
-    dojo.removeClass( 'ebd-body', 'alhambra_drag_in_progress_from_stock' );
-    dojo.query('.selected').removeClass('selected');
-},
-
-onClickFreePlace: function( evt )
-{
-    dojo.stopEvent( evt );
-
-    // Click on free place
-    var selected = dojo.query('.selected');
-    if( selected.length == 0 )
-    {
-        this.showMessage( _("You must select a building you bought first"), 'error' );
-        return ;
-    }
-
-    selected = selected[0];
-
-    var building_id = ( selected.id.split('_')[2]);
-    var building_div = $('building_tile_'+building_id);
-
-    var parts = evt.currentTarget.id.split('_');
-    var x = parts[3];
-    var y = parts[4];
-
-    var url = '';
-    if( building_div.parentNode.id == 'board' )
-    {
-        // Placing a building you just bought in the alhambra
-        url = "/alhambra/alhambra/placeBuilding.html";
-    }
-    else
-    {
-        url = "/alhambra/alhambra/transformAlhambraPlace.html";
-    }
-
-    // Launch an ajaxcall to place this building here
-    this.ajaxcall( url, { building: building_id, x:x, y:y, lock:true }, this,
-        function( result ) {},
-        function( is_error )
-        {
-        });
-
-    dojo.removeClass( 'ebd-body', 'alhambra_drag_in_progress' );
-    dojo.removeClass( 'ebd-body', 'alhambra_drag_in_progress_from_stock' );
-    dojo.query('.selected').removeClass('selected');
-},
+      dojo.stopEvent(evt);
+      if(this.clickedBuilding == null){
+        this.onStartDraggingBuilding(building.id);
+        this.clickedBuilding = building;
+        this.bDragged = false;
+        dojo.addClass('building-tile-' + building.id, 'drag-selected');
+      } else {
+        dojo.removeClass('building-tile-' + this.clickedBuilding.id, 'drag-selected');
+        this.clickedBuilding = null;
+        dojo.query('.droppable').removeClass('droppable');
+      }
+    },
 
 
+    onClickOnStockToDrop(){
+      // Is is really a click n click ?
+      if(this.bDragged || this.clickedBuilding == null)
+        return;
 
-onClickOnBuilding: function( evt )
-{
-    dojo.stopEvent( evt );
-    var building_id = evt.currentTarget.id.split('_')[2];
+      // Can be dropped on stock ?
+      if(!this.clickedBuilding.canGoToStock)
+        return;
 
-    if( dojo.hasClass( 'building_tile_'+building_id, 'selected' ) )
-    {
-        // Unselect
-        dojo.removeClass( 'building_tile_'+building_id, 'selected' );
-        dojo.removeClass( 'ebd-body', 'alhambra_drag_in_progress' );
-        dojo.removeClass( 'ebd-body', 'alhambra_drag_in_progress_from_stock' );
-    }
-    else
-    {
-        dojo.query( '.selected').removeClass( 'selected');
-        dojo.addClass( 'building_tile_'+building_id, 'selected' );
-        dojo.addClass( 'ebd-body', 'alhambra_drag_in_progress' );
-        if(  evt.currentTarget.parentNode.parentNode.parentNode.id  == 'alhambra_stock_current_player')
-        {
-            dojo.addClass( 'ebd-body', 'alhambra_drag_in_progress_from_stock' );
-        }
-    }
-},
+      this.droppableZone = 'stock';
+      this.draggedBuilding = this.clickedBuilding;
+      this.actPlaceBuilding();
+    },
 
+    onClickFreePlaceToDrop(x, y){
+      debug("test", x, y, this.bDragged);
+      // Is is really a click n click ?
+      if(this.bDragged || this.clickedBuilding == null)
+        return;
 
+      // Can be dropped on this free place ?
+      if(this.clickedBuilding.availablePlaces.find(pos => pos.x == x && pos.y == y) == undefined)
+        return;
+
+      this.droppableZone = { x, y };
+      this.draggedBuilding = this.clickedBuilding;
+      this.actPlaceBuilding();
+    },
   });
 });

@@ -1,12 +1,14 @@
 define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
   const BUILDING_THEN_MONEY = 1;
   const MONEY_THEN_BUILDING = 2;
+  const DIRK = 0;
 
   return declare("alhambra.buildingTrait", null, {
     constructor(){
       this._notifications.push(
         ['buyBuilding', 1000],
-        ['newBuildings', 1500]
+        ['newBuildings', 1500],
+        ['newBuildingsForNeutral', 1500]
       );
       this.buildingDeckCounter = null;
       this.buildingSite = [];
@@ -109,16 +111,6 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
             setTimeout(() => dojo.removeClass(id, "animate"), 500);
           });
         }
-
-        /* TODO : ????
-        if( building.location == 'alamb')
-        {
-            // Specific case: must add it immediately to alhambra
-            // (happens with Neutral player)
-            this.addToAlhambra( building, 0 );
-        }
-        else
-        */
       });
     },
 
@@ -246,6 +238,14 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
     notif_newBuildings(n){
       debug("New buildings", n);
       this.addToBuildingSite(n.args.buildings, true); // True to animate
+      this.gamedatas.buildings.count = n.args.count;
+      this.updateBuildingDeckCount();
+    },
+
+
+    notif_newBuildingsForNeutral(n){
+      debug("New buildings for neutral player", n);
+      n.args.buildings.forEach(building => this.addToAlhambra(building, DIRK) );
       this.gamedatas.buildings.count = n.args.count;
       this.updateBuildingDeckCount();
     },

@@ -132,21 +132,6 @@
     background-position: -300px 0px;
 }
 
-.stat_1 {   color: blue;}
-.stat_2 {   color: red; }
-.stat_3 {   color: brown;}
-.stat_4 {   color: white;}
-.stat_5{    color: green;}
-.stat_6{    color: purple;}
-
-.stat_nbr {
-    position: absolute;
-    width: 60px;
-    bottom: -3px;
-    font-weight: bold;
-    text-align:center;
-    font-size: 20px;
-}
 
 .wallicon {
     width: 45px;

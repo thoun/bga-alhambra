@@ -87,7 +87,7 @@ class Globals
    * Setters
    */
   public static function setNeutral($value){
-    self::set('neutral_player', $value);
+    self::set('neutral_player', $value? 1 : 0);
   }
 
   public static function setFirstPlayer($pId){

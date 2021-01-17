@@ -35,7 +35,7 @@ class Deck extends DB_Manager
   {
     static::$deck->moveCard($cardId, $location, $location_arg);
   }
-  
+
 
   /*******************
   ***** GETTERS ******
@@ -56,9 +56,9 @@ class Deck extends DB_Manager
     return self::castArray(static::$deck->getCardsInLocation($location, $location_arg, $order_by));
   }
 
-  public function countInLocation($location)
+  public function countInLocation($location, $location_arg = null)
   {
-    return static::$deck->countCardsInLocation($location);
+    return static::$deck->countCardsInLocation($location, $location_arg);
   }
 
   public function get($cardIds)

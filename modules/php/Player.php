@@ -46,6 +46,7 @@ class Player extends Helpers\DB_Manager
       'color'     => $this->color,
       'score'     => $this->score,
       'hand'      => $pId == $this->id? $this->getMoneyCards() : [],
+      'cardCount' => $this->countMoneyCards(),
       'stock'     => $this->getStock(),
       'board'     => $this->getBoard()->getUiData(),
     ];
@@ -117,4 +118,33 @@ class Player extends Helpers\DB_Manager
     Notifications::swapBuildings($this, $buildingFromStock, $buildingOnAlhambra, $x, $y);
   }
 
+
+  // Update alhambra statistics for current player:
+  // _ update longest wall in DB
+  // _ send building count & longest wall by notification to everyone
+  // MUST be called after each alhambra update
+  function updateAlhambraStats()
+  {
+    $longestWallScore = 0;
+
+    // Update DB
+    if($this->id != 0){
+      $longestWall = $this->getBoard()->getLongestWall();
+      $longestWallScore = count($longestWall) - 1;
+      self::DB()->update(['player_longest_wall' => $longestWallScore], $this->id);
+      Stats::longestWall($this, $longestWallScore);
+
+      $this->updateMaxWall();
+    }
+
+    $buildingCounts = $this->getBoard()->getBuildingCounts();
+    Notifications::updateAlhambraStats($this, $longestWallScore, $buildingCounts);
+   }
+
+
+   function updateMaxWall()
+   {
+     $maxWall = self::DB()->max('player_longest_wall');
+     Stats::longestWall($maxWall);
+   }
 }

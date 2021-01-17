@@ -103,4 +103,19 @@ class Players extends \ALH\Helpers\DB_Manager
   {
     return self::getAll()->assocMap(function($player) use ($pId){ return $player->getUiData($pId); });
   }
+
+  public function getNeutral()
+  {
+    $row = [
+      'player_id' => 0,
+      'player_no' => -1,
+      'player_color' => "000000",
+      'player_name' => clienttranslate('Dirk'),
+      'player_score' => 0,
+      'player_eliminated' => 0,
+      'player_zombie' => 0
+    ];
+
+    return new \ALH\Player($row);
+  }
 }

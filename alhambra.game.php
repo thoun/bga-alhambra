@@ -39,6 +39,7 @@ class Alhambra extends Table
   use ALH\States\StartOfGameTrait;
   use ALH\States\PlayerTurnTrait;
   use ALH\States\PlaceBuildingTrait;
+  use ALH\States\ScoringRoundTrait;
 
   public static $instance = null;
   public function __construct()
@@ -71,8 +72,8 @@ class Alhambra extends Table
    */
   protected function setupNewGame($players, $options = [])
   {
-    ALH\Players::setupNewGame($players);
     ALH\Globals::setupNewGame();
+    ALH\Players::setupNewGame($players);
     ALH\Stats::setupNewGame();
     ALH\Buildings::setupNewGame($players);
     $firstPlayerId = ALH\Money::setupNewGame($players);
@@ -93,6 +94,8 @@ class Alhambra extends Table
     $pId = self::getCurrentPlayerId();
     return [
       'players' => ALH\Players::getUiData($pId),
+      'isNeutral' => ALH\Globals::isNeutral(),
+      'neutral' => ALH\Players::getNeutral()->getUiData(0),
       'buildings' => ALH\Buildings::getUiData(),
       'moneyCards' => ALH\Money::getUiData(),
     ];
@@ -106,7 +109,11 @@ class Alhambra extends Table
    */
   public function getGameProgression()
   {
-    return 0; // TODO
+    // Game progression: get the number of buildings remaining in the deck
+    $remaining = ALH\Buildings::countInLocation('deck');
+    $initial = 54;
+
+    return 100 - ceil(100*($remaining/$initial));
   }
 
 

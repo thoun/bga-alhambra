@@ -80,6 +80,7 @@ $machinestates = [
     "name" => "placeBuildings",
     "description" => clienttranslate('${actplayer} must place new buildings'),
     "descriptionmyturn" => clienttranslate('${you} must place your new building(s) in your Alhambra or in your stock'),
+    "descriptionmyturndirk" => clienttranslate('${you} must place your new building(s) in your Alhambra or in your stock or give them to neutral player'),
     "type" => "activeplayer",
     "args" => "argPlaceBuilding",
     "possibleactions" => ["placeBuilding"],

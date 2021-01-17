@@ -1,80 +1,100 @@
-#board {
+.alhambra_wrapper {
+  position:relative;
+}
+
+#board-wrapper {
+  padding:5px;
   position: relative;
-  width: 800px;
-  height: 410px;
-  background-image: url('img/board.jpg');
-  border: 2px solid #913b3b;
-  box-shadow: 2px 2px 5px -2px black;
-  border-radius: 4px;
+  z-index: 12;
+  max-height: 420px;
 
-
-  .building-spot {
-    position: absolute;
-    top: 294px;
-    left: 0px;
-    width: 95px;
-    height: 95px;
-
-    &#building-deck {
-      width: 95px;
-      height: 95px;
-      background-image: url("img/fontains.jpg");
-      background-size: cover;
-      background-position-y: 6/7 * 100%;
-      top: 295px;
-      left: 13px;
-      box-shadow: 1px 1px 0px black, 2px 2px 0px black, 3px 3px 0px black;
-
-      #building-count {
-        font-size: 38px;
-        font-weight: bold;
-        position: absolute;
-        top: 25px;
-        width: 100%;
-        text-align: center;
-        color: #000000;
-        text-shadow: 2px 2px 0 #ffffff, 2px -2px 0 #ffffff, -2px 2px 0 #ffffff, -2px -2px 0 #ffffff, 2px 0px 0 #ffffff, 0px 2px 0 #ffffff, -2px 0px 0 #ffffff, 0px -2px 0 #ffffff;
-        &::before {
-          content:'x';
-        }
-      }
-    }
-
-    &#building-spot-1 { left: 133px; }
-    &#building-spot-2 { left: 279px; }
-    &#building-spot-3 { left: 426px; }
-    &#building-spot-4 { left: 572px; }
+  &::before {
+    background-image:none;
+  }
+  &::after {
+    z-index: 1;
   }
 
-  .money-spot {
-    width: 112px;
-    height: 173px;
-    position: absolute;
-    top: 22px;
+  #board {
+    position: relative;
+    width: 770px;
+    height: 410px;
+    background-image: url('img/board.jpg');
+//    border: 2px solid #913b3b;
+//    box-shadow: 2px 2px 5px -2px black;
+    border-radius: 15px;
 
-    &#money-deck {
-      left: 51px;
-      top: 21px;
 
-      #money-count {
-        font-size: 38px;
-        font-weight: bold;
-        position: absolute;
-        top: 62px;
-        width: 100%;
-        text-align: center;
-        color: #000000;
-        text-shadow: 2px 2px 0 #ffffff, 2px -2px 0 #ffffff, -2px 2px 0 #ffffff, -2px -2px 0 #ffffff, 2px 0px 0 #ffffff, 0px 2px 0 #ffffff, -2px 0px 0 #ffffff, 0px -2px 0 #ffffff;
-        &::before {
-          content:'x';
+    .building-spot {
+      position: absolute;
+      top: 294px;
+      left: 0px;
+      width: 95px;
+      height: 95px;
+      z-index:2;
+
+      &#building-deck {
+        width: 95px;
+        height: 95px;
+        background-image: url("img/fontains.jpg");
+        background-size: cover;
+        background-position-y: 6/7 * 100%;
+        top: 295px;
+        left: 13px;
+        box-shadow: 1px 1px 0px black, 2px 2px 0px black, 3px 3px 0px black;
+
+        #building-count {
+          font-size: 38px;
+          font-weight: bold;
+          position: absolute;
+          top: 25px;
+          width: 100%;
+          text-align: center;
+          color: #000000;
+          text-shadow: 2px 2px 0 #ffffff, 2px -2px 0 #ffffff, -2px 2px 0 #ffffff, -2px -2px 0 #ffffff, 2px 0px 0 #ffffff, 0px 2px 0 #ffffff, -2px 0px 0 #ffffff, 0px -2px 0 #ffffff;
+          &::before {
+            content:'x';
+          }
         }
       }
+
+      &#building-spot-1 { left: 133px; }
+      &#building-spot-2 { left: 279px; }
+      &#building-spot-3 { left: 426px; }
+      &#building-spot-4 { left: 572px; }
     }
 
-    &#money-spot-0 { left: 199px; }
-    &#money-spot-1 { left: 345px; }
-    &#money-spot-2 { left: 491px; }
-    &#money-spot-3 { left: 638px; }
+    .money-spot {
+      width: 112px;
+      height: 173px;
+      position: absolute;
+      top: 22px;
+      z-index:2;
+
+      &#money-deck {
+        left: 51px;
+        top: 21px;
+
+        #money-count {
+          font-size: 38px;
+          font-weight: bold;
+          position: absolute;
+          top: 62px;
+          width: 100%;
+          text-align: center;
+          color: #000000;
+          text-shadow: 2px 2px 0 #ffffff, 2px -2px 0 #ffffff, -2px 2px 0 #ffffff, -2px -2px 0 #ffffff, 2px 0px 0 #ffffff, 0px 2px 0 #ffffff, -2px 0px 0 #ffffff, 0px -2px 0 #ffffff;
+          &::before {
+            content:'x';
+          }
+        }
+      }
+
+      &#money-spot-0 { left: 199px; }
+      &#money-spot-1 { left: 345px; }
+      &#money-spot-2 { left: 491px; }
+      &#money-spot-3 { left: 638px; }
+    }
   }
 }
 
@@ -89,22 +109,9 @@
     filter:progid:DXImageTransform.Microsoft.Shadow(color=#656565, Direction=134, Strength=30);
 
 }
+TODO
 .notouch-device #board .building_available:hover {
     transform: scale( 1.1 );
-}
-
-#board .building_bought {
-    outline: 3px blue solid;
-
-    -moz-box-shadow: 16px 20px 5px 0px rgba(0,0,0,0.4);
-    -webkit-box-shadow: 16px 20px 5px 0px rgba(0,0,0,0.4);
-    -o-box-shadow: 16px 20px 5px 0px rgba(0,0,0,0.4);
-    box-shadow: 16px 20px 5px 0px rgba(0,0,0,0.4);
-    filter:progid:DXImageTransform.Microsoft.Shadow(color=#656565, Direction=134, Strength=30);
-}
-
-#board .building_bought.selected {
-    outline: 3px red solid;
 }
 */
 
@@ -112,7 +119,7 @@
 .alhambra-block, #popin_moneyDialog {
   box-sizing: border-box;
   position:relative;
-  filter:drop-shadow(2px 2px 5px #2f2719);
+  filter:drop-shadow(2px 2px 5px rgba(0,0,0,0.3));
 
   &::before, &::after {
     content:'';
@@ -133,7 +140,7 @@
 
   &::after {
     border-image-slice: 70 70 70 100;
-    border-image-width: 20px 20px 20px 20px;
+    border-image-width: 13px 15px 13px 15px;
     border-image-outset: 0px 0px 0px 0px;
     border-image-repeat: stretch stretch;
     border-image-source:url('img/frame.png');
@@ -150,46 +157,75 @@
 
 #upper-part {
   display:flex;
+  margin-bottom:20px;
+  justify-content: stretch;
+  @media only screen and (max-width: $breakPoint) {
+    flex-flow:column;
+  }
 
   #left-part {
-    width: 800px;
+    width: 780px;
+    display: flex;
+    flex-wrap: wrap;
+    @media only screen and (max-width: $breakPoint) {
+      width:970px;
+    }
 
-    #player-aid {
-      width: 646px;
-      height: 477px;
-      background-image: url('img/player_aid.jpg');
-      border-radius: 30px;
-      margin-top: 6px;
-      display:none;
+    #player-aid-wrapper {
+      margin-top:10px;
+      &::after {
+        z-index:1;
+      }
+
+      #player-aid {
+        width: 620px;
+        height: 477px;
+        background-image: url('img/player_aid.jpg');
+        border-radius: 10px;
+        margin-top: 6px;
+        @media only screen and (max-width: $breakPoint) {
+          display:none;
+        }
+      }
     }
 
     #player-stock {
-      min-height: 452px;
-      width:140px;
-      margin-left:auto;
+      width:150px;
+      margin-left:10px;
+      @media only screen and (min-width: $breakPoint) {
+        margin-top:10px;
+        min-height: 452px;
+      }
       padding:20px;
       z-index:10;
 
-      &.droppable::after {
-        border-image-source:url('img/frame-droppable.png');
+      &.droppable {
+        cursor:pointer;
+        &::after {
+          border-image-source:url('img/frame-droppable.png');
+        }
       }
-      &.droppable-now::after {
+      &.droppable:hover::after, &.droppable-now::after {
         border-image-source:url('img/frame-droppable-now.png');
       }
     }
   }
 
   #right-part {
-    width:640px;
-    height:900px;
+    margin: 10px 0px;
     flex-grow: 1;
-    margin: 0px 10px;
-//    background-image:url('img/player-board.png');
+    display: flex;
+    flex-flow: column;
+    @media only screen and (min-width: $breakPoint) {
+      width:640px;
+      margin: 0px 10px;
+    }
 
     #money-wrap {
       width:100%;
-      height:220px;
-      padding:20px;
+      height: 207px;
+      padding: 16px;
+      z-index: 12;
 
       #player-hand-wrapper {
         display: flex;
@@ -203,22 +239,32 @@
 
 
     .alhambra-wrapper {
+      flex-grow:1;
       margin-top:10px;
       min-height: 635px;
     }
   }
 }
 
+#bottom-part .alhambra-wrapper {
+  margin-bottom:20px;
+}
 
 .alhambra-wrapper {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding:40px;
+  padding:20px;
+  position:relative;
   &::before {
     background-image:url('img/desert-texture.jpg');
   }
 
+  .alhambra-stock {
+    position:absolute;
+    left:15px;
+    top:15px;
+  }
 
   .alhambra {
     position: relative;
@@ -237,11 +283,110 @@
       &.droppable {
         background:rgba(255,0,0,0.3);
         z-index:2000;
+        cursor:pointer;
+        &:hover {
+          background:rgba(0,255,0,0.4);
+        }
       }
       &.droppable-now {
         background:rgba(0,255,0,0.4);
         z-index:2000;
       }
+    }
+  }
+}
+
+
+
+.alhambra-stats {
+  display:flex;
+  flex-wrap:wrap;
+  justify-content: space-around;
+
+  .alhambra-stat {
+    width: 60px;
+    height: 60px;
+    margin: 5px;
+
+    .building-type-stat {
+      width: 60px;
+      height: 40px;
+      background-image: url('img/icons_panel.png');
+    }
+    @for $i from 1 through 6 {
+      &.stat-#{$i} .building-type-stat { background-position-x:($i - 1)*100%/6; }
+    }
+
+
+    .stat-nbr {
+      width: 60px;
+      font-weight: bold;
+      text-align:center;
+      font-size: 20px;
+    }
+    &.stat-1 { color: blue;}
+    &.stat-2 { color: red; }
+    &.stat-3 { color: brown;}
+    &.stat-4 { color: white;}
+    &.stat-5 { color: green;}
+    &.stat-6 { color: purple;}
+  }
+
+
+  .wall-stat {
+    width: 128px;
+    height: 22px;
+    display: flex;
+    align-items: center;
+    margin-top: 5px;
+
+    .wallicon {
+      width: 45px;
+      height: 100%;
+      background-image: url('img/icons_panel.png');
+      background-position:100% center;
+    }
+
+    .wall-nbr {
+      text-align: center;
+      width: 38px;
+      font-weight: 700;
+      font-size:20px;
+    }
+  }
+
+  .card-nbr {
+    height:30px;
+    display: flex;
+    align-items: center;
+
+    .card-nbr-icon {
+      height: 30px;
+      width: 19px;
+      background-image: url(img/card_icon.jpg);
+      border-radius: 3px;
+    }
+
+    .card-nbr-nbr {
+      font-size: 20px;
+      font-weight: 700;
+      &::before {
+        content:'x';
+        margin-left:7px;
+      }
+    }
+  }
+}
+
+
+.neutral-playerboard {
+  .player-name {
+    text-align: center;
+  }
+
+ .alhambra-stats {
+    .wall-stat, .card-nbr {
+      display:none;
     }
   }
 }

@@ -103,6 +103,34 @@ class Notifications
   }
 
 
+  public static function giveToNeutral($player, $building, $x, $y){
+    self::notifyAll("placeBuilding", clienttranslate('${player_name} gives a ${building_type_pre}${building_type}${building_type_post} to Neutral player'), [
+      'player_name' => $player->getName(),
+      'player_id' => 0,
+      'building' => $building,
+      'x' => $x,
+      'y' => $y,
+      'stock' => false,
+    ]);
+  }
+
+  public static function newBuildingsForNeutral($buildings, $nToDraw, $deckCount){
+    self::notifyAll("newBuildingsForNeutral", clienttranslate('${nb} tiles are drawn from the deck for the Neutral player'), [
+      "buildings" => $buildings,
+      'nb' => $nToDraw,
+      'count' => $deckCount
+    ]);
+  }
+
+  public static function updateAlhambraStats($player, $longestWallScore, $buildingCounts){
+    self::notifyAll("alhambraStats", '',  [
+      "player" => $player,
+      "walls" => $longestWallScore,
+      "buildings" => $buildingCounts
+    ]);
+  }
+
+
   /*
    * Automatically adds some standard field about player and/or card/task
    */

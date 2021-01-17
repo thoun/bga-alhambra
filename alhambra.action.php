@@ -78,32 +78,10 @@ class action_alhambra extends APP_GameAction
   }
 
 
-
-
-public function transformAlhambraPlace()
-{
-self::setAjaxMode();
-$building_id = self::getArg( "building", AT_posint, true );
-$x = self::getArg( "x", AT_int, true );
-$y = self::getArg( "y", AT_int, true );
-$this->game->placeBuilding( $building_id, false, $x, $y );
-self::ajaxResponse( );
-}
-public function transformAlhambraRemove()
-{
-self::setAjaxMode();
-$building_to_remove = self::getArg( "remove", AT_posint, true );
-$this->game->transformAlhambraRemove( $building_to_remove );
-self::ajaxResponse( );
-}
-
-
-public function giveneutral()
-{
-self::setAjaxMode();
-$this->game->giveneutral();
-self::ajaxResponse( );
-
-}
-
+  public function giveneutral()
+  {
+    self::setAjaxMode();
+    $this->game->actGiveneutral();
+    self::ajaxResponse();
+  }
 }

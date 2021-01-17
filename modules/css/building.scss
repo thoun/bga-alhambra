@@ -59,6 +59,10 @@
     box-shadow: 16px 20px 5px 0 rgba(0,0,0,.4);
   }
 
+  &.drag-selected .building-tile-front {
+    outline: 3px solid #f00;
+  }
+
   .building-cost {
     position: absolute;
     bottom: 5px;

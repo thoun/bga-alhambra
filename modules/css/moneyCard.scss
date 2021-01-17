@@ -49,8 +49,10 @@
 
 .money-spot.selectable .money-card, #player-hand .stockitem.selectable {
   cursor:pointer;
+  z-index:50 !important;
   &:hover {
     transform: scale(1.1);
+    z-index:150 !important;
   }
 }
 
@@ -71,6 +73,6 @@
   &.stockitem_selected {
     margin-left:-1px;
     margin-top:-1px;
-    z-index:100;
+    z-index:100 !important;
   }
 }

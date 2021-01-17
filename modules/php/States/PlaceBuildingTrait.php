@@ -57,6 +57,9 @@ trait PlaceBuildingTrait {
     $building = $this->checkPlaceBuilding($buildingId, 'stock');
     $player = Players::getActive();
     $player->placeBuildingInStock($building);
+    if($building['location'] == 'alam'){
+      Stats::transform($player);
+    }
     $this->endTurnOrPlaceBuildings();
   }
 
@@ -79,33 +82,18 @@ trait PlaceBuildingTrait {
       Stats::transform($player);
     }
 
-    // TODO
-    /*
-    self::updateAlhambraStats( $g_user->get_id() );
-
-      if( ! $is_bought )
-    */
-
+    $player->updateAlhambraStats();
     $this->endTurnOrPlaceBuildings();
   }
 
-  /*
-  TODO
-  if( $buildingAlreadyThere )
+
+  function actGiveneutral()
   {
-      if( $buildingAlreadyThere['card_x']==0 && $buildingAlreadyThere['card_y']==0 )
-          throw new feException( self::_("You can't replace the fountain"), true, true );
-
-      // The building here must be moved to player's stock
-      $this->buildings->moveCard( $buildingAlreadyThere['id'], 'stock', $g_user->get_id() );
-
-      $this->notifyAllPlayers( "placeBuilding", '',
-                               array( "player_name" => self::getCurrentPlayerName(),
-                                      "player" => $g_user->get_id(),
-                                      "building_id" => $buildingAlreadyThere['id'],
-                                      "building" => $buildingAlreadyThere,
-                                      "stock" => 1
-                                      ) );
+    self::checkAction('placeBuilding');
+    // Get all buildings to place and place them into neutral player alhambra
+    $buildings = Buildings::getInLocation('bought');
+    $player = Players::getActive();
+    Buildings::giveTilesToNeutral($buildings, false, $player);
+    self::endTurnOrPlaceBuildings();
   }
-*/
 }

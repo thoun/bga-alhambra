@@ -324,8 +324,7 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
      * Get total value of each color in hand
      */
     getTotalValueByColorInHand(onlySelected = false){
-      // TODO : remove optional parameter ?
-      onlySelected = this.playerHand.getSelectedItems().length > 0;
+      onlySelected = onlySelected || this.playerHand.getSelectedItems().length > 0;
 
       var cards = onlySelected? this.playerHand.getSelectedItems() : this.playerHand.getAllItems();
       var totals = { 1:0, 2:0, 3:0, 4:0};
@@ -399,7 +398,8 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
       // Already in "building then money" mode => unselect selected building if it was clicked
       else if(this.selectionMode == BUILDING_THEN_MONEY){
         // Compare value with selected total
-        let total = this.getTotalValueByColorInHand();
+        let total = this.getTotalValueByColorInHand(true); // true = only selected
+        debug(total);
         if(total[this.selectedBuilding.pos] >= this.selectedBuilding.cost)
           this.addPrimaryActionButton('btnConfirmBuyBuilding', _('Buy'), () => this.onConfirmBuyBuilding());
         else

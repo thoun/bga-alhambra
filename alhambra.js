@@ -121,5 +121,17 @@ TODO
         this.inherited(arguments);
       },
 
+
+      onScreenWidthChange() {
+        this.adaptPlayerHandOverlap();
+        /*
+         TODO handle Dirk
+          for( player_id in this.gamedatas.alamb )
+          {
+              this.adaptAlhambra( player_id );
+          }
+        */
+      },
+
    });
 });

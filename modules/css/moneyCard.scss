@@ -43,13 +43,12 @@
 }
 
 .money-spot.unselectable .money-card, #player-hand .stockitem.unselectable {
-  opacity: 0.6 !important;
   cursor: not-allowed;
+  filter: contrast(0.6);
 }
 
 .money-spot.selectable .money-card, #player-hand .stockitem.selectable {
   cursor:pointer;
-  z-index:50 !important;
   &:hover {
     transform: scale(1.1);
     z-index:150 !important;

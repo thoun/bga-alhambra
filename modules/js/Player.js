@@ -2,13 +2,10 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
   const DIRK = 0;
   return declare("alhambra.playerTrait", null, {
     constructor(){
-      /*
       this._notifications.push(
-        ['newHand', 100],
-        ['giveCard', 1000],
-        ['receiveCard', 1000]
+        ['alhambraStats', 10],
+        ['updateMoneyCount', 10]
       );
-      */
       this.statCounters = {};
     },
 
@@ -30,7 +27,8 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
         this.setupAlhambra(player);
 
         // Setup board for stats
-        this.setupPlayerStat(player);
+        this.setupPlayerStats(player);
+        this.updatePlayerStats(player);
       });
 
 
@@ -41,7 +39,8 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
         this.setupAlhambra(neutral);
 
         this.place('jstpl_neutralPlayerBoard', neutral, 'player_boards');
-        this.setupPlayerStat(neutral);
+        this.setupPlayerStats(neutral);
+        this.updatePlayerStats(neutral);
         /*
         TODO
           dojo.place( this.format_block('jstpl_neutral_player_board', {
@@ -93,11 +92,10 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
           }
       }
 */
-      this.updatePlayersStats();
     },
 
 
-    setupPlayerStat(player){
+    setupPlayerStats(player){
       let pId = player.id;
       this.place('jstpl_playerStats', player, 'player_board_' + pId);
       this.statCounters[pId] = {};
@@ -111,19 +109,29 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
       this.statCounters[pId]["card"].create("card-" + pId + "-nbr");
     },
 
-    updatePlayersStats(){
-      let updatePlayer = (player) => {
-        for(var i = 1; i <= 6; i++){
-          this.statCounters[player.id][i].toValue(player.board.stats[i]);
-        }
-        this.statCounters[player.id]["wall"].toValue(player.board.wall);
-        this.statCounters[player.id]["card"].toValue(player.cardCount);
-      };
-
-      Object.values(this.gamedatas.players).forEach(updatePlayer);
-      if(this.gamedatas.isNeutral){
-        updatePlayer(this.gamedatas.neutral);
+    updatePlayerStats(player){
+      for(var i = 1; i <= 6; i++){
+        this.statCounters[player.id][i].toValue(player.board.stats[i]);
       }
+      this.statCounters[player.id]["wall"].toValue(player.board.wall);
+      this.statCounters[player.id]["card"].toValue(player.cardCount);
+    },
+
+
+    // Change one player's alhambra stats (in right panel)
+    notif_alhambraStats(n){
+      debug("Notif: updating alhambra stats", n);
+      let player = n.args.player_id == 0? this.gamedatas.neutral : this.gamedatas.players[n.args.player_id];
+      player.board.wall = n.args.walls;
+      player.board.stats = n.args.buildings;
+      this.updatePlayerStats(player);
+    },
+
+    notif_updateMoneyCount(n){
+      debug("Notif: updating money count", n);
+      let player = n.args.player_id == 0? this.gamedatas.neutral : this.gamedatas.players[n.args.player_id];
+      player.cardCount = n.args.count;
+      this.updatePlayerStats(player);
     },
   });
 });

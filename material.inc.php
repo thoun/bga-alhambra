@@ -20,3 +20,13 @@
  */
 
 require_once("modules/php/constants.inc.php");
+
+// Points score for each building type:
+$this->scoring = [
+  PAVILLON => [ 16, 8, 1],
+  SERAGLIO => [ 17, 9, 2],
+  ARCADE =>   [18, 10, 3],
+  CHAMBER =>  [19, 11, 4],
+  GARDEN =>   [20, 12, 5],
+  TOWER =>    [21, 13, 6],
+];

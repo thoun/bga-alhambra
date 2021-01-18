@@ -53,14 +53,21 @@ class Stats
   }
 
   public static function transform($player){
-    self::inc("transformation_nbr",$player);
+    self::inc("transformation_nbr", $player);
   }
 
   public static function longestWall($longestWallScore, $player = null){
     if(is_null($player))
-      self::set('longest_wall_all', $longestWallScore);
+      self::set($longestWallScore, 'longest_wall_all');
     else
-      self::set('longest_wall', $player,  $longestWallScore);
+      self::set($longestWallScore, 'longest_wall', $player);
+  }
+
+  public static function setScoringResult($pId, $score, $round){
+    $name = 'points_win_'.$round;
+    if($pId != 0){
+      self::set($score, $name, $pId);
+    }
   }
 }
 

@@ -34,6 +34,7 @@
      g_gamethemeurl + "modules/js/PlaceBuilding.js",
      g_gamethemeurl + "modules/js/Player.js",
      g_gamethemeurl + "modules/js/AlhambraBoard.js",
+     g_gamethemeurl + "modules/js/Scoring.js",
  ], function (dojo, declare) {
     return declare("bgagame.alhambra", [
       customgame.game,
@@ -42,6 +43,7 @@
       alhambra.placeBuildingTrait,
       alhambra.playerTrait,
       alhambra.alhambraBoardTrait,
+      alhambra.scoringTrait,
     ], {
       constructor(){
         this.selectionMode = null; // moneyThenBuilding or buildingThenMoney
@@ -67,6 +69,156 @@
 
 
       onUpdateActionButtons(){
+        this.addPrimaryActionButton("coucou", "Coucou", () => this.notif_scoringRound({
+  "uid": "6004d6b1f196c",
+  "type": "scoringRound",
+  "log": "Scoring round !",
+  "args": {
+    "round_no": 1,
+    "players": {
+      "0": {
+        "points": 21,
+        "walls": 0
+      },
+      "2322020": {
+        "walls": "2",
+        "points": 2
+      },
+      "2322021": {
+        "walls": "2",
+        "points": 2
+      }
+    },
+    "buildingdetails": {
+      "1": [
+        {
+          "player": 0,
+          "nb": 2,
+          "rank": 1,
+          "points": 1
+        },
+        {
+          "player": 2322021,
+          "nb": 0,
+          "rank": 2,
+          "points": 0
+        },
+        {
+          "player": 2322020,
+          "nb": 0,
+          "rank": 2,
+          "points": 0
+        }
+      ],
+      "2": [
+        {
+          "player": 0,
+          "nb": 2,
+          "rank": 1,
+          "points": 2
+        },
+        {
+          "player": 2322020,
+          "nb": 1,
+          "rank": 2,
+          "points": 0
+        },
+        {
+          "player": 2322021,
+          "nb": 0,
+          "rank": 3,
+          "points": 0
+        }
+      ],
+      "3": [
+        {
+          "player": 0,
+          "nb": 6,
+          "rank": 1,
+          "points": 3
+        },
+        {
+          "player": 2322021,
+          "nb": 0,
+          "rank": 2,
+          "points": 0
+        },
+        {
+          "player": 2322020,
+          "nb": 0,
+          "rank": 2,
+          "points": 0
+        }
+      ],
+      "4": [
+        {
+          "player": 0,
+          "nb": 2,
+          "rank": 1,
+          "points": 4
+        },
+        {
+          "player": 2322021,
+          "nb": 0,
+          "rank": 2,
+          "points": 0
+        },
+        {
+          "player": 2322020,
+          "nb": 0,
+          "rank": 2,
+          "points": 0
+        }
+      ],
+      "5": [
+        {
+          "player": 0,
+          "nb": 3,
+          "rank": 1,
+          "points": 5
+        },
+        {
+          "player": 2322021,
+          "nb": 1,
+          "rank": 2,
+          "points": 0
+        },
+        {
+          "player": 2322020,
+          "nb": 1,
+          "rank": 2,
+          "points": 0
+        }
+      ],
+      "6": [
+        {
+          "player": 0,
+          "nb": 5,
+          "rank": 1,
+          "points": 6
+        },
+        {
+          "player": 2322021,
+          "nb": 1,
+          "rank": 2,
+          "points": 0
+        },
+        {
+          "player": 2322020,
+          "nb": 0,
+          "rank": 3,
+          "points": 0
+        }
+      ]
+    }
+  },
+  "channelorig": "/table/t222798",
+  "gamenameorig": "alhambra",
+  "time": 1610929842,
+  "move_id": 28,
+  "bIsTableMsg": true,
+  "table_id": "222798"
+}));
       },
 
       onScreenWidthChange() {

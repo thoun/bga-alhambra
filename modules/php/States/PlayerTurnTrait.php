@@ -24,11 +24,11 @@ trait PlayerTurnTrait {
     Money::fillPool();
     $bEndOfGame = Buildings::fillPool();
 
+    if(Globals::isScoringRound())
+      $this->scoringRound();   // Trigger a scoring round if needed
 
 /*
 TODO
-        if( self::getGameStateValue( 'scoringAtTheEndOfTurn' ) > 0 )
-            self::scoringRound();   // Trigger a scoring round if needed
 
         if( $bEndOfGame )
         {
@@ -189,9 +189,6 @@ TODO
           }
 
 
-      }
-      else
-      {
       }
       */
   }

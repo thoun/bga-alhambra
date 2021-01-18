@@ -163,7 +163,6 @@ class Money extends \ALH\Helpers\Deck
 
         $card = self::pickForLocation('deck', 'pool');
         Notifications::reformingMoneyDeck();
-//TODO            $this->notifyAllPlayers( "noMoreMoney", clienttranslate("No more money card: recreating a deck"), array() );
 
         if(is_null($card))
           throw new feException( "no more money card" );
@@ -174,16 +173,17 @@ class Money extends \ALH\Helpers\Deck
       if($card['type'] == CARD_SCORING){
         // Scoring at the end of turn
         self::$deck->moveCard($card['id'], 'retired', 0);
-        // TODO
-//          self::setGameStateValue( 'scoringAtTheEndOfTurn', $card['type_arg'] );
+        Globals::setScoringRound($card['value']);
         Notifications::upcomingScoring($card['value']);
-//          $this->notifyAllPlayers( "scoringCard", clienttranslate('A scoring round card has been picked !'), array( "scoring_round" => $card['type_arg'] ) );
       }
       // Otherwise, just add it to pool
       else {
         $newCards[] = $card;
         $nCards++;
       }
+      Globals::setScoringRound(1);
+      Notifications::upcomingScoring(1);
+
     }
 
 

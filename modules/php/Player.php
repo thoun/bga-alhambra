@@ -14,6 +14,7 @@ class Player extends Helpers\DB_Manager
     $this->score = (int) $row['player_score'];
     $this->eliminated = $row['player_eliminated'] == 1;
     $this->zombie = $row['player_zombie'] == 1;
+    $this->longestWall = $row['player_longest_wall'];
   }
 
   private $id;
@@ -23,6 +24,7 @@ class Player extends Helpers\DB_Manager
   private $eliminated = false;
   private $zombie = false;
   private $score;
+  private $longestWall = 0;
 
 
   /////////////////////////////////
@@ -36,7 +38,7 @@ class Player extends Helpers\DB_Manager
   public function getColor(){ return $this->color; }
   public function isEliminated(){ return $this->eliminated; }
   public function isZombie(){ return $this->zombie; }
-
+  public function getStoredLongestWall() { return $this->longestWall; }
   public function getUiData($pId)
   {
     return [
@@ -130,9 +132,9 @@ class Player extends Helpers\DB_Manager
     // Update DB
     if($this->id != 0){
       $longestWall = $this->getBoard()->getLongestWall();
-      $longestWallScore = count($longestWall) - 1;
+      $longestWallScore = max(0, count($longestWall) - 1);
       self::DB()->update(['player_longest_wall' => $longestWallScore], $this->id);
-      Stats::longestWall($this, $longestWallScore);
+      Stats::longestWall($longestWallScore, $this);
 
       $this->updateMaxWall();
     }
@@ -146,5 +148,10 @@ class Player extends Helpers\DB_Manager
    {
      $maxWall = self::DB()->max('player_longest_wall');
      Stats::longestWall($maxWall);
+   }
+
+   function score($value)
+   {
+     self::DB()->inc(['player_score' => $value], $this->id);
    }
 }

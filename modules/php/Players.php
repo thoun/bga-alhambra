@@ -113,9 +113,19 @@ class Players extends \ALH\Helpers\DB_Manager
       'player_name' => clienttranslate('Dirk'),
       'player_score' => 0,
       'player_eliminated' => 0,
-      'player_zombie' => 0
+      'player_zombie' => 0,
+      'player_longest_wall' => 0,
     ];
 
     return new \ALH\Player($row);
+  }
+
+  public function getBuildingCounts()
+  {
+    $data = self::getAll()->assocMap(function($player){ return $player->getBoard()->getBuildingCounts(); });
+    if(Globals::isNeutral()){
+      $data[0] = self::getNeutral()->getBoard()->getBuildingCounts();
+    }
+    return $data;
   }
 }

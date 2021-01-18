@@ -64,91 +64,52 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
 
       // Add the "last placed" class
       dojo.addClass(bId, 'building-last-placed');
-
-/*
-TODO
-        if( player_id == this.player_id )
-        {
-            if( parseInt( x, 10 ) !== 0 || parseInt( y, 10 ) !== 0 )  // Filter fountain
-            {
-                // Add the "remove building" icon
-               this.addTooltip( 'rm_'+building.id, '', _("Remove this building from your Alhambra and place it in your stock") );
-               dojo.connect( $('rm_'+building.id), 'onclick', this, 'onRemoveBuilding' );
-           }
-        }
-*/
     },
 
 
     adaptAlhambra(pId){
+      if(this.alhambraWrappers[pId] == undefined)
+        return;
 
+
+      // Adapt alhambra size & position to make sure it matches the current space
+      var coords_container = dojo.position('alhambra-wrapper-' + pId);
+      var max_width = coords_container.w;
+
+      var coords_alhambra = dojo.position('alhambra-' + pId);
+      var width = coords_alhambra.w;
+      var height = coords_alhambra.h;
+
+      var old_size = this.alhambraWrappers[pId].item_size;
+      var new_size = old_size;
+
+      // Compute new size (shrink or enlarge)
+      if(width > max_width){
+        // The alhambra does not fit (in the width)
+        new_size = toint( Math.floor( this.alhambraWrappers[pId].item_size / width * max_width ) );
+      } else {
+        // It fits... but may it be larger?
+        var tmp_size = Math.min( 95, Math.floor( old_size * max_width / width ) );
+        if(tmp_size > old_size){
+          new_size = tmp_size; // Enlarge !
+        }
+      }
+
+      // Change of size ? => update
+      if(new_size != old_size){
+        // Change tiles size to this size
+        this.alhambraWrapper[pId].item_size = new_size;
+
+        dojo.query('#alhambra-'+player_id+' .building_tile' ).forEach(node => {
+          dojo.style(node, {
+            left : ( dojo.style( node, 'left' ) * new_size / old_size ) + 'px',
+            top : ( dojo.style( node, 'top' ) * new_size / old_size ) + 'px',
+            width :  new_size + 'px',
+            height : new_size + 'px'
+          });
+        });
+      }
       this.alhambraWrappers[pId].rewrap();
-      return;
-
-        if( typeof this.alhambra_wrapper[ player_id] == 'undefined')
-        {
-            return ;
-        }
-
-        // Adapt alhambra size & position to make sure it matches the current space
-        var coords_container = dojo.position( 'alhambra_wrap_'+player_id );
-        var max_width = coords_container.w;
-
-        var coords_alhambra = dojo.position( 'alhambra_'+player_id );
-        var width = coords_alhambra.w;
-        var height = coords_alhambra.h;
-
-
-        if( width > max_width  )
-        {
-            // The alhambra does not fit (in the width)
-            var old_size = this.alhambra_wrapper[ player_id ].item_size;
-            var new_size = toint( Math.floor( this.alhambra_wrapper[ player_id ].item_size / width * max_width ) );
-
-            // Change tiles size to this size
-            this.alhambra_wrapper[ player_id ].item_size = new_size;
-
-            dojo.query( '#alhambra_'+player_id+' .building_tile' ).forEach( dojo.hitch( this, function( node ) {
-                dojo.style( node, 'left', ( dojo.style( node, 'left' ) * new_size / old_size ) + 'px' );
-                dojo.style( node, 'top', ( dojo.style( node, 'top' ) * new_size / old_size ) + 'px' );
-                dojo.style( node, 'width',  new_size + 'px' );
-                dojo.style( node, 'height', new_size + 'px' );
-                dojo.style( node, 'backgroundSize', (new_size*7) + 'px '+(new_size*11)+'px' );
-            } ) );
-
-            this.alhambra_wrapper[ player_id ].rewrap();
-
-        }
-        else
-        {
-            // It fits... but may it be larger?
-            var old_size = this.alhambra_wrapper[ player_id ].item_size;
-            var new_size = Math.min( 95, Math.floor( old_size * max_width / width ) );
-            if( new_size > old_size )
-            {
-                // We can enlarge the size !
-                this.alhambra_wrapper[ player_id ].item_size = new_size;
-
-                dojo.query( '#alhambra_'+player_id+' .building_tile' ).forEach( dojo.hitch( this, function( node ) {
-                    dojo.style( node, 'left', ( dojo.style( node, 'left' ) * new_size / old_size ) + 'px' );
-                    dojo.style( node, 'top', ( dojo.style( node, 'top' ) * new_size / old_size ) + 'px' );
-                    dojo.style( node, 'width',  new_size + 'px' );
-                    dojo.style( node, 'height', new_size + 'px' );
-                    dojo.style( node, 'backgroundSize', (new_size*7) + 'px '+(new_size*11)+'px' );
-                } ) );
-
-                this.alhambra_wrapper[ player_id ].rewrap();
-
-            }
-        }
-
-        // Center the new alhambra
-        var coords_alhambra = dojo.position( 'alhambra_'+player_id );
-        var width = coords_alhambra.w;
-        var height = coords_alhambra.h;
-
-        this.slideToObjectPos( 'alhambra_'+player_id, 'alhambra_wrap_'+player_id, (max_width-width)/2, 40 ).play();
-
     },
 
 

@@ -25,6 +25,10 @@ class Notifications
   }
 
 
+  public static function reformingMoneyDeck(){
+    self::notifyAll("noMoreMoney", clienttranslate("No more money card: recreating a deck"), []);
+  }
+
   public static function newMoneyCards($newCards, $nCardsLeft){
     self::notifyAll("newMoneyCards", '', [
       "cards" => $newCards,
@@ -130,6 +134,17 @@ class Notifications
     ]);
   }
 
+
+  public static function upcomingScoring($round){
+    self::notifyAll("scoringCard", clienttranslate('A scoring round card has been picked !'), [
+      "scoring_round" => $round
+    ]);
+  }
+
+
+  public static function scoringRound($points){
+    self::notifyAll("scoringRound", clienttranslate('Scoring round !'), $points);
+  }
 
   /*
    * Automatically adds some standard field about player and/or card/task

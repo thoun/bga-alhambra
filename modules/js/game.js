@@ -147,8 +147,12 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], (dojo, declare) => {
          var functionName = "notif_" + notif[0];
 
          dojo.subscribe(notif[0], this, functionName);
-         if(notif[1] != null){
-           this.notifqueue.setSynchronous(notif[0], notif[1]);
+         if(notif[1] != undefined){
+           if(notif[1] == null){
+             this.notifqueue.setSynchronous(notif[0]);
+           } else {
+             this.notifqueue.setSynchronous(notif[0], notif[1]);
+           }
 
            // xxxInstant notification runs same function without delay
            dojo.subscribe(notif[0] + 'Instant', this, functionName);

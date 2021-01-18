@@ -113,7 +113,7 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
           let id = 'card-' + card.id;
           dojo.addClass(id, "flipped animate");
           this.placeOnObject(id, "money-deck");
-          this.slide(id, "money-spot-" + i, 800)
+          this.slidePos(id, "money-spot-" + i, 0, 0, 800)
           .then(() => {
             dojo.removeClass(id, "flipped");
             setTimeout(() => dojo.removeClass(id, "animate"), 500);
@@ -143,7 +143,6 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
 
     updateSelectableStacks(){
       var selectedTotal = this.selectedStacks.reduce((carry, i) => carry + this.cardInStacks[i].value, 0);
-      debug(selectedTotal)
       let stacks = null;
       if(selectedTotal != 0){
         stacks = [];
@@ -399,7 +398,6 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
       else if(this.selectionMode == BUILDING_THEN_MONEY){
         // Compare value with selected total
         let total = this.getTotalValueByColorInHand(true); // true = only selected
-        debug(total);
         if(total[this.selectedBuilding.pos] >= this.selectedBuilding.cost)
           this.addPrimaryActionButton('btnConfirmBuyBuilding', _('Buy'), () => this.onConfirmBuyBuilding());
         else

@@ -82,6 +82,14 @@ class Globals
     return $pId == self::getFirstPlayerId();
   }
 
+  public static function isScoringRound(){
+    return self::get('scoringAtTheEndOfTurn') > 0;
+  }
+  
+  public static function getScoringRound(){
+    return self::get('scoringAtTheEndOfTurn');
+  }
+
 
   /*
    * Setters
@@ -96,5 +104,9 @@ class Globals
 
   public static function startNewTurn(){
     self::inc('turn_number');
+  }
+
+  public static function setScoringRound($round){
+    self::set('scoringAtTheEndOfTurn', $round);
   }
 }

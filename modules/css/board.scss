@@ -25,6 +25,32 @@
     border-radius: 15px;
 
 
+    #token-crown {
+      position: absolute;
+      width: 73px;
+      height: 65px;
+      background: #ffeec4;
+      top: 213px;
+      left: 24px;
+      border-radius: 38px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 3px solid red;
+
+      div {
+        width: 60px;
+        height: 42px;
+        background-image: url("img/crowns.png");
+        background-size: 200%;
+      }
+      &[data-round="2"] div { background-position-x: 100% }
+
+      &[data-round="0"] {
+        display:none;
+      }
+    }
+
     .building-spot {
       position: absolute;
       top: 294px;
@@ -307,6 +333,11 @@ TODO
     width: 60px;
     height: 60px;
     margin: 5px;
+
+    &.highlighted {
+      box-shadow: 0 0 3pt 2pt red;
+      border-radius: 10px;
+    }
 
     .building-type-stat {
       width: 60px;

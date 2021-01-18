@@ -40,6 +40,7 @@ class Alhambra extends Table
   use ALH\States\PlayerTurnTrait;
   use ALH\States\PlaceBuildingTrait;
   use ALH\States\ScoringRoundTrait;
+  use ALH\States\EndOfGameTrait;
 
   public static $instance = null;
   public function __construct()
@@ -98,6 +99,7 @@ class Alhambra extends Table
       'neutral' => ALH\Players::getNeutral()->getUiData(0),
       'buildings' => ALH\Buildings::getUiData(),
       'moneyCards' => ALH\Money::getUiData(),
+      'scoreRound' => ALH\Globals::getScoringRound(),
     ];
   }
 

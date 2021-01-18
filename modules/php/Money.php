@@ -181,9 +181,6 @@ class Money extends \ALH\Helpers\Deck
         $newCards[] = $card;
         $nCards++;
       }
-      Globals::setScoringRound(1);
-      Notifications::upcomingScoring(1);
-
     }
 
 

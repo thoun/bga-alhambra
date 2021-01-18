@@ -21,23 +21,20 @@ trait PlayerTurnTrait {
       Globals::startNewTurn();
     }
 
+    if(Globals::isScoringRound()){
+      $this->scoringRound();   // Trigger a scoring round if needed, must be called before filling pool
+    }
+
     Money::fillPool();
     $bEndOfGame = Buildings::fillPool();
 
-    if(Globals::isScoringRound())
-      $this->scoringRound();   // Trigger a scoring round if needed
+    $transition = 'playerTurn';
+    if($bEndOfGame) {
+      Notifications::endOfGame();
+      $transition = 'notEnoughBuilding';
+    }
 
-/*
-TODO
-
-        if( $bEndOfGame )
-        {
-            $this->notifyAllPlayers( "endOfGame", clienttranslate('The last building has been drawn: this is the end of the game!'), array() );
-            $this->gamestate->nextState( 'notEnoughBuilding');
-        }
-        else
-*/
-      $this->gamestate->nextState( 'playerTurn');
+    $this->gamestate->nextState($transition);
   }
 
 
@@ -148,7 +145,7 @@ TODO
     }
     else {
       // More money than expected => go to "place building" step
-      $this->gamestate->nextState( "buildingToPlace" );
+      $this->gamestate->nextState("buildingToPlace");
     }
   }
 
@@ -163,34 +160,19 @@ TODO
   function endTurnOrPlaceBuildings()
   {
     $player = Players::getCurrent();
-    $newState = Buildings::countInLocation("bought") == 0? "endTurn" : "buildingToPlace";
-    $this->gamestate->nextState($newState);
 
-  /*
-    TODO
-      global $g_user;
-      $state = $this->gamestate->state();
-
-      if( $state['name'] == 'placeLastBuildings' )
-      {
-          $all_buildings = $this->buildings->getCardsInLocation( 'bought' );
-          $buildings_to_place = 0;
-
-          foreach( $all_buildings as $building )
-          {
-              if( self::getGameStateValue( 'lastbuilding_'.$building['location_arg'] ) == $g_user->get_id() )
-                  $buildings_to_place ++;
-          }
-
-          if( $buildings_to_place == 0 )
-          {
-              // Specific case: this is the last turn and this player placed all the building he gets
-              $this->gamestate->setPlayerNonMultiactive( $g_user->get_id(), "noMoreBuilding" );
-          }
-
-
+    $state = $this->gamestate->state();
+    if($state['name'] != 'placeLastBuildings'){
+      $newState = Buildings::countInLocation("bought") == 0? "endTurn" : "buildingToPlace";
+      $this->gamestate->nextState($newState);
+    } else {
+      $args = $this->argPlaceLastBuilding();
+      $buildings = $args['_private'][$player->getId()]['buildings'];
+      if(empty($buildings)){
+        $this->gamestate->setPlayerNonMultiactive($player->getId(), "noMoreBuilding" );
+      } else {
+        Notifications::updatePlacementOptions($player, $buildings);
       }
-      */
+    }
   }
-
 }

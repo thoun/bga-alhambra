@@ -150,6 +150,27 @@
     height: 410px;
     background-image: url("img/board.jpg");
     border-radius: 15px; }
+    #board-wrapper #board #token-crown {
+      position: absolute;
+      width: 73px;
+      height: 65px;
+      background: #ffeec4;
+      top: 213px;
+      left: 24px;
+      border-radius: 38px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 3px solid red; }
+      #board-wrapper #board #token-crown div {
+        width: 60px;
+        height: 42px;
+        background-image: url("img/crowns.png");
+        background-size: 200%; }
+      #board-wrapper #board #token-crown[data-round="2"] div {
+        background-position-x: 100%; }
+      #board-wrapper #board #token-crown[data-round="0"] {
+        display: none; }
     #board-wrapper #board .building-spot {
       position: absolute;
       top: 294px;
@@ -368,6 +389,9 @@ TODO
     width: 60px;
     height: 60px;
     margin: 5px; }
+    .alhambra-stats .alhambra-stat.highlighted {
+      box-shadow: 0 0 3pt 2pt red;
+      border-radius: 10px; }
     .alhambra-stats .alhambra-stat .building-type-stat {
       width: 60px;
       height: 40px;
@@ -675,5 +699,83 @@ TODO
     background-position-x: 33.33%; }
   .moneytype .moneyname {
     display: none; }
+
+.buildingtype {
+  font-weight: bold; }
+  .buildingtype.buildingtype_1 {
+    color: blue; }
+  .buildingtype.buildingtype_2 {
+    color: red; }
+  .buildingtype.buildingtype_3 {
+    color: brown; }
+  .buildingtype.buildingtype_4 {
+    color: white;
+    text-shadow: 1px 1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, -1px -1px 0 #000000, 1px 0px 0 #000000, 0px 1px 0 #000000, -1px 0px 0 #000000, 0px -1px 0 #000000; }
+  .buildingtype.buildingtype_5 {
+    color: green; }
+  .buildingtype.buildingtype_6 {
+    color: purple; }
+
+#scoring_panel {
+  position: absolute;
+  display: none;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.3);
+  z-index: 2000; }
+  #scoring_panel .round_scoring {
+    display: none;
+    border: black 10px solid;
+    border-radius: 15px;
+    background-color: white;
+    position: absolute;
+    left: 50%;
+    top: 30px;
+    z-index: 20;
+    height: 500px;
+    background-image: url("img/scoring.png"); }
+    #scoring_panel .round_scoring#round_scoring_1 {
+      width: 86px;
+      margin-left: -43px;
+      background-position: -1px 0px; }
+    #scoring_panel .round_scoring#round_scoring_2 {
+      width: 142px;
+      margin-left: -71px;
+      background-position: -90px 0px; }
+    #scoring_panel .round_scoring#round_scoring_3 {
+      width: 205px;
+      margin-left: -102px;
+      background-position: -236px 0px; }
+    #scoring_panel .round_scoring .scoring_items {
+      position: absolute;
+      left: 7px;
+      top: 113px;
+      width: 100%; }
+      #scoring_panel .round_scoring .scoring_items .scoring_zone {
+        border-radius: 10px;
+        box-shadow: 0 0 3pt 2pt red;
+        width: 70px;
+        height: 55px;
+        margin-bottom: 10.3px;
+        display: inline-block;
+        transition: all .5s;
+        opacity: 0; }
+        #scoring_panel .round_scoring .scoring_items .scoring_zone.highlighted {
+          opacity: 1; }
+    #scoring_panel .round_scoring#round_scoring_2 .scoring_items .scoring_zone {
+      width: 65px;
+      height: 55px;
+      margin-bottom: 5.2px;
+      margin-right: -4px; }
+    #scoring_panel .round_scoring#round_scoring_3 .scoring_items .scoring_zone {
+      width: 66px;
+      height: 55px;
+      margin-bottom: 5.3px;
+      margin-right: -6px; }
+
+.scoring_nbr {
+  font-weight: bold;
+  font-size: 30px;
+  text-shadow: 1px 1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, -1px -1px 0 #fff, 1px 0px 0 #fff, 0px 1px 0 #fff, -1px 0px 0 #fff, 0px -1px 0 #fff; }
 
 /*# sourceMappingURL=alhambra.css.map */

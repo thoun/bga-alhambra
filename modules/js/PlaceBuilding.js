@@ -3,7 +3,8 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
     constructor(){
       this._notifications.push(
         ['placeBuilding', 1000],
-        ['swapBuildings', 1000]
+        ['swapBuildings', 1000],
+        ['updatePlacementOptions', 10]
       );
 
       this.draggables = [];
@@ -29,6 +30,28 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
       if(this.gamedatas.isNeutral){
         this.onEnteringStatePlaceBuildingsWithNeutral();
       }
+    },
+
+
+    /*
+     * LAST BUILDINGS
+     */
+    onEnteringStatePlaceLastBuildings(args){
+      args._private.remove.forEach(building => {
+        dojo.removeClass('building-tile-' + building.id, "bought");
+        dojo.style('building-tile-' + building.id, { top:0, left: 0});
+      });
+
+      if(this.isCurrentPlayerActive()){
+        this.addToBuildingSiteToPlace(args._private.buildings, true);
+        this.makeBuildingsDraggable(args._private.buildings);
+      }
+    },
+
+    notif_updatePlacementOptions(n){
+      debug("Notif: update options");
+      this.clearPossible();
+      this.makeBuildingsDraggable(n.args.buildings);
     },
 
 

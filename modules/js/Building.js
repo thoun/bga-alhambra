@@ -57,7 +57,7 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
 
 
     // Add to building site the list of building (deck format) to be placed in the Alhambra
-    addToBuildingSiteToPlace(buildings){
+    addToBuildingSiteToPlace(buildings, animate = false){
       debug("Adding building on site to place", buildings);
       buildings.forEach(building => {
         if(!$('building-tile-' + building.id))
@@ -66,7 +66,11 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
         dojo.addClass('building-tile-' + building.id, 'bought');
         this.buildingSite[building.pos] = building;
 
-        this.slideToObjectPos( $('building-tile-' + building.id ), $('building-spot-' + building.pos), -16, -20 ).play();
+        if(animate){
+          this.slideToObjectPos( $('building-tile-' + building.id ), $('building-spot-' + building.pos), -16, -20 ).play();
+        } else {
+          dojo.style('building-tile-' + building.id , { left:"-16xp", top:"-20px" });
+        }
       });
     },
 
@@ -230,7 +234,7 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
         }
       });
 
-      setTimeout(() => this.addToBuildingSiteToPlace([building]), 500);
+      setTimeout(() => this.addToBuildingSiteToPlace([building], true), 500);
     },
 
 

@@ -41,57 +41,7 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
         this.place('jstpl_neutralPlayerBoard', neutral, 'player_boards');
         this.setupPlayerStats(neutral);
         this.updatePlayerStats(neutral);
-        /*
-        TODO
-          dojo.place( this.format_block('jstpl_neutral_player_board', {
-            id:0,
-              color:'000000',
-              name:
-          } ), $('player_boards') );
-
-            var player_id = 0;
-            var player_board_div = $('player_board_'+player_id);
-            dojo.place( this.format_block('jstpl_player_board', {id: player_id } ), player_board_div );
-          *
-
-            $('wallnbr_'+player_id).innerHTML = player.longest_wall;
-
-            if( gamedatas.alamb_stats[ player_id ] )
-            {
-                for( var building_type_id in gamedatas.alamb_stats[ player_id ] )
-                {
-                    $('btnbr_'+building_type_id+'_'+player_id).innerHTML = gamedatas.alamb_stats[ player_id ][ building_type_id ];
-                }
-            }
-
-          }*/
       }
-
-
-
-      /*
-      for( player_id in gamedatas.players )
-      {
-
-          this.alamb_stock[ player_id ] = new ebg.zone();
-          this.alamb_stock[ player_id ].create( this, $('stock_'+player_id), 95, 95 );
-          if( player_id != this.player_id )
-          {
-              this.alamb_stock[ player_id ].autowidth = true;
-          }
-          this.alamb_stock[ player_id ].setFluidWidth();
-
-          $('wallnbr_'+player_id).innerHTML = player.longest_wall;
-
-          if( gamedatas.alamb_stats[ player_id ] )
-          {
-              for( var building_type_id in gamedatas.alamb_stats[ player_id ] )
-              {
-                  $('btnbr_'+building_type_id+'_'+player_id).innerHTML = gamedatas.alamb_stats[ player_id ][ building_type_id ];
-              }
-          }
-      }
-*/
     },
 
 

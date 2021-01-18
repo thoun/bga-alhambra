@@ -85,9 +85,13 @@ class Globals
   public static function isScoringRound(){
     return self::get('scoringAtTheEndOfTurn') > 0;
   }
-  
+
   public static function getScoringRound(){
     return self::get('scoringAtTheEndOfTurn');
+  }
+
+  public static function getLastBuilding($type){
+    return self::get('lastbuilding_'.$type);
   }
 
 
@@ -108,5 +112,9 @@ class Globals
 
   public static function setScoringRound($round){
     self::set('scoringAtTheEndOfTurn', $round);
+  }
+
+  public static function setLastBuilding($type, $maxPlayer){
+    self::set( 'lastbuilding_'.$type, $maxPlayer);
   }
 }

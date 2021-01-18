@@ -26,3 +26,18 @@
     display: none;
   }
 }
+
+
+.buildingtype {
+  font-weight: bold;
+
+  &.buildingtype_1 { color: blue }
+  &.buildingtype_2 { color: red }
+  &.buildingtype_3 { color: brown }
+  &.buildingtype_4 {
+    color: white;
+    text-shadow: 1px 1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, -1px -1px 0 #000000, 1px 0px 0 #000000, 0px 1px 0 #000000, -1px 0px 0 #000000, 0px -1px 0 #000000;
+  }
+  &.buildingtype_5 { color: green }
+  &.buildingtype_6 { color: purple }
+}

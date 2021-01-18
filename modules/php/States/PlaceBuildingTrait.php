@@ -32,7 +32,11 @@ trait PlaceBuildingTrait {
    */
   function checkPlaceBuilding($buildingId, $zone)
   {
-    $buildings = $this->gamestate->state()['args']['buildings'];
+    $args = $this->gamestate->state()['args'];
+    if($this->gamestate->state()['name'] == 'placeLastBuildings')
+      $args = $args['_private'][$this->getCurrentPlayerId()];
+    $buildings = $args['buildings'];
+
     // Try to find the building
     $building = \array_reduce($buildings, function($carry, $building) use ($buildingId){
       return $carry ?? ($building['id'] == $buildingId? $building : null);
@@ -55,7 +59,7 @@ trait PlaceBuildingTrait {
   {
     self::checkAction("placeBuilding");
     $building = $this->checkPlaceBuilding($buildingId, 'stock');
-    $player = Players::getActive();
+    $player = Players::getCurrent();
     $player->placeBuildingInStock($building);
     if($building['location'] == 'alam'){
       Stats::transform($player);
@@ -69,7 +73,7 @@ trait PlaceBuildingTrait {
   {
     self::checkAction("placeBuilding");
     $building = $this->checkPlaceBuilding($buildingId, ['x' => $x, 'y' => $y]);
-    $player = Players::getActive();
+    $player = Players::getCurrent();
 
     // Is there a piece already at this position ?
     $piece = Buildings::getAt($player->getId(), $x, $y);
@@ -92,7 +96,7 @@ trait PlaceBuildingTrait {
     self::checkAction('placeBuilding');
     // Get all buildings to place and place them into neutral player alhambra
     $buildings = Buildings::getInLocation('bought');
-    $player = Players::getActive();
+    $player = Players::getCurrent();
     Buildings::giveTilesToNeutral($buildings, false, $player);
     self::endTurnOrPlaceBuildings();
   }

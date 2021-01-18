@@ -137,7 +137,7 @@ class Notifications
 
   public static function upcomingScoring($round){
     self::notifyAll("scoringCard", clienttranslate('A scoring round card has been picked !'), [
-      "scoring_round" => $round
+      "round" => $round
     ]);
   }
 
@@ -145,6 +145,36 @@ class Notifications
   public static function scoringRound($points){
     self::notifyAll("scoringRound", clienttranslate('Scoring round !'), $points);
   }
+
+
+  public static function endOfGame(){
+    self::notifyAll("endOfGame", clienttranslate('The last building has been drawn: this is the end of the game!'), []);
+  }
+
+  public static function noGetBuilding($building, $moneyType, $bTie){
+    $msg = $bTie? clienttranslate('Several players has the same value in ${money_name}, ${building_type_pre}${building_type}${building_type_post} stays in buildingsite')
+        : clienttranslate('Nobody has any ${money_name}, ${building_type_pre}${building_type}${building_type_post} stays in buildingsite');
+
+    self::notifyAll("nogetBuilding", $msg, [
+      'building' => $building,
+      'money' => $moneyType,
+    ]);
+  }
+
+  public static function getFreeBuilding($player, $building, $moneyType){
+    self::notifyAll("getBuilding", clienttranslate('${player_name} gets ${building_type_pre}${building_type}${building_type_post} because he has the most ${money_name}'), [
+      'player' => $player,
+      'building' => $building,
+      'money' => $moneyType,
+    ]);
+  }
+
+  public static function updatePlacementOptions($player, $buildings){
+    self::notify($player->getId(), 'updatePlacementOptions', '', [
+      'buildings' => $buildings,
+    ]);
+  }
+
 
   /*
    * Automatically adds some standard field about player and/or card/task
@@ -169,9 +199,6 @@ class Notifications
         TOWER => clienttranslate("tower")        // purple
       ];
 
-      if(!isset($args['i18n'])){
-        $args['i18n'] = [];
-      }
       $args['i18n'][] = 'building_type';
       $args['building_type'] = $names[$args['building']['type'] ];
       $args["building_type_pre"] = '<span class="buildingtype buildingtype_'.$args['building']['type'] .'">';
@@ -185,16 +212,15 @@ class Notifications
       }
     }
 
+    $moneyNames = [
+      1 => clienttranslate("couronne"), // yellow
+      2 => clienttranslate("dirham"),   // green
+      3 => clienttranslate("dinar"),    // blue
+      4 => clienttranslate("ducat")     // orange
+    ];
 
     //#### CARDS #####
     if(isset($args['cards'])) {
-      $names = [
-        1 => clienttranslate("couronne"), // yellow
-        2 => clienttranslate("dirham"),   // green
-        3 => clienttranslate("dinar"),    // blue
-        4 => clienttranslate("ducat")     // orange
-      ];
-
       $description = '';
       $description_args = [];
       $i = 0;
@@ -202,7 +228,7 @@ class Notifications
         if($description != '' )
             $description .= ', ';
         $description .= '<span class="moneytype moneytype_'.$card['type'].'">'.$card['value'].' <span class="moneyicon"></span><span class="moneyname">${money_name_'.$i.'}'.'</span></span>';
-        $description_args['money_name_'.$i] = $names[ $card['type'] ];
+        $description_args['money_name_'.$i] = $moneyNames[ $card['type'] ];
         $description_args['i18n'][] = 'money_name_'.$i;
         $i++;
       }
@@ -211,6 +237,12 @@ class Notifications
         "log" => $description,
         "args" => $description_args
       ];
+    }
+
+    //#### MONEY ####
+    if(isset($args['money'])) {
+      $args['money_name'] = $moneyNames[$args['money']];
+      $args['i18n'][] = 'money_name';
     }
   }
 }

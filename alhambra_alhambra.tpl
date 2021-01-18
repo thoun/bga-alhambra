@@ -4,6 +4,7 @@
     <div id="left-part">
       <div id="board-wrapper" class="alhambra-block">
         <div id="board">
+          <div id="token-crown" data-round="0"><div></div></div>
           <div id="building-deck" class="building-spot">
             <div id="building-count"></div>
           </div>
@@ -36,6 +37,57 @@
     </div>
 
     <!-- right part will be added by js if not spectator -->
+
+    <div id="scoring_panel">
+        <div id="round_scoring_1" class="round_scoring">
+            <div class="scoring_items">
+                <div id="scoring_1_1_1" class="scoring_zone"></div>
+                <div id="scoring_1_2_1" class="scoring_zone"></div>
+                <div id="scoring_1_3_1" class="scoring_zone"></div>
+                <div id="scoring_1_4_1" class="scoring_zone"></div>
+                <div id="scoring_1_5_1" class="scoring_zone"></div>
+                <div id="scoring_1_6_1" class="scoring_zone"></div>
+            </div>
+        </div>
+        <div id="round_scoring_2" class="round_scoring">
+            <div class="scoring_items">
+                <div id="scoring_2_1_1" class="scoring_zone"></div>
+                <div id="scoring_2_1_2" class="scoring_zone"></div>
+                <div id="scoring_2_2_1" class="scoring_zone"></div>
+                <div id="scoring_2_2_2" class="scoring_zone"></div>
+                <div id="scoring_2_3_1" class="scoring_zone"></div>
+                <div id="scoring_2_3_2" class="scoring_zone"></div>
+                <div id="scoring_2_4_1" class="scoring_zone"></div>
+                <div id="scoring_2_4_2" class="scoring_zone"></div>
+                <div id="scoring_2_5_1" class="scoring_zone"></div>
+                <div id="scoring_2_5_2" class="scoring_zone"></div>
+                <div id="scoring_2_6_1" class="scoring_zone"></div>
+                <div id="scoring_2_6_2" class="scoring_zone"></div>
+            </div>
+        </div>
+        <div id="round_scoring_3" class="round_scoring">
+            <div class="scoring_items">
+                <div id="scoring_3_1_1" class="scoring_zone"></div>
+                <div id="scoring_3_1_2" class="scoring_zone"></div>
+                <div id="scoring_3_1_3" class="scoring_zone"></div>
+                <div id="scoring_3_2_1" class="scoring_zone"></div>
+                <div id="scoring_3_2_2" class="scoring_zone"></div>
+                <div id="scoring_3_2_3" class="scoring_zone"></div>
+                <div id="scoring_3_3_1" class="scoring_zone"></div>
+                <div id="scoring_3_3_2" class="scoring_zone"></div>
+                <div id="scoring_3_3_3" class="scoring_zone"></div>
+                <div id="scoring_3_4_1" class="scoring_zone"></div>
+                <div id="scoring_3_4_2" class="scoring_zone"></div>
+                <div id="scoring_3_4_3" class="scoring_zone"></div>
+                <div id="scoring_3_5_1" class="scoring_zone"></div>
+                <div id="scoring_3_5_2" class="scoring_zone"></div>
+                <div id="scoring_3_5_3" class="scoring_zone"></div>
+                <div id="scoring_3_6_1" class="scoring_zone"></div>
+                <div id="scoring_3_6_2" class="scoring_zone"></div>
+                <div id="scoring_3_6_3" class="scoring_zone"></div>
+            </div>
+        </div>
+    </div>
   </div>
 
   <div id="bottom-part"></div>
@@ -155,6 +207,7 @@ var jstpl_playerStats = `
 /************************
 ******** SCORING ********
 ************************/
+var jstpl_tmpScoring = '<div id="scoring_${type}_${pId}_${score}" class="scoring_nbr">+${score}</div>';
 
 var jstpl_scoringDlgBuilding = '<div class="scoringBuilding">\
         <div class="building_tile_scoring" style="background-position: ${back_x}px 0px"></div>\

@@ -152,6 +152,6 @@ class Player extends Helpers\DB_Manager
 
    function score($value)
    {
-     self::DB()->inc(['player_score' => $value], $this->id);
+     self::DB()->inc(['player_score' => (int) $value], $this->id);
    }
 }

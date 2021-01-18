@@ -64,173 +64,22 @@
         this.setupMoneyPool();
         this.setupBuildingsPool();
         this.setupPlayers();
+        this.setupTooltips();
+        dojo.attr('token-crown', 'data-round', gamedatas.scoreRound);
         this.inherited(arguments);
       },
 
 
       onUpdateActionButtons(){
-        this.addPrimaryActionButton("coucou", "Coucou", () => this.notif_scoringRound({
-  "uid": "6004d6b1f196c",
-  "type": "scoringRound",
-  "log": "Scoring round !",
-  "args": {
-    "round_no": 1,
-    "players": {
-      "0": {
-        "points": 21,
-        "walls": 0
-      },
-      "2322020": {
-        "walls": "2",
-        "points": 2
-      },
-      "2322021": {
-        "walls": "2",
-        "points": 2
-      }
-    },
-    "buildingdetails": {
-      "1": [
-        {
-          "player": 0,
-          "nb": 2,
-          "rank": 1,
-          "points": 1
-        },
-        {
-          "player": 2322021,
-          "nb": 0,
-          "rank": 2,
-          "points": 0
-        },
-        {
-          "player": 2322020,
-          "nb": 0,
-          "rank": 2,
-          "points": 0
-        }
-      ],
-      "2": [
-        {
-          "player": 0,
-          "nb": 2,
-          "rank": 1,
-          "points": 2
-        },
-        {
-          "player": 2322020,
-          "nb": 1,
-          "rank": 2,
-          "points": 0
-        },
-        {
-          "player": 2322021,
-          "nb": 0,
-          "rank": 3,
-          "points": 0
-        }
-      ],
-      "3": [
-        {
-          "player": 0,
-          "nb": 6,
-          "rank": 1,
-          "points": 3
-        },
-        {
-          "player": 2322021,
-          "nb": 0,
-          "rank": 2,
-          "points": 0
-        },
-        {
-          "player": 2322020,
-          "nb": 0,
-          "rank": 2,
-          "points": 0
-        }
-      ],
-      "4": [
-        {
-          "player": 0,
-          "nb": 2,
-          "rank": 1,
-          "points": 4
-        },
-        {
-          "player": 2322021,
-          "nb": 0,
-          "rank": 2,
-          "points": 0
-        },
-        {
-          "player": 2322020,
-          "nb": 0,
-          "rank": 2,
-          "points": 0
-        }
-      ],
-      "5": [
-        {
-          "player": 0,
-          "nb": 3,
-          "rank": 1,
-          "points": 5
-        },
-        {
-          "player": 2322021,
-          "nb": 1,
-          "rank": 2,
-          "points": 0
-        },
-        {
-          "player": 2322020,
-          "nb": 1,
-          "rank": 2,
-          "points": 0
-        }
-      ],
-      "6": [
-        {
-          "player": 0,
-          "nb": 5,
-          "rank": 1,
-          "points": 6
-        },
-        {
-          "player": 2322021,
-          "nb": 1,
-          "rank": 2,
-          "points": 0
-        },
-        {
-          "player": 2322020,
-          "nb": 0,
-          "rank": 3,
-          "points": 0
-        }
-      ]
-    }
-  },
-  "channelorig": "/table/t222798",
-  "gamenameorig": "alhambra",
-  "time": 1610929842,
-  "move_id": 28,
-  "bIsTableMsg": true,
-  "table_id": "222798"
-}));
+//        this.addPrimaryActionButton("coucou", "Coucou", () => this.notif_scoringRound();
       },
 
       onScreenWidthChange() {
         this.adaptPlayerHandOverlap();
-
-/*
-TODO
-          for( player_id in this.gamedatas.alamb )
-          {
-              this.adaptAlhambra( player_id );
-          }
-          */
+        Object.values(this.gamedatas.players).forEach(player => this.adaptAlhambra(player.id) );
+        if(this.gamedatas.isNeutral){
+          this.adaptAlhambra(0);
+        }
       },
 
 
@@ -274,16 +123,20 @@ TODO
       },
 
 
-      onScreenWidthChange() {
-        this.adaptPlayerHandOverlap();
-        /*
-         TODO handle Dirk
-          for( player_id in this.gamedatas.alamb )
-          {
-              this.adaptAlhambra( player_id );
-          }
-        */
-      },
+      setupTooltips(){
+        this.addTooltip( 'player-aid', _("Points wins at each scoring round.<br/>Example: on the second scoring round, the player with the most red buildings wins 9 points and the second wins 2 points."), '' );
+        this.addTooltip( 'money-count', _("Number of remaining money cards in the deck"), '' );
+        this.addTooltip( 'building-count', _("Number of remaining building tiles (no more tiles = game end)"), '' );
+        this.addTooltip( 'token-crown', _("A scoring round will take place at the end of this turn"), '' );
 
+        this.addTooltipToClass( 'stat-1', dojo.string.substitute( _("Number of ${building} in this player palace"), {building: _("pavillon")} ), '' );
+        this.addTooltipToClass( 'stat-2', dojo.string.substitute( _("Number of ${building} in this player palace"), {building: _("seraglio")} ), '' );
+        this.addTooltipToClass( 'stat-3', dojo.string.substitute( _("Number of ${building} in this player palace"), {building: _("arcades")} ), '' );
+        this.addTooltipToClass( 'stat-4', dojo.string.substitute( _("Number of ${building} in this player palace"), {building: _("chambers")} ), '' );
+        this.addTooltipToClass( 'stat-5', dojo.string.substitute( _("Number of ${building} in this player palace"), {building: _("garden")} ), '' );
+        this.addTooltipToClass( 'stat-6', dojo.string.substitute( _("Number of ${building} in this player palace"), {building: _("pavillon")} ), '' );
+        this.addTooltipToClass( 'wall-stat', _("Length of the longest wall"), '' );
+        this.addTooltipToClass( 'card-nbr', _("Number of cards in hand"), '' );
+      },
    });
 });

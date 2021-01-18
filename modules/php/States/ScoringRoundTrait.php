@@ -11,9 +11,9 @@ use ALH\Stats;
 trait ScoringRoundTrait {
 
   // Trigger a scoring round
-  function scoringRound($forcevalue = null)
+  function scoringRound()
   {
-    $round = $forcevalue ?? Globals::getScoringRound();
+    $round = Globals::getScoringRound();
     Globals::setScoringRound(0);
 
     // Get players points and points details
@@ -21,6 +21,9 @@ trait ScoringRoundTrait {
 
     // Increase player scores
     foreach($points['players'] as $pId => $result){
+      if($pId == 0)
+        continue;
+
       Players::get($pId)->score($result['points']);
       Stats::setScoringResult($pId, $result['points'], $round);
     }
@@ -91,6 +94,10 @@ trait ScoringRoundTrait {
           $rank += $nbrPlayerTie;
           $nbrPlayerTie = 1;
         }
+
+        // You must have at least one building of the type to score
+        if($count == 0)
+          $rank = 4;
 
         $rankToPlayers[$rank][] = $pId;
         $previousCount = $count;

@@ -147,7 +147,7 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], (dojo, declare) => {
          var functionName = "notif_" + notif[0];
 
          dojo.subscribe(notif[0], this, functionName);
-         if(notif[1] != undefined){
+         if(notif[1] !== undefined){
            if(notif[1] == null){
              this.notifqueue.setSynchronous(notif[0]);
            } else {
@@ -317,6 +317,11 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], (dojo, declare) => {
     },
 
 
+    pause(ms){
+      return new Promise((resolve, reject) => {
+        setTimeout( () => resolve(), ms);
+      });
+    },
 
     /*
      * Return a span with a colored 'You'

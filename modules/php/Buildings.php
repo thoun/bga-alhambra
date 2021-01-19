@@ -25,11 +25,15 @@ class Buildings extends \ALH\Helpers\Deck
 
   protected static function cast($row)
   {
+    if(is_null($row))
+      return null;
+
     // Type arg contains unique id of building, static info are in $buildings
     $data = self::$buildings[$row['type_arg']];
 
     $data['id'] = (int) $row['id'];
     $data['location'] = $row['location'];
+    $data['location_arg'] = $row['location_arg'];
     $data['x'] = $row['card_x'] ?? null;
     $data['y'] = $row['card_y'] ?? null;
 

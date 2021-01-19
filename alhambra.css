@@ -267,8 +267,9 @@ TODO
     background-size: 100px;
     z-index: -1; }
   .alhambra-block::before, #popin_moneyDialog::before {
-    border-radius: 40px; }
+    border-radius: 20px; }
   .alhambra-block::after, #popin_moneyDialog::after {
+    border: 1px solid;
     border-image-slice: 70 70 70 100;
     border-image-width: 13px 15px 13px 15px;
     border-image-outset: 0px 0px 0px 0px;
@@ -278,7 +279,7 @@ TODO
     filter: drop-shadow(1px 1px 2px #2f2719); }
   .alhambra-block h3, #popin_moneyDialog h3 {
     display: none;
-    font-family: 'Chopin Script'; }
+    font-family: "Roboto", Arial, sans-serif; }
 
 #upper-part {
   display: flex;
@@ -302,7 +303,7 @@ TODO
         width: 620px;
         height: 477px;
         background-image: url("img/player_aid.jpg");
-        border-radius: 10px;
+        border-radius: 22px;
         margin-top: 6px; }
         @media only screen and (max-width: 1480px) {
           #upper-part #left-part #player-aid-wrapper #player-aid {
@@ -347,7 +348,8 @@ TODO
       min-height: 635px; }
 
 #bottom-part .alhambra-wrapper {
-  margin-bottom: 20px; }
+  margin-bottom: 20px;
+  z-index: 20; }
 
 .alhambra-wrapper {
   display: flex;
@@ -357,6 +359,18 @@ TODO
   position: relative; }
   .alhambra-wrapper::before {
     background-image: url("img/desert-texture.jpg"); }
+  .alhambra-wrapper h3 {
+    display: block;
+    position: absolute;
+    right: 20px;
+    top: 10px;
+    padding: 10px 15px; }
+    .alhambra-wrapper h3::before {
+      background: #f9f1e8;
+      border-radius: 15px; }
+    .alhambra-wrapper h3::after {
+      border-image-width: 7px 8px 7px 8px;
+      filter: none; }
   .alhambra-wrapper .alhambra-stock {
     position: absolute;
     left: 15px;
@@ -426,21 +440,30 @@ TODO
     .alhambra-stats .alhambra-stat.stat-6 {
       color: purple; }
   .alhambra-stats .wall-stat {
-    width: 128px;
+    width: 110px;
     height: 22px;
     display: flex;
     align-items: center;
     margin-top: 5px; }
+    @media only screen and (min-width: 1480px) {
+      .alhambra-stats .wall-stat {
+        width: 128px; } }
     .alhambra-stats .wall-stat .wallicon {
-      width: 45px;
+      width: 38px;
       height: 100%;
       background-image: url("img/icons_panel.png");
       background-position: 100% center; }
+      @media only screen and (min-width: 1480px) {
+        .alhambra-stats .wall-stat .wallicon {
+          width: 45px; } }
     .alhambra-stats .wall-stat .wall-nbr {
+      width: 30px;
       text-align: center;
-      width: 38px;
       font-weight: 700;
       font-size: 20px; }
+      @media only screen and (min-width: 1480px) {
+        .alhambra-stats .wall-stat .wall-nbr {
+          width: 38px; } }
   .alhambra-stats .card-nbr {
     height: 30px;
     display: flex;
@@ -715,6 +738,19 @@ TODO
     color: green; }
   .buildingtype.buildingtype_6 {
     color: purple; }
+
+/* Cancelled notification messages */
+.log.cancel {
+  color: #c62828 !important;
+  text-decoration: line-through; }
+
+/* Desktop logs */
+.log.cancel .roundedbox {
+  background-color: rgba(239, 154, 154, 0.6); }
+
+/* Mobile logs */
+.log.cancel.roundedbox {
+  background-color: #ef9a9a; }
 
 #scoring_panel {
   position: absolute;

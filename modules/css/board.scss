@@ -161,10 +161,11 @@ TODO
   }
 
   &::before {
-    border-radius: 40px;
+    border-radius: 20px;
   }
 
   &::after {
+    border:1px solid;
     border-image-slice: 70 70 70 100;
     border-image-width: 13px 15px 13px 15px;
     border-image-outset: 0px 0px 0px 0px;
@@ -176,7 +177,7 @@ TODO
 
   h3 {
     display:none;
-    font-family: 'Chopin Script';
+    font-family: "Roboto", Arial, sans-serif; //'Chopin Script';
   }
 }
 
@@ -207,7 +208,7 @@ TODO
         width: 620px;
         height: 477px;
         background-image: url('img/player_aid.jpg');
-        border-radius: 10px;
+        border-radius: 22px;
         margin-top: 6px;
         @media only screen and (max-width: $breakPoint) {
           display:none;
@@ -274,6 +275,7 @@ TODO
 
 #bottom-part .alhambra-wrapper {
   margin-bottom:20px;
+  z-index: 20;
 }
 
 .alhambra-wrapper {
@@ -284,6 +286,22 @@ TODO
   position:relative;
   &::before {
     background-image:url('img/desert-texture.jpg');
+  }
+
+  h3 {
+    display: block;
+    position: absolute;
+    right:20px;
+    top:10px;
+    padding: 10px 15px;
+    &::before {
+      background:#f9f1e8;
+      border-radius: 15px;
+    }
+    &::after {
+      border-image-width: 7px 8px 7px 8px;
+      filter: none;
+    }
   }
 
   .alhambra-stock {
@@ -365,24 +383,36 @@ TODO
 
 
   .wall-stat {
-    width: 128px;
+    width: 110px;
     height: 22px;
     display: flex;
     align-items: center;
     margin-top: 5px;
+    @media only screen and (min-width: $breakPoint) {
+      width: 128px;
+    }
+
 
     .wallicon {
-      width: 45px;
+      width: 38px;
       height: 100%;
       background-image: url('img/icons_panel.png');
       background-position:100% center;
+
+      @media only screen and (min-width: $breakPoint) {
+        width: 45px;
+      }
     }
 
     .wall-nbr {
+      width:30px;
       text-align: center;
-      width: 38px;
       font-weight: 700;
       font-size:20px;
+
+      @media only screen and (min-width: $breakPoint) {
+        width: 38px;
+      }
     }
   }
 

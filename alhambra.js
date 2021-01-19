@@ -47,6 +47,10 @@
     ], {
       constructor(){
         this.selectionMode = null; // moneyThenBuilding or buildingThenMoney
+        this._notifications.push(
+          ['clearTurnPrivate', 1],
+          ['clearTurn', 1]
+        );
       },
 
 
@@ -87,6 +91,7 @@
         if(!this.isCurrentPlayerActive())
           return;
 
+        this.checkCancelable(args);
         this.makeMoneyPoolSelectable();
         this.updateSelectableBuildings();
         this.makeBuildingsDraggable(args.buildings);
@@ -112,7 +117,8 @@
           this.initialMoneyDlg.destroy();
 
         this.selectedStacks = [];
-        this.onCancelBuyBuilding();
+        if(!this.isSpectator)
+          this.onCancelBuyBuilding();
         dojo.query(".money-spot").removeClass('selected selectable unselectable');
         dojo.query(".stockitem").removeClass('stockitem_selected selectable unselectable');
         dojo.query(".building-tile").removeClass('selected selectable unselectable');
@@ -127,16 +133,86 @@
         this.addTooltip( 'player-aid', _("Points wins at each scoring round.<br/>Example: on the second scoring round, the player with the most red buildings wins 9 points and the second wins 2 points."), '' );
         this.addTooltip( 'money-count', _("Number of remaining money cards in the deck"), '' );
         this.addTooltip( 'building-count', _("Number of remaining building tiles (no more tiles = game end)"), '' );
-        this.addTooltip( 'token-crown', _("A scoring round will take place at the end of this turn"), '' );
+        this.addTooltip( 'token-crown', _("A scoring round is taking place"), '' );
 
         this.addTooltipToClass( 'stat-1', dojo.string.substitute( _("Number of ${building} in this player palace"), {building: _("pavillon")} ), '' );
         this.addTooltipToClass( 'stat-2', dojo.string.substitute( _("Number of ${building} in this player palace"), {building: _("seraglio")} ), '' );
         this.addTooltipToClass( 'stat-3', dojo.string.substitute( _("Number of ${building} in this player palace"), {building: _("arcades")} ), '' );
         this.addTooltipToClass( 'stat-4', dojo.string.substitute( _("Number of ${building} in this player palace"), {building: _("chambers")} ), '' );
         this.addTooltipToClass( 'stat-5', dojo.string.substitute( _("Number of ${building} in this player palace"), {building: _("garden")} ), '' );
-        this.addTooltipToClass( 'stat-6', dojo.string.substitute( _("Number of ${building} in this player palace"), {building: _("pavillon")} ), '' );
+        this.addTooltipToClass( 'stat-6', dojo.string.substitute( _("Number of ${building} in this player palace"), {building: _("tower")} ), '' );
         this.addTooltipToClass( 'wall-stat', _("Length of the longest wall"), '' );
         this.addTooltipToClass( 'card-nbr', _("Number of cards in hand"), '' );
       },
+
+
+
+      ///////////////////////////////////////
+      ///////////////////////////////////////
+      /////////   Confirm/undo turn   ///////
+      ///////////////////////////////////////
+      ///////////////////////////////////////
+      onEnteringStateConfirmTurn(args){
+        if(!this.isCurrentPlayerActive())
+          return;
+
+        this.addPrimaryActionButton("buttonConfirmAction", _("Confirm"), 'onClickConfirmTurn');
+        this.addSecondaryActionButton("buttonCancelAction", _("Cancel"), 'onClickCancelTurn');
+
+        // Launch timer on button depending on pref
+        const CONFIRM = 102;
+        const CONFIRM_TIMER = 1;
+        const CONFIRM_ENABLED = 2;
+        const CONFIRM_DISABLED = 3;
+
+        var pref = 1;
+        if(this.prefs[CONFIRM].value == CONFIRM_DISABLED) pref = 0;
+        if(this.prefs[CONFIRM].value == CONFIRM_ENABLED) pref = 2;
+        this.startActionTimer('buttonConfirmAction', 10, pref);
+      },
+
+      checkCancelable(args){
+        if(args.cancelable)
+          this.addDangerActionButton("buttonCancelAction", _("Restart turn"), 'onClickCancelTurn');
+      },
+
+      onClickConfirmTurn(){
+        this.takeAction("confirmTurn");
+      },
+
+      onClickCancelTurn(){
+        this.takeAction("cancelTurn");
+      },
+
+      // Called before the main notif only for active player to update hand
+      notif_clearTurnPrivate(n){
+        this.refreshPlayerHand(n.args.hand);
+      },
+
+      notif_clearTurn(n){
+        debug("Notif: restarting turn", n);
+        // Clear first money and buildings pools to avoid duplicate id
+        this.clearMoneyPool();
+        this.clearBuildingsPool();
+
+        // Then refresh current player
+        this.gamedatas.players[n.args.playerData.id] = n.args.playerData;
+        this.refreshPlayer(n.args.playerData);
+
+        // Then refresh neutral if needed
+        this.gamedatas.neutral = n.args.neutral;
+        if(this.gamedatas.isNeutral)
+          this.refreshPlayer(n.args.neutral);
+
+        // Then refresh pools
+        this.gamedatas.moneyCards = n.args.moneyCards;
+        this.gamedatas.buildings = n.args.buildings;
+        this.setupMoneyPool(false);
+        this.setupBuildingsPool(false);
+
+        // Update canceled logs
+        this.cancelLogs(n.args.notifIds);
+      },
+
    });
 });

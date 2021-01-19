@@ -27,6 +27,7 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
         return;
 
       this.makeBuildingsDraggable(args.buildings);
+      this.checkCancelable(args);
       if(this.gamedatas.isNeutral){
         this.onEnteringStatePlaceBuildingsWithNeutral();
       }
@@ -37,6 +38,9 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
      * LAST BUILDINGS
      */
     onEnteringStatePlaceLastBuildings(args){
+      if(!this.isCurrentPlayerActive())
+        return;
+
       args._private.remove.forEach(building => {
         dojo.removeClass('building-tile-' + building.id, "bought");
         dojo.style('building-tile-' + building.id, { top:0, left: 0});

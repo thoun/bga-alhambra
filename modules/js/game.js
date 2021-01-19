@@ -11,6 +11,10 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], (dojo, declare) => {
       this._notifications = [];
       this._activeStates = [];
       this._connections = [];
+
+      // Canceled ids stuff
+      this._notif_uid_to_log_id = {};
+      this._last_notif = null;
     },
 
 
@@ -28,9 +32,9 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], (dojo, declare) => {
 
     onLoadingComplete(){
       debug('Loading complete');
+
+      this.cancelLogs(this.gamedatas.canceledNotifIds);
     },
-
-
 
 
     /*
@@ -42,6 +46,9 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], (dojo, declare) => {
 
       this.setupNotifications();
       this.initPreferencesObserver();
+      dojo.connect(this.notifqueue, "addToLog", () => {
+        this.checkLogCancel(this._last_notif);
+      });
      },
 
 
@@ -175,7 +182,7 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], (dojo, declare) => {
        var button = $(buttonId);
        var isReadOnly = this.isReadOnly();
        if (button == null || isReadOnly || pref == 2) {
-         debug('Ignoring startActionTimer(' + buttonId + ')', 'readOnly=' + isReadOnly, 'prefValue=' + prefValue);
+         debug('Ignoring startActionTimer(' + buttonId + ')', 'readOnly=' + isReadOnly, 'prefValue=' + pref);
          return;
        }
 
@@ -334,6 +341,43 @@ define(["dojo", "dojo/_base/declare","ebg/core/gamegui",], (dojo, declare) => {
         }
         var you = "<span style=\"font-weight:bold;color:#" + color + ";" + color_bg + "\">" + __("lang_mainsite", "You") + "</span>";
         return you;
+    },
+
+
+
+
+    /*
+     * [Undocumented] Called by BGA framework on any notification message
+     * Handle cancelling log messages for restart turn
+     */
+    onPlaceLogOnChannel(msg){
+      var currentLogId = this.notifqueue.next_log_id;
+      var res = this.inherited(arguments);
+      this._notif_uid_to_log_id[msg.uid] = currentLogId;
+      this._last_notif = msg.uid;
+      return res;
+    },
+
+
+
+    /*
+     * cancelLogs:
+     *   strikes all log messages related to the given array of notif ids
+     */
+    checkLogCancel(notifId){
+      if (this.gamedatas.canceledNotifIds != null && this.gamedatas.canceledNotifIds.includes(notifId)) {
+        this.cancelLogs([notifId]);
+      }
+    },
+
+    cancelLogs(notifIds) {
+      notifIds.forEach(uid => {
+        if(this._notif_uid_to_log_id.hasOwnProperty(uid)){
+          let logId = this._notif_uid_to_log_id[uid];
+          if($('log_' + logId))
+            dojo.addClass('log_' + logId, "cancel");
+        }
+      });
     },
   });
 });

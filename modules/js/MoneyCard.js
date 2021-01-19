@@ -82,12 +82,16 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
   ###### MONEY POOL #######
   #########################
   #######################*/
-    setupMoneyPool(){
-      // Connect events
-      [0,1,2,3].forEach(i => dojo.connect($('money-spot-' + i), 'click', () => this.onMoneyPoolChangeSelection(i) ) );
-
+    setupMoneyPool(initialSetup = true){
       // Add cards to pool
       this.addToMoneyPool(this.gamedatas.moneyCards.pool);
+
+      // Useful in case of cancel turn
+      if(!initialSetup)
+        return;
+
+      // Connect events
+      [0,1,2,3].forEach(i => dojo.connect($('money-spot-' + i), 'click', () => this.onMoneyPoolChangeSelection(i) ) );
 
       // Setup deck counter and update
       this.moneyDeckCounter = new ebg.counter();
@@ -97,6 +101,11 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
 
     updateMoneyDeckCount(){
       this.moneyDeckCounter.setValue(this.gamedatas.moneyCards.count);
+    },
+
+    // Called after a restart of the turn
+    clearMoneyPool(){
+      [0,1,2,3].forEach(i => dojo.empty('money-spot-' + i) );
     },
 
 
@@ -135,7 +144,9 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
 
     makeMoneyPoolSelectable(stacks = null){
       dojo.query('.money-spot').removeClass('selectable').addClass('unselectable');
-      stacks = stacks ?? [0,1,2,3];
+      if(stacks == null)
+        stacks = [0,1,2,3];
+
       stacks.forEach(i => {
         dojo.query('#money-spot-' + i).removeClass("unselectable").addClass("selectable");
       });
@@ -281,6 +292,11 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
       dojo.connect(this.playerHand, 'onChangeSelection', this, 'onChangeHandSelection');
     },
 
+    // Called after a restart
+    refreshPlayerHand(cards){
+      this.playerHand.removeAll();
+      this.addToPlayerHand(cards);
+    },
 
     // Add money card to current player hand.
     // If card exist in pool, then destroy and slide from there

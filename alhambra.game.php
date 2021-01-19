@@ -100,6 +100,7 @@ class Alhambra extends Table
       'buildings' => ALH\Buildings::getUiData(),
       'moneyCards' => ALH\Money::getUiData(),
       'scoreRound' => ALH\Globals::getScoringRound(),
+      'canceledNotifIds' => ALH\Log::getCanceledNotifIds(),
     ];
   }
 
@@ -132,7 +133,7 @@ class Alhambra extends Table
   public function zombieTurn($state, $activePlayer)
   {
     if( $state['name'] == 'initialMoney') {
-      self::acceptMoney(); // TODO
+      self::actAcceptMoney();
     }
     else if(in_array($state['name'], ['playerTurn', 'placeBuildings'])) {
       $this->gamestate->nextState( "zombiePass" );
@@ -161,7 +162,25 @@ class Alhambra extends Table
    */
   public function upgradeTableDb($from_version)
   {
+    if ($from_version <= 2011201610) {
+      $sql = "ALTER TABLE `DBPREFIX_gamelog` ADD `cancel` TINYINT(1) NOT NULL DEFAULT 0";
+      self::applyDbUpgradeToAllDB( $sql );
 
+      $sql = "CREATE TABLE IF NOT EXISTS `DBPREFIX_log` (
+        `log_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+        `turn` int(11) NOT NULL,
+        `player_id` int(11) NOT NULL,
+        `action` varchar(16) NOT NULL,
+        `action_arg` json,
+        PRIMARY KEY (`log_id`)
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1";
+      self::applyDbUpgradeToAllDB( $sql );
+    }
+
+    if($from_version <= 2101182335){
+      $sql = "UPDATE `DBPREFIX_building` SET card_location = 'alam' WHERE card_location = 'alamb'";
+      self::applyDbUpgradeToAllDB( $sql );
+    }
   }
 
 

@@ -111,7 +111,6 @@ var jstpl_currentPlayerPanel = `
   </div>
 
   <div id="alhambra-wrapper-\${id}" class="alhambra-block alhambra-wrapper-current alhambra-wrapper">
-      <h3>{MY_ALHAMBRA}</h3>
       <div id="alhambra-\${id}" class="alhambra">
         <div id="alhambra-inner-\${id}"></div>
       </div>
@@ -121,7 +120,7 @@ var jstpl_currentPlayerPanel = `
 
 var jstpl_playerPanel = `
 <div id="alhambra-wrapper-\${id}" class="alhambra-block alhambra-wrapper">
-  <h3>\${name}</h3>
+  <h3 class="alhambra-block" style="color:#\${color}">\${name}</h3>
 
   <div class="alhambra-stock">
     <div id="stock-\${id}"></div>

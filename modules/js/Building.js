@@ -29,7 +29,9 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
       building.wallS = building.wall.includes(2);
       building.wallW = building.wall.includes(3);
 
-      this.place('jstpl_building', building, container ?? 'board');
+      if(container == null)
+        container = "board";
+      this.place('jstpl_building', building, container);
     },
 
 
@@ -50,9 +52,17 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
         this.addBuilding(building);
         this.stockZones[pId].placeInZone('building-tile-' + building.id);
       });
+    },
 
-      // TODO : useless ??
-      //dojo.connect($('player_stock'), 'onclick', this, 'onPlaceOnStock');
+    // Called after a turn restart
+    refreshStock(player){
+      let pId = player.id;
+      this.stockZones[pId].removeAll();
+
+      player.stock.forEach(building => {
+        this.addBuilding(building);
+        this.stockZones[pId].placeInZone('building-tile-' + building.id);
+      });
     },
 
 
@@ -81,11 +91,14 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
     #### BUILDING POOL ######
     #########################
     #######################*/
-    setupBuildingsPool(){
+    setupBuildingsPool(initialSetup = true){
       // Add buildings to pool
       this.addToBuildingSite(this.gamedatas.buildings.buildingsite);
       // Add buildings to place
       this.addToBuildingSiteToPlace(this.gamedatas.buildings.toPlace);
+
+      if(!initialSetup)
+        return; // Useful in case of restart turn
 
       // Setup deck counter and update
       this.buildingDeckCounter = new ebg.counter();
@@ -97,6 +110,11 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
       this.buildingDeckCounter.setValue(this.gamedatas.buildings.count);
     },
 
+
+    // Called after a turn restart
+    clearBuildingsPool(){
+      [1,2,3,4].forEach(i => dojo.empty('building-spot-' + i) );
+    },
 
     // Add to building site the list of building
     addToBuildingSite(buildings, animate = false){

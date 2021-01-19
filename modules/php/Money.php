@@ -22,6 +22,9 @@ class Money extends \ALH\Helpers\Deck
 
   protected static function cast($row)
   {
+    if(is_null($row))
+      return null;
+
     $data = [
       'id' => (int) $row['id'],
       'type' => (int) $row['type'],
@@ -165,7 +168,7 @@ class Money extends \ALH\Helpers\Deck
         Notifications::reformingMoneyDeck();
 
         if(is_null($card))
-          throw new feException( "no more money card" );
+          throw new \feException("no more money card");
       }
 
 
@@ -182,7 +185,6 @@ class Money extends \ALH\Helpers\Deck
         $nCards++;
       }
     }
-
 
     $nCardsLeft = self::countInLocation('deck');
     Notifications::newMoneyCards($newCards, $nCardsLeft);

@@ -17,8 +17,14 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
       this.alhambraWrappers[player.id].item_size = 95;
 
       player.board.buildings.forEach(building => this.addToAlhambra(building, player.id));
-
       // Do not mark any building at setup time
+      dojo.query('.building-last-placed').removeClass('building-last-placed' );
+    },
+
+    // Called after a turn restart
+    refreshAlhambra(player){
+      dojo.empty('alhambra-inner-' + player.id);
+      player.board.buildings.forEach(building => this.addToAlhambra(building, player.id));
       dojo.query('.building-last-placed').removeClass('building-last-placed' );
     },
 

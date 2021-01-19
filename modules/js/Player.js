@@ -83,5 +83,13 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
       player.cardCount = n.args.count;
       this.updatePlayerStats(player);
     },
+
+
+    refreshPlayer(player){
+      if(player.id != 0)
+        this.refreshStock(player);
+      this.refreshAlhambra(player);
+      this.updatePlayerStats(player);
+    },
   });
 });

@@ -84,4 +84,21 @@ class action_alhambra extends APP_GameAction
     $this->game->actGiveneutral();
     self::ajaxResponse();
   }
+
+  /////////////////////////////
+  //// Confirm / pass turn ////
+  /////////////////////////////
+  public function cancelTurn()
+  {
+    self::setAjaxMode();
+    $this->game->cancelTurn();
+    self::ajaxResponse();
+  }
+
+  public function confirmTurn()
+  {
+    self::setAjaxMode();
+    $this->game->confirmTurn();
+    self::ajaxResponse();
+  }
 }

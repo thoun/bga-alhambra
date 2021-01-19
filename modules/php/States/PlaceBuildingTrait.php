@@ -6,6 +6,7 @@ use ALH\Money;
 use ALH\Buildings;
 use ALH\Notifications;
 use ALH\Stats;
+use ALH\Log;
 
 
 trait PlaceBuildingTrait {
@@ -23,6 +24,7 @@ trait PlaceBuildingTrait {
 
     return [
       'buildings' => $buildings,
+      'cancelable' => $player->hasSomethingToCancel(),
     ];
   }
 
@@ -61,6 +63,8 @@ trait PlaceBuildingTrait {
     $building = $this->checkPlaceBuilding($buildingId, 'stock');
     $player = Players::getCurrent();
     $player->placeBuildingInStock($building);
+    Log::insert($player, 'placeBuilding', ['building' => $building]);
+
     if($building['location'] == 'alam'){
       Stats::transform($player);
     }
@@ -79,9 +83,11 @@ trait PlaceBuildingTrait {
     $piece = Buildings::getAt($player->getId(), $x, $y);
     if(is_null($piece)){
       // No, that's just a usual place then
+      Log::insert($player, 'placeBuilding', ['building' => $building]);
       $player->placeBuilding($building, $x, $y);
     } else {
       // Yes, we must first place this one to stock before placing this one instead
+      Log::insert($player, 'swapBuildings', ['building' => $building, 'piece' => $piece, 'x' => $x, 'y' => $y]);
       $player->swapBuildings($building, $piece, $x, $y);
       Stats::transform($player);
     }
@@ -97,6 +103,7 @@ trait PlaceBuildingTrait {
     // Get all buildings to place and place them into neutral player alhambra
     $buildings = Buildings::getInLocation('bought');
     $player = Players::getCurrent();
+    Log::insert($player, 'giveToNeutral', ['buildings' => $buildings ]);
     Buildings::giveTilesToNeutral($buildings, false, $player);
     self::endTurnOrPlaceBuildings();
   }

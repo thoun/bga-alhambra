@@ -6,6 +6,7 @@ use ALH\Money;
 use ALH\Buildings;
 use ALH\Notifications;
 use ALH\Stats;
+use ALH\Log;
 
 
 trait PlayerTurnTrait {
@@ -14,19 +15,20 @@ trait PlayerTurnTrait {
   ************************************/
   function stNextPlayer()
   {
-    $pId = Globals::getTurnNumber() == 0? self::getActivePlayerId() : self::activeNextPlayer();
+    $pId = (Globals::getTurnNumber() == 0 && Log::DB()->count() == 0)? self::getActivePlayerId() : self::activeNextPlayer();
     self::giveExtraTime($pId);
+    Notifications::startNewTurn();
 
     if(Globals::isFirstPlayer($pId)){
       Globals::startNewTurn();
     }
 
-    if(Globals::isScoringRound()){
-      $this->scoringRound();   // Trigger a scoring round if needed, must be called before filling pool
-    }
-
     Money::fillPool();
     $bEndOfGame = Buildings::fillPool();
+
+    if(Globals::isScoringRound()){
+      $this->scoringRound();   // Trigger a scoring round if needed, must be called after filling pool
+    }
 
     $transition = 'playerTurn';
     if($bEndOfGame) {
@@ -62,6 +64,7 @@ trait PlayerTurnTrait {
     return [
       'buildings' => array_merge($buildings, $stock),
       'buildingsite' => Buildings::getInLocation('buildingsite'),
+      'cancelable' => $player->hasSomethingToCancel(),
     ];
   }
 
@@ -89,6 +92,7 @@ trait PlayerTurnTrait {
 
     // Move the cards in player's hand and notify
     $player->takeMoney($cards, $total);
+    Log::insert($player, 'takeMoney', ['cards' => $cards, 'total' => $total]);
 
     // This action ends player turn
     $this->endTurnOrPlaceBuildings();
@@ -135,6 +139,7 @@ trait PlayerTurnTrait {
     // Buy the building, ie place it in player's "to place" location, and notify
     Buildings::move($building['id'], 'bought', $building['pos']);
     Notifications::buyBuilding($player, $cards, $building);
+    Log::insert($player, 'buyBuilding', ['cards' => $cards, 'building' => $building]);
     $player->updateMoneyCount();
 
 
@@ -175,4 +180,22 @@ trait PlayerTurnTrait {
       }
     }
   }
+
+
+  function cancelTurn()
+  {
+    self::checkAction("restart");
+    $player = Players::getCurrent();
+    $notifIds = Log::clearTurn($player->getId());
+    Notifications::clearTurn($player, $notifIds);
+
+    $this->gamestate->nextState("restart");
+  }
+
+  function confirmTurn()
+  {
+    self::checkAction("confirm");
+    $this->gamestate->nextState("confirm");
+  }
+
 }

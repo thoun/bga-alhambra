@@ -24,6 +24,10 @@ class Notifications
     self::notify($pId, 'message', $txt, $args);
   }
 
+  public static function startNewTurn(){
+    // Useful as a sync point for undo
+    self::notifyAll('startTurn', '', []);
+  }
 
   public static function reformingMoneyDeck(){
     self::notifyAll("noMoreMoney", clienttranslate("No more money card: recreating a deck"), []);
@@ -174,6 +178,25 @@ class Notifications
       'buildings' => $buildings,
     ]);
   }
+
+
+  public static function clearTurn($player, $notifIds){
+    self::notify($player->getId(), 'clearTurnPrivate', '', [
+      'hand' => $player->getMoneyCards(),
+    ]);
+
+    self::notifyAll('clearTurn', clienttranslate('${player_name} restart their turn'), [
+      'player' => $player,
+      'notifIds' => $notifIds,
+
+      // Fetch again to make sur we don't have cached data
+      'playerData' => Players::get($player->getId())->getUiData(null),
+      'neutral' => Players::getNeutral()->getUiData(0),
+      'buildings' => Buildings::getUiData(),
+      'moneyCards' => Money::getUiData(),
+    ]);
+  }
+
 
 
   /*

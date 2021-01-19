@@ -84,10 +84,8 @@ class Player extends Helpers\DB_Manager
       Money::move($card['id'], 'hand', $this->id);
     }
 
-    // Increase the stat
+    // Increase the stat, log action and notify
     Stats::takeMoney($this, $total);
-
-    // Notify new cards
     Notifications::takeMoney($this, $cards);
 
     // Update money count
@@ -153,5 +151,11 @@ class Player extends Helpers\DB_Manager
    function score($value)
    {
      self::DB()->inc(['player_score' => (int) $value], $this->id);
+   }
+
+
+   function hasSomethingToCancel()
+   {
+     return Log::hasSomethingToCancel($this->id);
    }
 }

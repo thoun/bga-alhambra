@@ -67,12 +67,13 @@ $machinestates = [
     "descriptionmyturnmoneyforbuilding" => clienttranslate('${you} must select money card(s) and then select the building to buy'),
     "type" => "activeplayer",
     "args" => "argPlayerTurn",
-    "possibleactions" => ["takeMoney", "buyBuilding", "placeBuilding"],
+    "possibleactions" => ["takeMoney", "buyBuilding", "placeBuilding", "restart"],
     "transitions" => [
       "replay" => STATE_PLAYER_TURN,
-      "endTurn" => STATE_NEXT_PLAYER,
+      "endTurn" => ST_CONFIRM_TURN,
       "buildingToPlace" => STATE_PLACE_BUILDING,
       "zombiePass" => STATE_NEXT_PLAYER,
+      "restart" => STATE_PLAYER_TURN,
     ]
   ],
 
@@ -83,11 +84,25 @@ $machinestates = [
     "descriptionmyturndirk" => clienttranslate('${you} must place your new building(s) in your Alhambra or in your stock or give them to neutral player'),
     "type" => "activeplayer",
     "args" => "argPlaceBuilding",
-    "possibleactions" => ["placeBuilding"],
+    "possibleactions" => ["placeBuilding", "restart"],
     "transitions" => [
       "buildingToPlace" => STATE_PLACE_BUILDING,
-      "endTurn" => STATE_NEXT_PLAYER,
-      "zombiePass" => STATE_NEXT_PLAYER
+      "endTurn" => ST_CONFIRM_TURN,
+      "zombiePass" => STATE_NEXT_PLAYER,
+      "restart" => STATE_PLAYER_TURN,
+    ]
+  ],
+
+  ST_CONFIRM_TURN => [
+    "name" => "confirmTurn",
+    "description" => clienttranslate('${actplayer} must confirm or restart its turn'),
+    "descriptionmyturn" => clienttranslate('${you} must confirm or restart your turn'),
+    "type" => "activeplayer",
+    "possibleactions" => ["restart", "confirm"],
+    "transitions" => [
+      "restart" => STATE_PLAYER_TURN,
+      "confirm" => STATE_NEXT_PLAYER,
+      "zombiePass" => STATE_NEXT_PLAYER,
     ]
   ],
 

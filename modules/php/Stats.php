@@ -9,9 +9,8 @@ class Stats
   }
 
   public static function inc($name, $player = null, $value = 1, $log = true){
-// TODO : keep ?
     $pId = is_null($player)? null : ( ($player instanceof \ALH\Player)? $player->getId() : $player );
-//    Log::insert($pId, 'changeStat', [ 'name' => $name, 'value' => $value ]);
+    Log::insert($pId, 'changeStat', [ 'name' => $name, 'value' => $value ]);
     Alhambra::get()->incStat($value, $name, $pId);
   }
 

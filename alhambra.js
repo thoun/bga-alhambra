@@ -168,7 +168,7 @@
         var pref = 1;
         if(this.prefs[CONFIRM].value == CONFIRM_DISABLED) pref = 0;
         if(this.prefs[CONFIRM].value == CONFIRM_ENABLED) pref = 2;
-        this.startActionTimer('buttonConfirmAction', 10, pref);
+        this.startActionTimer('buttonConfirmAction', 5, pref);
       },
 
       checkCancelable(args){

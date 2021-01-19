@@ -15,6 +15,7 @@ trait ScoringRoundTrait {
   {
     $round = Globals::getScoringRound();
     Globals::setScoringRound(0);
+    Notifications::startScoringRound($round);
 
     // Get players points and points details
     $points = $this->countPlayersPoints($round);
@@ -27,9 +28,6 @@ trait ScoringRoundTrait {
       Players::get($pId)->score($result['points']);
       Stats::setScoringResult($pId, $result['points'], $round);
     }
-
-    // Notify
-    Notifications::scoringRound($points);
 
     // Neutral player
     if(Globals::isNeutral() && $round < 3){
@@ -53,24 +51,15 @@ trait ScoringRoundTrait {
       "buildingdetails" => []
     ];
 
-    //////// Walls //////////
-    foreach(Players::getAll() as $player){
-      $result['players'][$player->getId()] = [
-        'walls' => $player->getStoredLongestWall(),
-        'points' => $player->getStoredLongestWall(),
-      ];
-    }
-
-    if(Globals::isNeutral()){
-      $result['players'][0] = ['points' => 0, 'walls' => 0];
-    }
+    $playerScores = [];
 
 
     //////// Buildings //////
     $buildingCounts = Players::getBuildingCounts();
 
     foreach($this->scoring as $type => $rankToPoints){
-      $result['buildingdetails'][$type] = [];
+//      $result['buildingdetails'][$type] = [];
+      $result = [];
 
       // Extract count of given type
       $buildingsOfType = array_map(function($scores) use ($type){ return $scores[$type];}, $buildingCounts);
@@ -102,7 +91,8 @@ trait ScoringRoundTrait {
         $rankToPlayers[$rank][] = $pId;
         $previousCount = $count;
 
-        $result['buildingdetails'][$type][$index] = ['player' => $pId, 'nb' => $count, 'rank' => $rank, 'points' => 0];
+        $result[$index] = ['player' => $pId, 'nb' => $count, 'rank' => $rank, 'points' => 0];
+//        $result['buildingdetails'][$type][$index] = ['player' => $pId, 'nb' => $count, 'rank' => $rank, 'points' => 0];
         $playerToIndex[$pId] = $index++;    // Note: with this method, we ensure that the player order by rank will be kept
       }
 
@@ -112,9 +102,9 @@ trait ScoringRoundTrait {
 
       // Process points
       foreach($rankToPlayers as $rank => $players) {
-        $n = count( $players );
+        $n = count($players);
         if($n == 0 )
-          throw new feException( "no player at this rank: ".$rank);
+          throw new \feException( "no player at this rank: ".$rank);
 
         // All players at this rank are sharing the points corresponding to all the rank
         // they was supposed to occupied if they were not tie
@@ -131,9 +121,26 @@ trait ScoringRoundTrait {
         foreach($players as $pId) {
           $index = $playerToIndex[$pId];
           $result['buildingdetails'][$type][$index]['points'] = $pointsPerPlayer;
-          $result['players'][$pId]['points'] += $pointsPerPlayer;
+//          $result['buildingdetails'][$type][$index]['points'] = $pointsPerPlayer;
+          $playerScores[$pId] += $pointsPerPlayer;
         }
+
+        // Notify
+        Notifications::scoringBlock($round, $type, $rank, $players, $pointsPerPlayer);
       }
+    }
+
+
+    //////// Walls //////////
+    foreach(Players::getAll() as $player){
+      $result['players'][$player->getId()] = [
+        'walls' => $player->getStoredLongestWall(),
+        'points' => $player->getStoredLongestWall(),
+      ];
+    }
+
+    if(Globals::isNeutral()){
+      $result['players'][0] = ['points' => 0, 'walls' => 0];
     }
 
     return $result;

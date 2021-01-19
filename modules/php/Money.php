@@ -177,7 +177,6 @@ class Money extends \ALH\Helpers\Deck
         // Scoring at the end of turn
         self::$deck->moveCard($card['id'], 'retired', 0);
         Globals::setScoringRound($card['value']);
-        Notifications::upcomingScoring($card['value']);
       }
       // Otherwise, just add it to pool
       else {

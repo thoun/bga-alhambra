@@ -139,17 +139,37 @@ class Notifications
   }
 
 
-  public static function upcomingScoring($round){
-    self::notifyAll("scoringCard", clienttranslate('A scoring round card has been picked !'), [
-      "round" => $round
+  public static function startScoringRound($round){
+    self::notifyAll('startScoringRound', clienttranslate('Starting scoring round n°${round}'), [
+      'round' => $round
     ]);
   }
 
+  public static function scoringBlock($round, $type, $rank, $players, $pointsPerPlayer){
+    if($rank > $round)
+      return;
 
+    $n = count($players);
+    $data = [
+      'pointsPerPlayer' => $pointsPerPlayer,
+      'rank' => $rank,
+    ];
+    $msg = "";
+    if($n == 1){
+      $msg = clienttranslate('${player_name} has the ${rank} highest number of ${building_type} and is awarded ${pointsPerPlayer}');
+    } else {
+      if($rank == 1 && $n ==2) $msg = clienttranslate('${player_name1} and ${player_name2} have the ${rank} highest number of ${building_type} and are awarded ${pointsPerPlayer}')
+    }
+
+    self::notifyAll('scoringBlock', $msg);
+  }
+
+
+/*
   public static function scoringRound($points){
     self::notifyAll("scoringRound", clienttranslate('Scoring round !'), $points);
   }
-
+*/
 
   public static function endOfGame(){
     self::notifyAll("endOfGame", clienttranslate('The last building has been drawn: this is the end of the game!'), []);

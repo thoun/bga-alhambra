@@ -2,7 +2,6 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
   return declare("alhambra.scoringTrait", null, {
     constructor(){
       this._notifications.push(
-        ['scoringCard', 100],
         ['scoringRound', null],
         ['endOfGame', 10]
       );
@@ -113,7 +112,7 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
 
     wallScoringAnimation(){
       dojo.query('.highlighted').removeClass( 'highlighted');
-      this.fadeOutAndDestroy( 'round_scoring_' + this.scoringCurrentRound );
+      dojo.style('round_scoring_' + this.scoringCurrentRound, "display", "none");
       dojo.fadeOut( {node:'scoring_panel', onEnd: () => dojo.style("scoring_panel", "display", "none") }).play();
       dojo.attr('token-crown', 'data-round', 0);
 

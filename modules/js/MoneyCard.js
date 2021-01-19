@@ -18,6 +18,7 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
       this.playerHand = null;
       this.cardInStacks = [];
       this.selectedStacks = [];
+      this.selectableStacks = [];
 
       this.selectableCards = [];
     },
@@ -150,6 +151,7 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
       stacks.forEach(i => {
         dojo.query('#money-spot-' + i).removeClass("unselectable").addClass("selectable");
       });
+      this.selectableStacks = stacks;
     },
 
     updateSelectableStacks(){
@@ -206,9 +208,8 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
             unselectedCards.push(card);
         });
 
-
-        if(selectedCards.length == 1 && selectedCards[0].value >= 5){
-          this.takeAction('takeMoney', { cardIds: selectedCards[0].id });
+        if(selectedCards.length == 1 && (selectedCards[0].value >= 5 || this.selectableStacks.length == 1)){ // 1 and not 0 since we can unselect
+          this.onConfirmTakeMoney();
         }
         else {
           this.gamedatas.gamestate.descriptionmyturn = this.gamedatas.gamestate.descriptionmyturnmoney;

@@ -54,6 +54,15 @@
   #popin_moneyDialog .money-dialog-holder {
     display: flex; }
 
+#popin_showScoreSheet {
+  width: 620px;
+  height: 477px;
+  background-image: url("img/player_aid.jpg");
+  border-radius: 22px;
+  margin-top: 6px; }
+  #popin_showScoreSheet::before {
+    content: none !important; }
+
 .money-card {
   width: 109px;
   height: 169px;
@@ -251,11 +260,11 @@ TODO
     transform: scale( 1.1 );
 }
 */
-.alhambra-block, #popin_moneyDialog {
+.alhambra-block, #popin_moneyDialog, #popin_showScoreSheet {
   box-sizing: border-box;
   position: relative;
   filter: drop-shadow(2px 2px 5px rgba(0, 0, 0, 0.3)); }
-  .alhambra-block::before, .alhambra-block::after, #popin_moneyDialog::before, #popin_moneyDialog::after {
+  .alhambra-block::before, .alhambra-block::after, #popin_moneyDialog::before, #popin_moneyDialog::after, #popin_showScoreSheet::before, #popin_showScoreSheet::after {
     content: '';
     display: block;
     position: absolute;
@@ -266,9 +275,9 @@ TODO
     background-image: url("img/frame-texture.jpg");
     background-size: 100px;
     z-index: -1; }
-  .alhambra-block::before, #popin_moneyDialog::before {
+  .alhambra-block::before, #popin_moneyDialog::before, #popin_showScoreSheet::before {
     border-radius: 20px; }
-  .alhambra-block::after, #popin_moneyDialog::after {
+  .alhambra-block::after, #popin_moneyDialog::after, #popin_showScoreSheet::after {
     border: 1px solid;
     border-image-slice: 70 70 70 100;
     border-image-width: 13px 15px 13px 15px;
@@ -277,7 +286,7 @@ TODO
     border-image-source: url("img/frame.png");
     background: none;
     filter: drop-shadow(1px 1px 2px #2f2719); }
-  .alhambra-block h3, #popin_moneyDialog h3 {
+  .alhambra-block h3, #popin_moneyDialog h3, #popin_showScoreSheet h3 {
     display: none;
     font-family: "Roboto", Arial, sans-serif; }
 
@@ -813,5 +822,55 @@ TODO
   font-weight: bold;
   font-size: 30px;
   text-shadow: 1px 1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, -1px -1px 0 #fff, 1px 0px 0 #fff, 0px 1px 0 #fff, -1px 0px 0 #fff, 0px -1px 0 #fff; }
+
+#player_config {
+  margin: 10px 0px; }
+  #player_config #player_config_row {
+    display: flex;
+    justify-content: space-around; }
+  #player_config #show-scoresheet, #player_config #show-settings {
+    height: 40px;
+    width: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer; }
+    #player_config #show-scoresheet:hover, #player_config #show-settings:hover {
+      color: grey; }
+    #player_config #show-scoresheet:hover, #player_config #show-settings:hover {
+      color: grey; }
+    #player_config #show-scoresheet svg, #player_config #show-settings svg {
+      width: auto;
+      height: 40px; }
+  #player_config #show-settings .fa-primary {
+    transform-origin: 216px 255px;
+    transition: transform 1s; }
+  #player_config #show-settings:hover .fa-primary {
+    transform: rotate(180deg); }
+
+/*
+ * Controls in the top bar
+ */
+#layout-controls-container {
+  position: relative;
+  text-align: center;
+  border-top: 1px solid gray;
+  border-bottom: 1px solid gray;
+  margin-top: 10px; }
+  #layout-controls-container.layoutControlsHidden {
+    display: none; }
+  #layout-controls-container .row-data {
+    border: none;
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center; }
+    #layout-controls-container .row-data .row-label {
+      width: auto;
+      float: none;
+      color: black;
+      padding-bottom: 0px; }
+    #layout-controls-container .row-data .row-value {
+      margin: 0; }
 
 /*# sourceMappingURL=alhambra.css.map */

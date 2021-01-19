@@ -1,0 +1,75 @@
+#player_config {
+  margin:10px 0px;
+
+  #player_config_row {
+    display: flex;
+    justify-content: space-around;
+  }
+
+  #show-scoresheet, #show-settings {
+    height:40px;
+    width:50px;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+
+    &:hover {
+      color:grey;
+    }
+
+    cursor:pointer;
+    &:hover {
+      color:grey;
+    }
+
+    svg {
+      width:auto;
+      height:40px;
+    }
+  }
+
+  #show-settings{
+    .fa-primary {
+      transform-origin: 216px 255px;
+      transition: transform 1s;
+    }
+
+    &:hover .fa-primary {
+      transform: rotate(180deg);
+    }
+  }
+}
+
+/*
+ * Controls in the top bar
+ */
+#layout-controls-container {
+  position:relative;
+  text-align: center;
+  border-top: 1px solid gray;
+  border-bottom: 1px solid gray;
+  margin-top: 10px;
+
+  &.layoutControlsHidden {
+    display:none;
+  }
+
+  .row-data {
+    border:none;
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+
+    .row-label {
+      width:auto;
+      float:none;
+      color:black;
+      padding-bottom:0px;
+    }
+
+    .row-value {
+      margin:0;
+    }
+  }
+}

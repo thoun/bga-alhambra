@@ -65,11 +65,22 @@
       setup(gamedatas) {
       	debug('SETUP', gamedatas);
 
+        // Settings
+        if(!this.isSpectator){
+          this.place('jstpl_configPlayerBoard', {}, 'player_board_' + this.player_id);
+          dojo.connect($('show-settings'), 'onclick', () => this.toggleControls() );
+          dojo.connect($('show-scoresheet'), 'onclick', () => this.showScoreSheet() );
+
+          dojo.place($('preference_control_102').parentNode.parentNode, 'layout-controls-container');
+
+        }
+
         this.setupMoneyPool();
         this.setupBuildingsPool();
         this.setupPlayers();
         this.setupTooltips();
         dojo.attr('token-crown', 'data-round', gamedatas.scoreRound);
+
         this.inherited(arguments);
       },
 
@@ -146,6 +157,37 @@
       },
 
 
+      //////////////////////////////
+      //////////////////////////////
+      /////////   SETTINGS   ///////
+      //////////////////////////////
+      //////////////////////////////
+
+      showScoreSheet(){
+        debug("Showing scoresheet:");
+        new customgame.modal("showScoreSheet", {
+          autoShow:true,
+          class:"alhambra_popin",
+          closeIcon:'fa-times',
+          openAnimation:true,
+          openAnimationTarget:"show-scoresheet",
+        });
+      },
+
+      toggleControls(){
+        dojo.toggleClass('layout-controls-container', 'layoutControlsHidden')
+
+        // Hacking BGA framework
+        if(dojo.hasClass("ebd-body", "mobile_version")){
+          dojo.query(".player-board").forEach(elt => {
+            if(elt.style.height != "auto"){
+              dojo.style(elt, "min-height", elt.style.height);
+              elt.style.height = "auto";
+            }
+          });
+        }
+      },
+
 
       ///////////////////////////////////////
       ///////////////////////////////////////
@@ -168,7 +210,7 @@
         var pref = 1;
         if(this.prefs[CONFIRM].value == CONFIRM_DISABLED) pref = 0;
         if(this.prefs[CONFIRM].value == CONFIRM_ENABLED) pref = 2;
-        this.startActionTimer('buttonConfirmAction', 10, pref);
+        this.startActionTimer('buttonConfirmAction', 5, pref);
       },
 
       checkCancelable(args){

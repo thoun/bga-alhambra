@@ -139,13 +139,6 @@ class Notifications
   }
 
 
-  public static function upcomingScoring($round){
-    self::notifyAll("scoringCard", clienttranslate('A scoring round card has been picked !'), [
-      "round" => $round
-    ]);
-  }
-
-
   public static function scoringRound($points){
     self::notifyAll("scoringRound", clienttranslate('Scoring round !'), $points);
   }

@@ -15,13 +15,6 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
       this.showMessage( _('The last building has been drawn: this is the end of the game!'), 'info' );
     },
 
-    notif_scoringCard(n){
-      debug("Notif: scoring card");
-      this.showMessage( _("Scoring a the end of this turn!"), 'info');
-      dojo.attr('token-crown', 'data-round', n.args.round);
-    },
-
-
     notif_scoringRound(n){
       debug("Notif: scoring round", n);
       var round = n.args.round_no;

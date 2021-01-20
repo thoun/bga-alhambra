@@ -71,6 +71,9 @@
           dojo.connect($('show-settings'), 'onclick', () => this.toggleControls() );
           dojo.connect($('show-scoresheet'), 'onclick', () => this.showScoreSheet() );
 
+          this.addTooltip( 'show-settings', '', _("Display some settings about the game."));
+          this.addTooltip( 'show-scoresheet', '', _("Display the scoring pad."));
+
           dojo.place($('preference_control_102').parentNode.parentNode, 'layout-controls-container');
 
         }
@@ -172,6 +175,8 @@
           openAnimation:true,
           openAnimationTarget:"show-scoresheet",
         });
+        dojo.style("popin_showScoreSheet", "transform", "scale(" + this.gameinterface_zoomFactor + ")");
+
       },
 
       toggleControls(){
@@ -210,7 +215,7 @@
         var pref = 1;
         if(this.prefs[CONFIRM].value == CONFIRM_DISABLED) pref = 0;
         if(this.prefs[CONFIRM].value == CONFIRM_ENABLED) pref = 2;
-        this.startActionTimer('buttonConfirmAction', 5, pref);
+        this.startActionTimer('buttonConfirmAction', 2 + args.nActions, pref);
       },
 
       checkCancelable(args){

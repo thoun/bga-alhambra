@@ -98,6 +98,7 @@ $machinestates = [
     "description" => clienttranslate('${actplayer} must confirm or restart its turn'),
     "descriptionmyturn" => clienttranslate('${you} must confirm or restart your turn'),
     "type" => "activeplayer",
+    "args" => "argConfirmTurn",
     "possibleactions" => ["restart", "confirm"],
     "transitions" => [
       "restart" => STATE_PLAYER_TURN,

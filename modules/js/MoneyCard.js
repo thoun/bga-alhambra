@@ -52,6 +52,7 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
         title: _("Initial money for players"),
       });
 
+      dojo.style("popin_moneyDialog", "transform", "scale(" + this.gameinterface_zoomFactor + ")");
       // Add money cards
       Object.keys(cards).forEach(pId => {
         let name = this.gamedatas.players[pId].name;

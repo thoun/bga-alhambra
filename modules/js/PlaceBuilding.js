@@ -191,6 +191,7 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
         y : dojo.style('building-tile-' + bId, 'top'),
       };
       this.bDragged = true;
+      this.deltaDrag = 0;
 
       if(building.canGoToStock)
         dojo.addClass('player-stock', 'droppable');
@@ -219,6 +220,7 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
       let pos = dojo.position(elemId);
       let centerX = pos.x + pos.w / 2;
       let centerY = pos.y + pos.h / 2;
+      this.deltaDrag = Math.abs(dx) + Math.abs(dy);
 
       let droppableZone = null;
 
@@ -249,8 +251,8 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
      * When we stop dragging => check whether the drop zone is ok
      */
     onEndDraggingBuilding( item_id, left, top, bDragged){
-      this.bDragged = bDragged;
-      if(!bDragged)
+      this.bDragged = bDragged && this.deltaDrag > 0;
+      if(!this.bDragged)
         return;
 
       dojo.query('.droppable').removeClass('droppable');

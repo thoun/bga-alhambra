@@ -90,42 +90,14 @@
     position:absolute;
     display:block;
     width:95px;
-    height:8px;
-    background-image:url('img/wall.png');
-    background-size:contain;
-  }
-
-  .wall-e::before {
-    transform:rotate(90deg);
-    transform-origin: 4px 4px;
-  }
-  .wall-s::before {
-    transform:rotate(180deg);
-    transform-origin: 50% 4px;
-  }
-  .wall-w::before {
-    transform:rotate(-90deg);
-    transform-origin: 47.5px 47.5px;
-  }
-
-
-  .wall-n, .wall-s {
-    position:absolute;
-    left:0px;
-    width:95px;
-    height:8px;
-  }
-  .wall-n { top : 0; }
-  .wall-s { bottom :0; }
-
-  .wall-e, .wall-w {
-    position:absolute;
-    top:0px;
     height:95px;
-    width:8px;
+    background-image:url('img/wall.png');
+    background-size:400%;
   }
-  .wall-e { right : 0; }
-  .wall-w { left : 0; }
+
+  .wall-e::before { background-position-x:-95px; }
+  .wall-s::before { background-position-x:-190px; }
+  .wall-w::before { background-position-x:-285px; }
 
   .wall-n[data-wall="false"] { display:none; }
   .wall-e[data-wall="false"] { display:none; }

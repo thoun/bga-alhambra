@@ -160,6 +160,12 @@ trait PlayerTurnTrait {
   ****  END OF TURN  ****
   **********************/
 
+  function argConfirmTurn()
+  {
+    $pId = $this->getActivePlayerId();
+    return ['nActions' => count(Log::getLastActions($pId))];
+  }
+
   // If there are building to place, go to corresponding step
   // Otherwise end current player turn
   function endTurnOrPlaceBuildings()

@@ -57,14 +57,13 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
       // Finally, add walls
       this.scoringWalls = n.args.players;
 
-      this.pause(1000).then( () => this.processScoring() );
+      this.pause(this._animationSpeed * 20).then( () => this.processScoring() );
     },
 
 
     slideScoringTmp(type, pId, score, from){
       let target = pId == 0? 'playername_0' : 'player_score_' + pId;
-      debug(from, target);
-      return this.slideTemporary('jstpl_tmpScoring', { pId, type, score }, from, from, target, 800);
+      return this.slideTemporary('jstpl_tmpScoring', { pId, type, score }, from, from, target, this._animationSpeed * 20);
     },
 
     incScore(pId, score){
@@ -88,14 +87,14 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
       if($(scoringId))
         dojo.addClass(scoringId, 'highlighted' );
 
-      this.pause(500)
+      this.pause(this._animationSpeed * 10)
       // highlight the buildings
       .then(() => {
         scoring.players.forEach(pId =>
           dojo.query('#player_board_'+ pId +' .stat-' + scoring.type).addClass('highlighted')
         );
 
-        return this.pause(500);
+        return this.pause(this._animationSpeed * 10);
       })
       // move the score to panel
       .then( () => {
@@ -104,7 +103,7 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
           .then( () => this.incScore(pId, scoring.score) );
         });
 
-        return this.pause(1000);
+        return this.pause(this._animationSpeed * 20);
       })
       // move on to next scoring
       .then(() => this.processScoring());

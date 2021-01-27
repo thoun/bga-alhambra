@@ -312,6 +312,7 @@ TODO
 
   .alhambra {
     position: relative;
+    flex-shrink:0;
 
     .building-tile-front, .building-tile-back {
       box-shadow:none;

@@ -129,7 +129,7 @@ class Board {
 
 
     // Check holes now
-    if($bSkipFreeCheckAndHoles)
+    if(!$this->isFree($x, $y) && $bSkipFreeCheckAndHoles)
       return true;
 
     // Compute holes in all 8 directions

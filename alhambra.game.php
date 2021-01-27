@@ -181,6 +181,26 @@ class Alhambra extends Table
       $sql = "UPDATE `DBPREFIX_building` SET card_location = 'alam' WHERE card_location = 'alamb'";
       self::applyDbUpgradeToAllDB( $sql );
     }
+
+    if($from_version <= 2101210030){
+     $result = self::getUniqueValueFromDB("SHOW COLUMNS FROM `gamelog` LIKE 'cancel'");
+     if(is_null($result)){
+       $sql = "ALTER TABLE `DBPREFIX_gamelog` ADD `cancel` TINYINT(1) NOT NULL DEFAULT 0";
+       self::applyDbUpgradeToAllDB( $sql );
+     }
+    }
+
+   if($from_verison <= 2101222317){
+     $sql = "CREATE TABLE IF NOT EXISTS `DBPREFIX_log` (
+       `log_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+       `turn` int(11) NOT NULL,
+       `player_id` int(11) NOT NULL,
+       `action` varchar(16) NOT NULL,
+       `action_arg` json,
+       PRIMARY KEY (`log_id`)
+     ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1";
+     self::applyDbUpgradeToAllDB( $sql );     
+   }
   }
 
 

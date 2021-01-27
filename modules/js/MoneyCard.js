@@ -322,7 +322,7 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
         return; // Can be trigger when loading by onScreenWidthChange
 
       let nCards = this.playerHand.getItemNumber();
-      let cardWidth = CARD_W + 10; // margin
+      let cardWidth = CARD_W + 20; // margin
       let spaceNeeded = cardWidth * nCards;
       var spaceAvailable = dojo.coords('player-hand').w;
 

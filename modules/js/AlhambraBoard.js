@@ -31,7 +31,7 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
 
     addToAlhambra(building, pId){
       let bId = 'building-tile-' + building.id;
-      //dojo.query( '.building_last_placed' ).removeClass( 'building_last_placed' );
+      dojo.query( '.building-last-placed' ).removeClass('building-last-placed');
 
       var bAlreadyExist = false;
       if($(bId)){
@@ -80,7 +80,7 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
 
       // Adapt alhambra size & position to make sure it matches the current space
       var coords_container = dojo.position('alhambra-wrapper-' + pId);
-      var max_width = coords_container.w;
+      var max_width = coords_container.w - 40; // 40 = padding
 
       var coords_alhambra = dojo.position('alhambra-' + pId);
       var width = coords_alhambra.w;
@@ -104,15 +104,19 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
       // Change of size ? => update
       if(new_size != old_size){
         // Change tiles size to this size
-        this.alhambraWrapper[pId].item_size = new_size;
+        this.alhambraWrappers[pId].item_size = new_size;
 
-        dojo.query('#alhambra-'+player_id+' .building_tile' ).forEach(node => {
+        dojo.query('#alhambra-'+ pId +' .building_tile' ).forEach(node => {
           dojo.style(node, {
             left : ( dojo.style( node, 'left' ) * new_size / old_size ) + 'px',
             top : ( dojo.style( node, 'top' ) * new_size / old_size ) + 'px',
             width :  new_size + 'px',
             height : new_size + 'px'
           });
+        });
+
+        dojo.query('#alhambra-'+ pId +' .building-cost').forEach(node => {
+          dojo.style(node, "transform", "scale(" + new_size / 95 + ")");
         });
       }
       this.alhambraWrappers[pId].rewrap();

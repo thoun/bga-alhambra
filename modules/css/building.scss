@@ -12,7 +12,10 @@
     position:absolute;
     width: 100%;
     height: 100%;
-    background-image: url('img/buildings.jpg');
+    background-image: url('img/buildings_low.jpg');
+    @media only screen and (min-width: $breakPoint) {
+      background-image: url('img/buildings.jpg');
+    }
     background-position: 0 0;
     background-size:600%;
     box-shadow: 5px 5px 5px 0 rgba(0, 0, 0, 0.4);
@@ -77,27 +80,20 @@
     line-height: 33px;
     filter: drop-shadow(2px 2px 3px #222);
     text-shadow: 1px 1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, -1px -1px 0 #fff, 1px 0px 0 #fff, 0px 1px 0 #fff, -1px 0px 0 #fff, 0px -1px 0 #fff;
+    transform-origin: bottom right;
   }
 
-  .remove-building {
-    // TODO
-    display:none;
-  }
-
-
-  .wall-n::before, .wall-e::before, .wall-s::before, .wall-w::before {
-    content:'';
+  .wall-n, .wall-e, .wall-s, .wall-w {
     position:absolute;
     display:block;
-    width:95px;
-    height:95px;
+    width:100%;
+    height:100%;
     background-image:url('img/wall.png');
-    background-size:400%;
+    background-size:500%;
   }
-
-  .wall-e::before { background-position-x:-95px; }
-  .wall-s::before { background-position-x:-190px; }
-  .wall-w::before { background-position-x:-285px; }
+  .wall-e { background-position-x:25%; }
+  .wall-s { background-position-x:50%; }
+  .wall-w { background-position-x:75%; }
 
   .wall-n[data-wall="false"] { display:none; }
   .wall-e[data-wall="false"] { display:none; }

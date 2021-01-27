@@ -21,6 +21,7 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
 
     // Create a new building div with argument in deck format
     addBuilding(building, container = null){
+      debug(building, container, $('building-tile-' + building.id));
       if($('building-tile-' + building.id))
         return;
 
@@ -57,7 +58,12 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
     // Called after a turn restart
     refreshStock(player){
       let pId = player.id;
-      this.stockZones[pId].removeAll();
+
+//      this.stockZones[pId].removeAll();
+      this.stockZones[pId].items = [];
+      this.stockZones[pId].item_selected = {};
+      this.stockZones[pId].next_item_id = 1;
+      dojo.empty(this.stockZones[pId].control_name);
 
       player.stock.forEach(building => {
         this.addBuilding(building);
@@ -198,6 +204,10 @@ define(["dojo", "dojo/_base/declare"], (dojo, declare) => {
 
       // Already in "money then building" mode => check cost and send action
       else if(this.selectionMode == MONEY_THEN_BUILDING){
+        if(!this.selectableBuildings.map(b => b.id).includes(building.id)){
+          return;
+        }
+
         this.selectedBuilding = building;
         this.onConfirmBuyBuilding();
       }

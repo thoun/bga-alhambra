@@ -20,6 +20,8 @@
 
  define([
      "dojo", "dojo/_base/declare",
+     g_gamethemeurl + "modules/js/vendor/nouislider.min.js",
+
      "ebg/core/gamegui",
      "ebg/counter",
      "ebg/stock",
@@ -35,7 +37,8 @@
      g_gamethemeurl + "modules/js/Player.js",
      g_gamethemeurl + "modules/js/AlhambraBoard.js",
      g_gamethemeurl + "modules/js/Scoring.js",
- ], function (dojo, declare) {
+
+ ], function (dojo, declare, noUiSlider) {
     return declare("bgagame.alhambra", [
       customgame.game,
       alhambra.moneyCardTrait,
@@ -49,8 +52,10 @@
         this.selectionMode = null; // moneyThenBuilding or buildingThenMoney
         this._notifications.push(
           ['clearTurnPrivate', 1],
-          ['clearTurn', 1]
+          ['clearTurn', 500]
         );
+
+        this._animationSpeed = this.getConfig('alhambraAnimationSpeed', 50);
       },
 
 
@@ -67,15 +72,16 @@
 
         // Settings
         if(!this.isSpectator){
-          this.place('jstpl_configPlayerBoard', {}, 'player_board_' + this.player_id);
+          this.place('jstpl_configPlayerBoard', {
+            scoringRoundSpeed: "Scoring speed",
+          }, 'player_board_' + this.player_id);
           dojo.connect($('show-settings'), 'onclick', () => this.toggleControls() );
           dojo.connect($('show-scoresheet'), 'onclick', () => this.showScoreSheet() );
 
           this.addTooltip( 'show-settings', '', _("Display some settings about the game."));
           this.addTooltip( 'show-scoresheet', '', _("Display the scoring pad."));
 
-          dojo.place($('preference_control_102').parentNode.parentNode, 'layout-controls-container');
-
+          this.setupSettings();
         }
 
         this.setupMoneyPool();
@@ -193,6 +199,34 @@
         }
       },
 
+
+      getConfig(value, v){
+        return localStorage.getItem(value) == null? v : localStorage.getItem(value);
+      },
+
+      setupSettings(){
+        dojo.place($('preference_control_102').parentNode.parentNode, 'layout-controls-container');
+
+        /*
+         * Simple slider to show the zoom of scoresheet
+         */
+        this._speedSlider = document.getElementById('layout-control-animation-speed');
+        noUiSlider.create(this._speedSlider, {
+          start: [100 - this._animationSpeed],
+          step:10,
+          padding:10,
+          range: {
+            'min': [0],
+            'max': [100]
+          },
+        });
+        this._speedSlider.noUiSlider.on('slide', (arg) => this.setAnimationSpeed(parseInt(arg[0])) );
+      },
+
+      setAnimationSpeed(speed){
+        this._animationSpeed = 100 - speed;
+        localStorage.setItem("alhambraAnimationSpeed", 100 - speed);
+      },
 
       ///////////////////////////////////////
       ///////////////////////////////////////

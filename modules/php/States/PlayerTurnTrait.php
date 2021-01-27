@@ -114,19 +114,19 @@ trait PlayerTurnTrait {
     // Check that theses cards exists and are in player hand
     foreach($cards as $card){
       if( $card['location'] != 'hand' || $card['pId'] != $player->getId())
-        throw new \feException( "This money card is not available in your hand" );
+        throw new \BgaUserException(self::_("This money card is not available in your hand"));
     }
 
     // Check if building was available
     if($building['location'] != 'buildingsite')
-      throw new \feException( "This building isn't available for buying" );
+      throw new \BgaUserException(self::_("This building isn't available for buying" ));
 
     // Check that the cards are in the good money
     $amount = 0;
     foreach($cards as $card){
       $amount += $card['value'];
       if($card['type'] != $building['pos']){
-        throw new \feException( "Try to pay with money which does not correspond to building" );
+        throw new \BgaUserException(self::_("Try to pay with money which does not correspond to building" ));
       }
 
       Money::move($card['id'], 'discard', 0);
@@ -134,7 +134,7 @@ trait PlayerTurnTrait {
 
     // Check the total amount
     if($amount < $building['cost'])
-      throw new \feException( "Not enough money to buy this building" );
+      throw new \BgaUserException(self::_("Not enough money to buy this building" ));
 
     // Buy the building, ie place it in player's "to place" location, and notify
     Buildings::move($building['id'], 'bought', $building['pos']);

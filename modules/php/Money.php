@@ -16,7 +16,7 @@ class Money extends \ALH\Helpers\Deck
   protected static $deck = null;
   public static function init()
   {
-    self::$deck = self::getNew("module.common.deck");
+    self::$deck = Alhambra::$instance->getNew("module.common.deck");
     self::$deck->init(self::$table);
   }
 
@@ -48,7 +48,7 @@ class Money extends \ALH\Helpers\Deck
   /*
    * Setup new game : create deck, deal cards to players and shuffle scoring cards
    */
-  public function setupNewGame($players)
+  public static function setupNewGame($players)
   {
     self::createDeck($players);
 
@@ -73,7 +73,7 @@ class Money extends \ALH\Helpers\Deck
   /*
    * Create the money cards (including scoring cards)
    */
-  public function createDeck($players)
+  public static function createDeck($players)
   {
     $isNeutral = count($players) == 2;
     $cards = [
@@ -101,7 +101,7 @@ class Money extends \ALH\Helpers\Deck
   /*
    * Initial money distribution to players
    */
-  public function dealCards($players)
+  public static function dealCards($players)
   {
     // (everyone received at least 20)
     $min = null;
@@ -135,7 +135,7 @@ class Money extends \ALH\Helpers\Deck
   /*
    * getUiData : get visible cards
    */
-  public function getUiData()
+  public static function getUiData()
   {
     return [
       'pool' => self::getInLocation('pool'),
@@ -152,7 +152,7 @@ class Money extends \ALH\Helpers\Deck
   /*
    * Fill the money pool to 4 cards
    */
-  public function fillPool()
+  public static function fillPool()
   {
     $nCards = self::countInLocation("pool");
     $newCards = [];

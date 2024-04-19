@@ -25,7 +25,7 @@ class Log extends \ALH\Helpers\DB_Manager
   /*
    * Utils : where filter with player and current turn
    */
-  private function getFilteredQuery($pId){
+  private static function getFilteredQuery($pId){
     return self::DB()->where('player_id', $pId)->where('turn', Globals::getTurnNumber() )->orderBy("log_id", "DESC");
   }
 
@@ -150,7 +150,7 @@ class Log extends \ALH\Helpers\DB_Manager
   /*
    * getCancelMoveIds : get all cancelled notifs IDs from BGA gamelog, used for styling the notifications on page reload
    */
-  protected function extractNotifIds($notifications){
+  protected static function extractNotifIds($notifications){
     $notificationUIds = [];
     foreach($notifications as $notification){
       $data = \json_decode($notification, true);
@@ -160,9 +160,9 @@ class Log extends \ALH\Helpers\DB_Manager
   }
 
 
-  public function getCanceledNotifIds()
+  public static function getCanceledNotifIds()
   {
-    return self::extractNotifIds(self::getObjectListFromDb("SELECT `gamelog_notification` FROM gamelog WHERE `cancel` = 1", true));
+    return self::extractNotifIds(Alhambra::$instance->getObjectListFromDb("SELECT `gamelog_notification` FROM gamelog WHERE `cancel` = 1", true));
   }
 
 
@@ -170,7 +170,7 @@ class Log extends \ALH\Helpers\DB_Manager
   /*
    * getLastStartTurnNotif : find the packet_id of the last notifications
    */
-  protected function getLastStartTurnNotif(){
+  protected static function getLastStartTurnNotif(){
     $packets = self::getObjectListFromDb("SELECT `gamelog_packet_id`, `gamelog_notification` FROM gamelog WHERE `gamelog_player` IS NULL ORDER BY gamelog_packet_id DESC");
     foreach($packets as $packet){
       $data = \json_decode($packet['gamelog_notification'], true);
@@ -183,12 +183,12 @@ class Log extends \ALH\Helpers\DB_Manager
   }
 
 
-  protected function cancelNotifs($pId)
+  protected static function cancelNotifs($pId)
   {
     $packetId = self::getLastStartTurnNotif();
     $whereClause = "WHERE `gamelog_current_player` = $pId AND `gamelog_packet_id` > $packetId";
-    $notifIds = self::extractNotifIds(self::getObjectListFromDb("SELECT `gamelog_notification` FROM gamelog $whereClause", true));
-    self::DbQuery("UPDATE gamelog SET `cancel` = 1 $whereClause");
+    $notifIds = self::extractNotifIds(Alhambra::$instance->getObjectListFromDb("SELECT `gamelog_notification` FROM gamelog $whereClause", true));
+    Alhambra::$instance->DbQuery("UPDATE gamelog SET `cancel` = 1 $whereClause");
     return $notifIds;
   }
 

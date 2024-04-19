@@ -19,7 +19,7 @@ class Buildings extends \ALH\Helpers\Deck
   protected static $deck = null;
   public static function init()
   {
-    self::$deck = self::getNew("module.common.deck");
+    self::$deck = Alhambra::$instance->getNew("module.common.deck");
     self::$deck->init(self::$table);
   }
 
@@ -125,7 +125,7 @@ class Buildings extends \ALH\Helpers\Deck
   /*******************
   ****** SETUP *******
   *******************/
-  public function setupNewGame($players)
+  public static function setupNewGame($players)
   {
     // Insert by hand
     $query = self::DB()->multipleInsert(['card_type', 'card_type_arg', 'card_location', 'card_location_arg', 'card_x', 'card_y']);
@@ -162,7 +162,7 @@ class Buildings extends \ALH\Helpers\Deck
   /*
    * Overwrite some deck getters since they can't handle custom fields
    */
-  protected function getSelectQuery(){
+  protected static function getSelectQuery(){
     return self::DB()->select([
       'id' => 'card_id',
       'location' => 'card_location',
@@ -173,7 +173,7 @@ class Buildings extends \ALH\Helpers\Deck
     ]);
   }
 
-  public function getInLocation($location, $location_arg = null, $orderBy = null){
+  public static function getInLocation($location, $location_arg = null, $orderBy = null){
     $query = self::getSelectQuery()->where('card_location', $location);
 
     if(!is_null($location_arg)){
@@ -187,7 +187,7 @@ class Buildings extends \ALH\Helpers\Deck
   }
 
 
-  public function get($buildingId, $raiseException = true)
+  public static function get($buildingId, $raiseException = true)
   {
     $building = self::getSelectQuery()->where('card_id', $buildingId)->get(true);
     if(is_null($building) && $raiseException)
@@ -199,7 +199,7 @@ class Buildings extends \ALH\Helpers\Deck
   /*
    * getUiData : get visible cards
    */
-  public function getUiData()
+  public static function getUiData()
   {
     return [
       'buildingsite' => self::getInLocation('buildingsite'),
@@ -213,7 +213,7 @@ class Buildings extends \ALH\Helpers\Deck
   /*
    * Fill the building pool to 4 buildings
    */
-  public function fillPool()
+  public static function fillPool()
   {
     $buildings = self::getInLocation("buildingsite");
     $nBuildings = count($buildings);
@@ -256,7 +256,7 @@ class Buildings extends \ALH\Helpers\Deck
   /*
    * Get a building at given x, y
    */
-  public function getAt($pId, $x, $y)
+  public static function getAt($pId, $x, $y)
   {
     return self::getSelectQuery()->where('card_location','alam')
       ->where('card_location_arg', $pId)
@@ -268,7 +268,7 @@ class Buildings extends \ALH\Helpers\Deck
   /*
    * Place a building at given x, y
    */
-  public function placeAt($buildingId, $pId, $x, $y)
+  public static function placeAt($buildingId, $pId, $x, $y)
   {
     self::DB()->update([
       'card_location' => 'alam',
@@ -288,10 +288,10 @@ class Buildings extends \ALH\Helpers\Deck
   /*
    * Give buildings to neutral player
    */
-  function giveTilesToNeutral(&$buildings, $silent = false, $player = null)
+  static function giveTilesToNeutral(&$buildings, $silent = false, $player = null)
   {
     // Get target location
-    $maxY = self::getUniqueValueFromDb("SELECT MAX(card_y) FROM `building` WHERE `card_location` LIKE 'alam' AND `card_location_arg` = 0");
+    $maxY = Alhambra::$instance->getUniqueValueFromDb("SELECT MAX(card_y) FROM `building` WHERE `card_location` LIKE 'alam' AND `card_location_arg` = 0");
     $y = is_null($maxY)? 0 : ($maxY + 1);
     $x = 0;
     $tilesWrap = 4;
@@ -318,7 +318,7 @@ class Buildings extends \ALH\Helpers\Deck
   /*
    * Give tiles to neutral player after $scoringRound
    */
-  function giveTilesToNeutralScoringRound($scoringRound)
+  static function giveTilesToNeutralScoringRound($scoringRound)
   {
     // Determine how many buildings to draw depending on the scoring round
     $nToDraw = 6;

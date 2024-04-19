@@ -210,11 +210,11 @@ class Alhambra extends Table
 
   // Exposing protected method getCurrentPlayerId
   public static function getCurrentPId(){
-    return self::getCurrentPlayerId();
+    return self::$instance->getCurrentPlayerId();
   }
 
   // Exposing protected method translation
   public static function translate($text){
-    return self::_($text);
+    return self::$instance->_($text);
   }
 }

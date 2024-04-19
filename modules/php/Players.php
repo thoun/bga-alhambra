@@ -16,7 +16,7 @@ class Players extends \ALH\Helpers\DB_Manager
   }
 
 
-  public function setupNewGame($players)
+  public static function setupNewGame($players)
   {
     // Create players
     self::DB()->delete();
@@ -40,17 +40,17 @@ class Players extends \ALH\Helpers\DB_Manager
 
 
 
-  public function getActiveId()
+  public static function getActiveId()
   {
     return Alhambra::get()->getActivePlayerId();
   }
 
-  public function getCurrentId()
+  public static function getCurrentId()
   {
     return Alhambra::get()->getCurrentPId();
   }
 
-  public function getAll(){
+  public static function getAll(){
     return self::DB()->get(false);
   }
 
@@ -58,7 +58,7 @@ class Players extends \ALH\Helpers\DB_Manager
   /*
    * Return the number of players
    */
-  public function count()
+  public static function count()
   {
     return self::DB()->count();
   }
@@ -67,29 +67,29 @@ class Players extends \ALH\Helpers\DB_Manager
   /*
    * get : returns the Player object for the given player ID
    */
-  public function get($pId = null)
+  public static function get($pId = null)
   {
     $pId = $pId ?: self::getActiveId();
     return self::DB()->where($pId)->get();
   }
 
-  public function getActive()
+  public static function getActive()
   {
     return self::get();
   }
 
-  public function getCurrent()
+  public static function getCurrent()
   {
     return self::get(self::getCurrentId());
   }
 
-  public function getNextId($player)
+  public static function getNextId($player)
   {
     $table = Alhambra::get()->getNextPlayerTable();
     return $table[$player->getId()];
   }
 
-  public function getPrevId($player)
+  public static function getPrevId($player)
   {
     $table = Alhambra::get()->getPrevPlayerTable();
     return $table[$player->getId()];
@@ -99,12 +99,12 @@ class Players extends \ALH\Helpers\DB_Manager
   /*
    * getUiData : get all ui data of all players : id, no, name, team, color, powers list, farmers
    */
-  public function getUiData($pId)
+  public static function getUiData($pId)
   {
     return self::getAll()->assocMap(function($player) use ($pId){ return $player->getUiData($pId); });
   }
 
-  public function getNeutral()
+  public static function getNeutral()
   {
     $row = [
       'player_id' => 0,
@@ -120,7 +120,7 @@ class Players extends \ALH\Helpers\DB_Manager
     return new \ALH\Player($row);
   }
 
-  public function getBuildingCounts()
+  public static function getBuildingCounts()
   {
     $data = self::getAll()->assocMap(function($player){ return $player->getBoard()->getBuildingCounts(); });
     if(Globals::isNeutral()){
